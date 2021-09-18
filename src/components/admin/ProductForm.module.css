@@ -1,0 +1,61 @@
+.controls {
+  background-color: white;
+  border-bottom: 1px solid #ddd;
+  padding: 0.5rem;
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.controls div {
+  margin: 0 auto;
+  max-width: 1000px;
+  display: flex;
+  justify-content: right;
+}
+
+.controls button {
+  margin: 0 0.25rem;
+}
+
+.container {
+  display: flex;
+  margin: 0 auto;
+  max-width: 1000px;
+  min-height: 85vh;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.product {
+  overflow-y: auto;
+  padding-right: 1rem;
+  flex: 1 1;
+}
+
+.images {
+  grid-area: images;
+  overflow-y: auto;
+  padding-left: 1rem;
+  flex: 1 1;
+}
+
+.header {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.header h3 {
+  margin: 0;
+}
+
+@media only screen and (min-device-width: 768px) {
+  .container {
+    flex-direction: row;
+  }
+  .product {
+    border-right: 1px solid #ddd;
+  }
+}

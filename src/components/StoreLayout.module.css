@@ -1,0 +1,19 @@
+.main {
+  margin: 2rem auto;
+  min-height: 70vh;
+  max-width: 960px;
+}
+
+.footer-icons {
+  display: flex;
+  justify-content: center;
+}
+
+.footer-icons img {
+  filter: contrast(0.5);
+  margin: 1rem;
+}
+
+.footer-icons img:hover {
+  filter: contrast(0.8);
+}

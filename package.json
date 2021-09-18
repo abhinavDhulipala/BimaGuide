@@ -1,20 +1,50 @@
 {
-  "name": "bimaguide",
-  "version": "0.1.0",
+  "name": "gatsby-starter-stripe",
   "private": true,
-  "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
-  },
+  "description": "A minimal starter to create a storefront with Stripe & Gatsby.",
+  "version": "0.3.0",
+  "author": "Brock McElroy (https://brxck.dev)",
   "dependencies": {
-    "next": "11.1.2",
-    "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "@stripe/stripe-js": "^1.13.2",
+    "gatsby": "^2.32.13",
+    "gatsby-image": "^3.1.0",
+    "gatsby-plugin-image": "^0.7.2",
+    "gatsby-plugin-manifest": "^2.12.1",
+    "gatsby-plugin-offline": "^3.10.2",
+    "gatsby-plugin-react-helmet": "^3.10.0",
+    "gatsby-plugin-sharp": "^2.14.4",
+    "gatsby-source-filesystem": "^2.11.1",
+    "gatsby-source-stripe": "^3.2.1",
+    "gatsby-transformer-sharp": "^2.12.1",
+    "hiq": "^4.0.2",
+    "netlify-identity-widget": "^1.9.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-helmet": "^6.1.0",
+    "react-hook-form": "^6.15.5",
+    "slug": "^4.0.3",
+    "stripe": "^8.140.0"
+  },
+  "keywords": [
+    "gatsby"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "fixtures": "stripe fixtures ./stripe-fixtures.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/brxck/gatsby-starter-stripe"
+  },
+  "bugs": {
+    "url": "https://github.com/brxck/gatsby-starter-stripe/issues"
   },
   "devDependencies": {
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2"
+    "babel-preset-gatsby": "^1.1.0",
+    "eslint-config-gatsby-standard": "^2.2.0",
+    "http-proxy-middleware": "^1.0.6"
   }
 }

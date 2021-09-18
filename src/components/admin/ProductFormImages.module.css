@@ -1,0 +1,41 @@
+.add-image {
+  margin: 0 1rem;
+  display: flex;
+  align-items: center;
+}
+
+.add-image input {
+  flex: 1 1;
+  margin: 0 0.5rem 0 1rem;
+}
+
+.container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.image {
+  border: 1px solid #ddd;
+  position: relative;
+  max-height: 200px;
+  max-width: 200px;
+  margin: 0.5rem;
+}
+
+.image > img {
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  padding: 0.25rem;
+  margin: 0 auto;
+}
+
+.remove {
+  height: 25px;
+  width: 25px;
+  padding: 0;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}

@@ -1,34 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# gatsby-starter-stripe
+
+A starter to create and manage a storefront with [Gatsby](https://www.gatsbyjs.org/), [Stripe](https://stripe.com/), & [Netlify Functions](https://www.netlify.com/docs/functions/); includes cart, checkout, admin, and live data.
+
+## Features
+
+- Create and manage inventory through admin interface
+- Statically generate based on Stripe inventory
+- Dynamically update with live inventory & availability data
+- Checkout powered by Stripe
+- Serverless functions interact with Stripe API
 
 ## Getting Started
 
-First, run the development server:
+1. **Create a new site from this starter**
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+   ```sh
+   gatsby new <project-name> https://github.com/brxck/gatsby-starter-stripe
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Setup Stripe**
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+   To get you started quickly, this starter comes with test data in the form of [Stripe fixtures](https://stripe.com/docs/cli/fixtures). To install the fixtures, first [install and configure the Stripe CLI](https://stripe.com/docs/stripe-cli#install).
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+   Next, from the project folder:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+   ```sh
+   stripe fixtures ./stripe-fixtures.json
+   ```
 
-## Learn More
+   > :warning: A `Cannot query field` error usually means that they queried field is empty in all of your products/prices. If a field is empty Gatsby cannot add it to the GraphQl schema. Either define the field in your Stripe data, or remove it from the query in question.
 
-To learn more about Next.js, take a look at the following resources:
+3. **Configure API keys**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   Rename `.env.example` to `.env` and fill with your Stripe API test keys. **Don't commit this file to a public repo!**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+4. **Start development servers**
 
-## Deploy on Vercel
+   You will need to install and configure the [Netlify CLI](https://docs.netlify.com/cli/get-started/): `npm install netlify-cli -g`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   To start the development servers for Gatsby & [Netlify Functions](https://github.com/netlify/netlify-lambda#usage) simply run [Netlify Dev](https://www.netlify.com/products/dev).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+   ```sh
+   netlify dev
+   ```
+
+   Your site is accessible at `http://localhost:8888`!
+
+   > :warning: Make sure to use the proxied _Netilfy Dev_ server at `:8888`! Otherwise your Gatsby application will not be able to access your Netlify Functions.
+
+5. **Start developing**
+
+   This starter aims to handle some of the plumbing needed to integrate Gatsby & Stripe. Everything else is left to you and your preferred methods.
+
+   The source files for [Netlify Functions](https://www.netlify.com/docs/functions/) are located at `/src/functions`, they are then built into the files in `/functions`. Visit the documentation for more information on their structure.
+
+6. **Deploy to [Netlify](https://www.netlify.com/docs)**
+
+   ```sh
+   netlify deploy
+   ```
+
+   You will need to enable Netlify Identity for authentication into the admin area.
+
+   > If you want to deploy somewhere other than Netlify, you'll have to find another place to deploy the serverless functions in `/functions`, ex. AWS Lambda.
+
+## Contributing
+
+Issues and pull requests welcome!
+
+## Acknowledgments
+
+Thanks @njosefbeck for authoring and maintaining [gatsby-source-stripe](https://github.com/njosefbeck/gatsby-source-stripe), which makes this starter possible!
