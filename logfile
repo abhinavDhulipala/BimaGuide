@@ -1,0 +1,8 @@
+2021-10-01 16:20:18.679 PDT [4543] LOG:  starting PostgreSQL 12.8 (Ubuntu 12.8-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, 64-bit
+2021-10-01 16:20:18.680 PDT [4543] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-10-01 16:20:18.687 PDT [4543] FATAL:  could not create lock file "/var/run/postgresql/.s.PGSQL.5432.lock": Permission denied
+2021-10-01 16:20:18.687 PDT [4543] LOG:  database system is shut down
+2021-10-01 16:21:14.813 PDT [4739] LOG:  starting PostgreSQL 12.8 (Ubuntu 12.8-0ubuntu0.20.04.1) on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0, 64-bit
+2021-10-01 16:21:14.813 PDT [4739] LOG:  listening on IPv4 address "127.0.0.1", port 5432
+2021-10-01 16:21:14.820 PDT [4739] FATAL:  could not create lock file "/var/run/postgresql/.s.PGSQL.5432.lock": Permission denied
+2021-10-01 16:21:14.820 PDT [4739] LOG:  database system is shut down
