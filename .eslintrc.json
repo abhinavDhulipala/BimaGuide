@@ -1,7 +1,0 @@
-{
-  "extends": "gatsby-standard",
-  "rules": {
-    "react/prop-types": 1,
-    "camelcase": [1, { "ignoreDestructuring": true }]
-  }
-}
