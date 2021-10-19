@@ -4,7 +4,7 @@
 The motivation to use postgres in development is to avoid the bugs in production cause by sqlite3 -> pg implicit conversion.
 
 ```bash
-sudo apt-get install postgresql # see Mac/brew or  yum/Centos variations on install
+sudo apt-get install postgresql # see Mac/brew or  yum/Centos variations on install or is postgres.app on mac
 sudo service postgresql start   # or systemctl instead of service depending on version/distro of unix
 sudo -u postgres psql
 postgres=# create user "bimaguide_dev" with password 'dev';
@@ -13,4 +13,10 @@ postgres=# create database "bima_dev_pg" owner "bimaguide_dev";
 CREATE DATABASE
 postgres=# exit;
 
+```
+
+Once pg is set up, run:
+
+```bash
+bundle && yarn
 ```
