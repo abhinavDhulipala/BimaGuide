@@ -1,6 +1,7 @@
 # README
 
 ### Set up Postgres
+
 The motivation to use postgres in development is to avoid the bugs in production cause by sqlite3 -> pg implicit conversion.
 
 ```bash
@@ -11,8 +12,8 @@ postgres=# create user "bimaguide_dev" with password 'dev';
 CREATE ROLE
 postgres=# create database "bima_dev_pg" owner "bimaguide_dev";
 CREATE DATABASE
-postgres=# exit;
-
+postgres=# GRANT ALL PRIVILEGES ON  DATABASE "bima_dev_pg" to "bimaguide_dev";
+GRANT
 ```
 
 Once pg is set up, run:

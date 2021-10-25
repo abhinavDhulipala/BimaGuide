@@ -16,15 +16,20 @@ ActiveRecord::Schema.define(version: 2021_10_02_054301) do
   enable_extension "plpgsql"
 
   create_table "employees", force: :cascade do |t|
-    t.string "first_name"
-    t.string "last_name"
-    t.string "role"
-    t.integer "contributions"
-    t.string "email"
-    t.string "occupation"
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "role", default: "contributor", null: false
+    t.integer "contributions", default: 0, null: false
+    t.string "occupation", default: "porter", null: false
+    t.string "email", default: "", null: false
+    t.string "encrypted_password", default: "", null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_employees_on_email", unique: true
+    t.index ["reset_password_token"], name: "index_employees_on_reset_password_token", unique: true
   end
 
 end
