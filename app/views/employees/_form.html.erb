@@ -11,34 +11,24 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :first_name %>
-    <%= form.text_field :first_name %>
+  <div class="form-group">
+    <%= form.label :first_name, class: 'col-form-label' %>
+    <%= form.text_field :first_name, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :last_name %>
-    <%= form.text_field :last_name %>
+  <div class="form-group">
+    <%= form.label :last_name, class: 'col-form-label' %>
+    <%= form.text_field :last_name, class: 'form-control'%>
   </div>
 
-  <div class="field">
-    <%= form.label :role %>
-    <%= form.text_field :role %>
+  <div class="form-group">
+    <%= form.label :email, class: 'col-form-label' %>
+    <%= form.text_field :email, class: 'form-control' %>
   </div>
 
-  <div class="field">
-    <%= form.label :contributions %>
-    <%= form.number_field :contributions %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :occupation %>
-    <%= form.text_field :occupation %>
+  <div class="form-group">
+    <%= form.label :occupation, class: 'col-form-label' %>
+    <%= form.text_field :occupation, class: 'form-control' %>
   </div>
 
   <div class="actions">
