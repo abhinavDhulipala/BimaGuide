@@ -10,6 +10,21 @@
   </div>
 
   <div class="form-group">
+    <%= f.label :first_name %><br/>
+    <%= f.text_field :first_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :last_name %><br/>
+    <%= f.text_field :last_name, class: 'form-control' %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :occupation %><br/>
+    <%= f.select :occupation, Employee.viable_occupations, class: 'form-control ' %>
+  </div>
+
+  <div class="form-group">
     <%= f.label :password %>
     <% if @minimum_password_length %>
     <em>(<%= @minimum_password_length %> characters minimum)</em>
