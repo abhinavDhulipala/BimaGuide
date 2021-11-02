@@ -24,7 +24,7 @@ default: &default
 development:
   <<: *default
   username: bimaguide_dev
-  password: 'dev'
+  password: "dev"
   database: bima_dev_pg
   host: localhost
   # The specified database role being used to connect to postgres.
@@ -59,7 +59,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: bimaguide_test
+  database: bima_test_pg
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is

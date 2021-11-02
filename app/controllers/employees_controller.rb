@@ -56,6 +56,9 @@ class EmployeesController < ApplicationController
     end
   end
 
+  #TODO: Stripe proccessing here
+  def about; end
+
   # static routes
   def about; end
 

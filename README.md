@@ -12,6 +12,7 @@ postgres=# create user "bimaguide_dev" with password 'dev';
 CREATE ROLE
 postgres=# create database "bima_dev_pg" owner "bimaguide_dev";
 CREATE DATABASE
+postgres=# create database "bima_test_pg";
 postgres=# GRANT ALL PRIVILEGES ON  DATABASE "bima_dev_pg" to "bimaguide_dev";
 GRANT
 ```
