@@ -1,6 +1,6 @@
 class DonationsController < ApplicationController
   before_action :set_donation, only: %i[ show edit update destroy ]
-
+  rescue_from Stripe::CardError, with: :flash_exception
   # GET /donations or /donations.json
   def index
     @donations = Donation.all
@@ -12,7 +12,7 @@ class DonationsController < ApplicationController
 
   # GET /donations/new
   def new
-    @donation = Donation.new
+    @donation = Donation.new 2.5
   end
 
   # GET /donations/1/edit

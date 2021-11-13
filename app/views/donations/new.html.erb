@@ -1,5 +1,24 @@
-<h1>New Donation</h1>
+<%= render 'layouts/navbar' %>
 
-<%= render 'form', donation: @donation %>
+<h2 class="text-center">New Donation</h2>
 
-<%= link_to 'Back', donations_path %>
+<% if flash[:error].present? %>
+  <div id="error_explanation">
+    <p><%= flash[:error] %></p>
+  </div>
+<% end %>
+
+<div class="container">
+
+  <%= form_with url: donations_path, class: 'form-group' do |form| %>
+    <article>
+      <%= form.label :amount, 'Amount', class: 'col-form-label'%>
+      <%= form.number_field :amount, in: 1..20, step: 0.5, value: 1, class: 'form-control' %>
+    </article>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+      data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+      data-description="A month's subscription"
+      data-amount="<%= @donation.price %>"
+      data-locale="auto"></script>
+  <% end %>
+</div>

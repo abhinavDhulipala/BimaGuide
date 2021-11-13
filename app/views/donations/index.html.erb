@@ -1,25 +1,42 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/navbar' %>
 
-<h1>Donations</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+<div class="col-lg-8 mx-auto p-3 py-md-5">
+  <header class="d-flex align-items-center pb-3 mb-5 border-bottom">
+    <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
+      <span class="fs-4">Donations</span>
+    </a>
+  </header>
 
-  <tbody>
-    <% @donations.each do |donation| %>
-      <tr>
-        <td><%= link_to 'Show', donation %></td>
-        <td><%= link_to 'Edit', edit_donation_path(donation) %></td>
-        <td><%= link_to 'Destroy', donation, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <main>
+    <h1>What happens to your donations?</h1>
+    <p class="fs-5 col-md-8">Donations are put directly into payer pool. 
+    This is the pool that is used to automatically resolve claims in the event of a lost family member or a on-the-job injury.
+    </p>
 
-<br>
+    <div class="mb-5">
+      <%= button_to 'Donate', new_donation_path, method: :get, class: 'btn btn-primary btn-lg px-4' %>
+    </div>
 
-<%= link_to 'New Donation', new_donation_path %>
+    <hr class="col-3 col-md-2 mb-5">
+
+    <div class="row g-5">
+      <div class="col-md-6">
+        <h2>Starter projects</h2>
+        <p>Ready to beyond the starter template? Check out these open source projects that you can quickly duplicate to a new GitHub repository.</p>
+        <ul class="icon-list">
+          <li><a href="https://github.com/twbs/bootstrap-npm-starter" rel="noopener" target="_blank">Bootstrap npm starter</a></li>
+          <li class="text-muted">Bootstrap Parcel starter (coming soon!)</li>
+        </ul>
+      </div>
+
+      <div class="col-md-6">
+        <h2>Guides</h2>
+        <p>Read more detailed instructions and documentation on using or contributing to Bootstrap.</p>
+      </div>
+    </div>
+  </main>
+  <footer class="pt-5 my-5 text-muted border-top">
+    Created by the <%= link_to 'Abhinav Dhulipala', 'https://github.com/abhinavDhulipala' %> 2021
+  </footer>
+</div>

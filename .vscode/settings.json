@@ -4,5 +4,6 @@
         "jsProfileVisualizer.cpuprofile.table": true
     },
     "editor.formatOnSave": true,
-    "editor.formatOnPaste": true
+    "editor.formatOnPaste": true,
+    "html.autoClosingTags": true
 }
