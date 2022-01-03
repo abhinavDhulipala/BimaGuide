@@ -6,19 +6,12 @@ The motivation to use postgres in development is to avoid the bugs in production
 
 ```bash
 sudo apt-get install postgresql # see Mac/brew or  yum/Centos variations on install or is postgres.app on mac
-sudo service postgresql start   # or systemctl instead of service depending on version/distro of unix
-sudo -u postgres psql
-postgres=# create user "bimaguide_dev" with password 'dev';
-CREATE ROLE
-postgres=# create database "bima_dev_pg" owner "bimaguide_dev";
-CREATE DATABASE
-postgres=# create database "bima_test_pg";
-postgres=# GRANT ALL PRIVILEGES ON  DATABASE "bima_dev_pg" to "bimaguide_dev";
-GRANT
+sudo service postgresql start   # or systemctl/gui instead of service depending on version/distro of unix
+sudo vi /etc/postgresql/*/main/pg_hba.conf # modify to use trust auth instead of peer auth ref: https://stackoverflow.com/questions/18664074/getting-error-peer-authentication-failed-for-user-postgres-when-trying-to-ge 
+psql -U postgres -f db/pg_init.sql
 ```
 
 Once pg is set up, run:
-
 ```bash
-bundle && yarn
+bundle && yarn && rails db:migrate
 ```

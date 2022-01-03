@@ -75,6 +75,7 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # host should be set to the actual host of the application in production
+  config.hosts << /nepal-visitor-\d+.codio.io/
   config.action_mailer.default_url_options = {
     host: 'localhost',
     port: 3000

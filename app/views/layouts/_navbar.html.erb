@@ -16,6 +16,7 @@
 
       <div class="btn-group" role="group"> 
         <% if employee_signed_in? %>
+          <%= button_to 'Profile', employee_path(current_employee), class: 'btn btn-primary', method: :get %>
           <%= button_to 'Logout', destroy_employee_session_path, class: 'btn btn-secondary', method: :delete %>
         <% else %>
           <%= button_to 'Register', new_employee_registration_path, class: 'btn btn-secondary', method: :get %>

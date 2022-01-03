@@ -6,7 +6,7 @@ class EmployeesController < ApplicationController
     @employees = Employee.all
   end
 
-  # GET /employees/1 or /employees/1.json
+
   def show
   end
 
@@ -59,13 +59,10 @@ class EmployeesController < ApplicationController
   #TODO: Stripe proccessing here
   def about; end
 
-  # static routes
-  def about; end
-
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_employee
-      @employee = Employee.find(params[:id])
+      @employee = current_employee || Employee.find(params[:id])  
     end
 
     # Only allow a list of trusted parameters through.
