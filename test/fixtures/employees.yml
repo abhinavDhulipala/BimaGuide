@@ -1,0 +1,6 @@
+default:
+    first_name: rico
+    last_name: suave
+    email: "rico.suave@gmail.com"
+    encrypted_password: <%= encrypted_password %>
+    occupation: porter
