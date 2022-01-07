@@ -1,0 +1,17 @@
+<%= form_with(model: donation_service) do |form| %>
+  <% if donation_service.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(donation_service.errors.count, "error") %> prohibited this donation_service from being saved:</h2>
+
+      <ul>
+        <% donation_service.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,18 +1,12 @@
 class EmployeesController < ApplicationController
   before_action :set_employee, only: %i[ show edit update destroy ]
+  before_action :authenticate_employee!, except: %i[ index about ]
 
   # GET /employees or /employees.json
-  def index
-    @employees = Employee.all
-  end
+  def index; end
 
 
   def show
-  end
-
-  # GET /employees/new
-  def new
-    @employee = Employee.new
   end
 
   # GET /employees/1/edit
@@ -56,8 +50,6 @@ class EmployeesController < ApplicationController
     end
   end
 
-  #TODO: Stripe proccessing here
-  def about; end
 
   private
     # Use callbacks to share common setup or constraints between actions.

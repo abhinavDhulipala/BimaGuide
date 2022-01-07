@@ -23,8 +23,7 @@ default: &default
 
 development:
   <<: *default
-  username: bimaguide_dev
-  password: "dev"
+  username: postgres
   database: bima_dev_pg
   host: localhost
   # The specified database role being used to connect to postgres.

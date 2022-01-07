@@ -10,24 +10,31 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_011633) do
+ActiveRecord::Schema.define(version: 2022_01_07_003354) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "donations", force: :cascade do |t|
+  create_table "contributions", force: :cascade do |t|
+    t.integer "amount"
+    t.string "purpose"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_contributions_on_employee_id"
   end
 
   create_table "employees", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
     t.string "role", default: "contributor", null: false
-    t.integer "contributions", default: 0, null: false
-    t.string "occupation", default: "porter", null: false
-    t.string "email", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
+    t.string "occupation", null: false
+    t.text "address1"
+    t.text "address2"
+    t.integer "zip"
+    t.string "phone"
+    t.string "email", null: false
+    t.string "encrypted_password", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"

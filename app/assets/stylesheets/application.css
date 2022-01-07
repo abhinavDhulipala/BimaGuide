@@ -13,3 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
+.nav-bar {
+    box-shadow: none
+}

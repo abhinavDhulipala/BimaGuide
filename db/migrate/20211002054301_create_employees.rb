@@ -1,10 +1,16 @@
 class CreateEmployees < ActiveRecord::Migration[6.1]
+
   def change
     create_table :employees do |t|
       t.string :first_name, null: false
       t.string :last_name, null: false
       t.string :role, null: false, default: :contributor
       t.string :occupation, null: false
+      t.text   :address1
+      t.text   :address2
+      t.integer :zip
+      t.string :phone
+      
 
       ## Database authenticatable
       t.string :email,              null: false

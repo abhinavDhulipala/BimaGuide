@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="no-shadow navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <%= link_to 'BimaGuide', employees_path, class: 'navbar-brand' %>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -8,19 +8,26 @@
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <%= link_to 'Home', employees_path, class: 'nav-link active' %>
-        </li>
-        <li class="nav-item">
-          <%= link_to 'Donate', donations_path, class: 'nav-link active' %>
-        </li>
+	</li>
+	<% if employee_signed_in? %>
+    <li class="nav-item">
+      <%= link_to 'Contribute', employee_contributions_path(current_employee), class: 'nav-link' %>
+    </li>
+	<% else %>
+    <li class="nav-item">
+      <%= link_to 'Donate', donation_services_path, class: 'nav-link active' %>
+    </li>
+  <% end %>
       </ul>
 
       <div class="btn-group" role="group"> 
+        <% btn_attn, btn_secondary = 'nav-link ', 'nav-link active' %>
         <% if employee_signed_in? %>
-          <%= button_to 'Profile', employee_path(current_employee), class: 'btn btn-primary', method: :get %>
-          <%= button_to 'Logout', destroy_employee_session_path, class: 'btn btn-secondary', method: :delete %>
+          <%= link_to 'Profile', employee_path(current_employee), class: btn_attn, method: :get %>
+          <%= link_to 'Logout', destroy_employee_session_path, class: btn_secondary, method: :delete %>
         <% else %>
-          <%= button_to 'Register', new_employee_registration_path, class: 'btn btn-secondary', method: :get %>
-          <%= button_to 'Login', new_employee_session_path, class: 'btn btn-primary' %>
+          <%= link_to 'Register', new_employee_registration_path, class: btn_attn, method: :get %>
+          <%= link_to 'Login', new_employee_session_path, class: btn_secondary %>
         <% end %>
       </div>
       
