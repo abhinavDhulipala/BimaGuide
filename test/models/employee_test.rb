@@ -28,6 +28,17 @@ class EmployeeTest < ActiveSupport::TestCase
     end
   end
 
+  test 'before_save::downcase' do 
+    @employee.update! first_name: 'ABhi', last_name: 'SUAvE'
+    assert_equal @employee.first_name, 'abhi'
+    assert_equal @employee.last_name, 'suave'
+
+    @employee.update! first_name: 'abhi', last_name: 'suave'
+    assert_equal @employee.first_name, 'abhi'
+    assert_equal @employee.last_name, 'suave'
+      
+  end
+
   test 'no duplicate emails' do 
     assert_difference ->{Employee.count}, 1 do 
       email = Faker::Internet.unique.email
@@ -53,6 +64,14 @@ class EmployeeTest < ActiveSupport::TestCase
   test 'find latest contribution time' do 
     latest = @employee.contributions.create! amount: 1, purpose: 'regular payment'
     assert_equal latest.created_at, @employee.latest_contribution_date
+  end
+
+  test 'unintialized attributes' do 
+    assert_equal @employee.unintialized_attrs, Employee::ADDITIONAL_INFO
+    @employee.update! phone: '+255 750995366'
+    assert_equal @employee.unintialized_attrs, %w[address1 zip]
+    @employee.update! address1: 'blah', address2: 'blah', zip: 88888
+    assert_empty @employee.unintialized_attrs
   end
 end
  

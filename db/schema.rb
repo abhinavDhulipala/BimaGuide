@@ -16,8 +16,8 @@ ActiveRecord::Schema.define(version: 2022_01_07_003354) do
   enable_extension "plpgsql"
 
   create_table "contributions", force: :cascade do |t|
-    t.integer "amount"
-    t.string "purpose"
+    t.float "amount", null: false
+    t.text "purpose", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "employee_id"

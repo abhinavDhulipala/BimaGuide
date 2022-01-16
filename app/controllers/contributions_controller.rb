@@ -1,17 +1,19 @@
 class ContributionsController < ApplicationController
+  before_action :authenticate_employee!
   before_action :set_contribution, only: %i[ show edit update destroy ]
 
   VIEW_LIMIT = 100
 
   # GET /contributions or /contributions.json
   def index
-    if current_employee.role == :contributor || 
-      (privledged_access && params[:filter_present_employee])
-      @contributions = current_employee.contributions
-    elsif privledged_access
-      @contributions = Contribution.all
+
+    @contributions = current_employee.contributions
+    @privileged = privledged_access
+    if @privileged
+      @contributions = Contribution.all unless params[:current_employee_filter].empty?
     end
-    @contributions = @contributions&.limit VIEW_LIMIT
+    
+    @contributions&.limit VIEW_LIMIT
   end
 
   # GET /contributions/1 or /contributions/1.json
@@ -65,11 +67,6 @@ class ContributionsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_contribution
-      @contribution = Contribution.find(params[:id])
-    end
-
     # Only allow a list of trusted parameters through.
     def contribution_params
       params.require(:contribution).permit(:amount, :purpose)
@@ -78,6 +75,6 @@ class ContributionsController < ApplicationController
     # when a member graduates from being a contributer to a member
     # they qualify for claims fulfillment
     def privledged_access 
-      current_employee.role == :member
+      current_employee.role == 'member'
     end
 end

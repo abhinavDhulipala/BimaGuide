@@ -1,4 +1,4 @@
-<%= form_with(model: contribution) do |form| %>
+<%= form_with(model: contribution, url: employee_contributions_path(current_employee)) do |form| %>
   <% if contribution.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(contribution.errors.count, "error") %> prohibited this contribution from being saved:</h2>
@@ -11,17 +11,17 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :amount %>
-    <%= form.number_field :amount %>
+  <div class="form-group">
+    <%= form.label :amount, class: 'form-label' %>
+    <%= form.number_field :amount, value: 2.5, class: 'form-control', max: Contribution::MAX_DONATION_AMOUNT, step: 0.01 %>
   </div>
 
-  <div class="field">
-    <%= form.label :purpose %>
-    <%= form.text_field :purpose %>
+  <div class="form-group">
+    <%= form.label :purpose, class: 'form-label' %>
+    <%= form.text_field :purpose, value: 'weekly payment', class: 'form-control' %>
   </div>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

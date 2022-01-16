@@ -1,5 +1,11 @@
-<h1>New Contribution</h1>
+<%= render 'layouts/navbar' %>
 
-<%= render 'form', contribution: @contribution %>
+<div class="container">
+    <h3>New Contribution</h3>
+    <div>
+        
+    </div>
+    <%= render 'form', contribution: Contribution.new %>
 
-<%= link_to 'Back', contributions_path %>
+    <%= link_to 'Back', employee_contributions_path(current_employee) %>
+</div>
