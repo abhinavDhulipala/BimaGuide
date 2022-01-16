@@ -1,0 +1,17 @@
+<% missing_attrs = employee.unintialized_attrs %>
+
+<% unless missing_attrs.empty? %>
+    <div class="alert alert-warning" role="alert">
+    <h4 class="alert-heading">Missing additional info:</h4> 
+    <p>You are missing some additional info. Certain features might be incomplete or might not work because the following attributes are missing
+    </p>
+    <hr>
+    <p> Please fill the following fields out at your earliest convenience </p>
+    <ul>
+        <% missing_attrs.each do |missing| %>
+            <li><%= link_to missing, edit_employee_path(employee), class: 'alert-link' %></li>
+        <% end %>
+    </ul>
+    <%= button_to 'Dismiss', employee_dismiss_notifications_path(employee), class: 'btn btn-primary'%>
+    </div>
+<% end %>

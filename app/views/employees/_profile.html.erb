@@ -1,0 +1,76 @@
+<% # args -> employee: Employee, edit_enabled: bool, path: str, method: symb %>
+
+<% print path, method %>
+<div class="container rounded mt-5 mb-5">
+    <div class="row">
+        <div class="col-md-3 border-right">
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"><img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"><%= employee.last_name.capitalize %></span><span class="text-black-50"><%= employee.email %></span><span></span></div>
+        </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-right">Profile Settings</h4>
+                </div>
+                <%= form_with(model: employee, url: path, method: method) do |f| %>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <%= f.label :first_name, 'Name' , class: 'labels' %>
+                        <%= f.text_field :first_name, class: 'form-control', value: employee.first_name.humanize, disabled: !edit_enabled %>
+                    </div>
+                    <div class="col-md-6">
+                        <%= f.label :last_name, 'Surname', class: 'labels' %>
+                        <%= f.text_field :last_name, class: 'form-control', value: employee.last_name.humanize, disabled: !edit_enabled %>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-12">
+                        <%= f.label :phone, 'Mobile Number (format: +255 750995366)', class: 'labels' %>
+                        <%= f.telephone_field :phone, class: 'form-control', value: employee.phone, disabled: !edit_enabled %>
+                    </div>
+                    <div class="col-md-12">
+                        <%= f.label :address1, 'Address Line 1', class: 'labels' %>
+                        <%= f.text_field :address1, class: 'form-control', value: employee.address1, disabled: !edit_enabled %>
+                    </div>
+                    <div class="col-md-12">
+                        <%= f.label :address2, 'Address Line 2', class: 'labels'%>
+                        <%= f.text_field :address2, class: 'form-control', value: employee.address2, disabled: !edit_enabled %>
+                    </div>
+                    <div class="col-md-12">
+                        <%= f.label :zip, 'Postcode', class: 'labels' %>
+                        <%= f.text_field :zip, class: 'form-control', value: employee.zip, disabled: !edit_enabled %>
+                    </div>
+                    <div class="col-md-12">
+                        <%= f.label :email, 'Email ID', class: 'labels' %>
+                        <%= f.email_field :email, class: 'form-control', value: employee.email, disabled: !edit_enabled %>
+                    </div>
+                <%= yield f if block_given? %>
+                </div>
+                    <% msg = edit_enabled ? 'Edit' : 'Edit Profile' %>
+                    <%= f.submit msg, class: 'btn btn-primary' %>
+                <% end %>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center experience"><span>Contribution Summary</span>
+                <%= button_to 'Make new contribution', new_employee_contribution_path(employee), class: 'btn-sm btn-success', method: :get %>
+                </div><br>
+                <div class="col-md-12">
+                <%= label_tag :total_contributions, 'total contributions', class: 'labels' %>
+                <%= text_field_tag :total_contributions, employee.contributions.count, class: 'form-control', disabled: true %>
+                <br>
+                <div class="col-md-12">
+                <%= label_tag :latest_contribution, 'latest contribution', class: 'labels' %>
+                <%= text_field_tag :latest_contribution, employee.latest_contribution_date || 'No contributions yet!', class: 'form-control', disabled: true %>
+                </div>
+                <div class="col-md-12">
+                <%= label_tag :role, 'Role', class: 'labels' %>
+                <%= text_field_tag :role, employee.role.to_s.humanize, class: 'form-control', disabled: true %>
+
+                </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</div>

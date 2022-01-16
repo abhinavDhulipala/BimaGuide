@@ -1,0 +1,25 @@
+<%= render 'layouts/navbar' %>
+
+<%= render 'employees/profile', employee: @employee, edit_enabled: true,
+ path: employee_registration_path , method: :put do |f| %>
+  <% if devise_mapping.confirmable? && current_employee.pending_reconfirmation? %>
+    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+  <% end %>
+  <div class="col-md-12">
+    <%= f.label :password, "password: (leave blank if you don't want to change it)", class: 'labels' %>
+    <%= f.password_field :password, autocomplete: "new-password", class: 'form-control' %>
+  </div>
+
+  <div class="col-md-12">
+    <%= f.label :password_confirmation, class: 'labels' %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password", class: 'form-control' %>
+  </div>
+
+  <div class="field">
+    <%= f.label :current_password, 'current_password: to confirm your changes', class: 'labels' %>
+    <%= f.password_field :current_password, autocomplete: "current-password", class: 'form-control' %>
+  </div>
+<% end %>
+
+
+
