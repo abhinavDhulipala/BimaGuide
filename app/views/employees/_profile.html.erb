@@ -1,6 +1,5 @@
 <% # args -> employee: Employee, edit_enabled: bool, path: str, method: symb %>
 
-<% print path, method %>
 <div class="container rounded mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
@@ -41,7 +40,7 @@
                     </div>
                     <div class="col-md-12">
                         <%= f.label :email, 'Email ID', class: 'labels' %>
-                        <%= f.email_field :email, class: 'form-control', value: employee.email, disabled: !edit_enabled %>
+                        <%= f.email_field :email, class: 'form-control', value: employee.email, disabled: true %>
                     </div>
                 <%= yield f if block_given? %>
                 </div>

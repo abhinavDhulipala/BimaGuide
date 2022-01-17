@@ -62,6 +62,7 @@ gem "devise", "~> 4.8"
 
 gem "phonelib", "~> 0.6.54"
 
-gem "stripe-rails", "~> 2.3"
 
 gem "faker", "~> 2.19", :groups => [:development, :test]
+
+gem "stripe", "~> 5.40"

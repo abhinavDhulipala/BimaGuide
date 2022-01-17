@@ -6,5 +6,8 @@ Rails.application.routes.draw do
     post '/dismiss_notifications', to: 'employees#dismiss_notifications'
   end
 
-  root to: redirect('/employees')
+  # static pages
+  get '/about', to: 'static_pages#about'
+
+  root to: redirect('/about')
 end
