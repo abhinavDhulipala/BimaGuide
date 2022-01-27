@@ -1,4 +1,6 @@
-<%= form_with(model: job) do |form| %>
+
+
+<%= form_with(model: job, url: job_form_url(job)) do |form| %>
   <% if job.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
@@ -11,7 +13,33 @@
     </div>
   <% end %>
 
+  <div class="form-group">
+    <%= form.label :date_completed, 'Date of trip completion' %>
+    <%= form.datetime_field :date_completed, class: 'form-control'  %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :duration, 'Number of Nights spent on the job' %>
+    <%= form.number_field :duration, class: 'form-control', min: 0 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :total_pay, 'Total Pay USD' %>
+    <%= form.number_field :total_pay, value: job.total_pay, class: 'form-control', min: 0, step: 0.01 %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :role, 'What was your role for this job?' %>
+    <%= form.select :role, occupation_dropdown , class: 'form-control', value: job.role %>
+  </div>
+
+
+  <div class="form-group"> 
+    <%= form.label :document, 'Supporting documentation', class: 'labels' %>
+    <%= form.file_field :document, class: 'form-control' %>
+  </div>
+
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

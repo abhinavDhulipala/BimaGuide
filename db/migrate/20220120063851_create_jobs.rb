@@ -4,9 +4,10 @@ class CreateJobs < ActiveRecord::Migration[6.1]
       t.integer :duration
       t.float :total_pay
       t.string :role
-      t.references :employees, null: false, foreign_key: true
+      t.datetime :date_completed
 
       t.timestamps
     end
+    add_belongs_to :jobs, :employee
   end
 end

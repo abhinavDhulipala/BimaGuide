@@ -1,3 +1,6 @@
 class Job < ApplicationRecord
-  belongs_to :employees
+  belongs_to :employee
+  validates_presence_of :duration, :total_pay, :date_completed, :role
+  validate :date_completed, if: ->{errors.add(:date_completed, 'must enter a date within a month from now') if date_completed and date_completed < 1.month.ago}
+  has_one_attached :document
 end

@@ -75,9 +75,12 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
 
   # host should be set to the actual host of the application in production
+
+  # config for developing on codio machine. Not needed for local development w/o proxy
   config.hosts << /nepal-visitor-\d+.codio.io/
   config.action_mailer.default_url_options = {
     host: 'localhost',
     port: 3000
   }
+  config.active_storage.service = :local
 end

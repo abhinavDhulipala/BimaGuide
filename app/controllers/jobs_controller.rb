@@ -1,9 +1,11 @@
 class JobsController < ApplicationController
   before_action :set_job, only: %i[ show edit update destroy ]
+  before_action :authenticate_employee!
+
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = Job.all
+    @jobs = current_employee.jobs.order :date_completed
   end
 
   # GET /jobs/1 or /jobs/1.json
@@ -21,30 +23,22 @@ class JobsController < ApplicationController
 
   # POST /jobs or /jobs.json
   def create
-    @job = Job.new(job_params)
+    @job = current_employee.jobs.create(job_params)
 
-    respond_to do |format|
-      if @job.save
-        format.html { redirect_to @job, notice: "Job was successfully created." }
-        format.json { render :show, status: :created, location: @job }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
-      end
+    if @job.valid?
+      redirect_to employee_jobs_url, notice: "Job was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
-    respond_to do |format|
       if @job.update(job_params)
-        format.html { redirect_to @job, notice: "Job was successfully updated." }
-        format.json { render :show, status: :ok, location: @job }
+        redirect_to employee_jobs_path(current_employee), notice: "Job was successfully updated." 
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @job.errors, status: :unprocessable_entity }
+        render :edit, status: :unprocessable_entity 
       end
-    end
   end
 
   # DELETE /jobs/1 or /jobs/1.json
@@ -64,6 +58,6 @@ class JobsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def job_params
-      params.fetch(:job, {})
+      params.require(:job).permit(%i[duration total_pay role date_completed])    
     end
 end

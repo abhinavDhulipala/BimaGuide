@@ -1,31 +1,41 @@
 <%= render 'layouts/navbar' %>
 
-<h1>Jobs</h1>
+<div class="container rounded mt-5 mb-5">
+  <div class="d-flex justify-content-between">
+    <h3>Jobs</h3>
+    <%= button_to 'log new job', new_employee_job_path, class: 'btn btn-success', method: :get %>
+  </div>
+  <% if @jobs %>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Role</th>
+          <th>Duration</th>
+          <th>Total Pay</th>
+          <th>Date Completed</th>
+          <th></th>
+        </tr>
+      </thead>
 
-<% if @jobs.empty? %>
-<div class="alert alert-info" role="alert">
-  You don't have any jobs added yet! Click <%= link_to 'here', new_employee_job_path, class: 'alert-link' %> to log your first job!
+      <tbody>
+        <% @jobs.each do |job| %>
+          <tr>
+            <td><%= job.role %></td>
+            <td><%= job.duration %></td>
+            <td><%= job.total_pay %></td>
+            <td><%= job.date_completed %></td>
+            <td><%= button_to 'Edit Job', edit_employee_job_path(current_employee, job), class: 'btn btn-primary', method: :get %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-dark" role="alert">
+      you don't have any contributions yet. Click 
+      <%= link_to 'here', new_employee_contribution_path, class: 'alert-link' %>
+      to make your first one.
+    </div>
+  <% end %>
 </div>
-<% end %>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @jobs.each do |job| %>
-      <tr>
-        <td><%= link_to 'Show', job %></td>
-        <td><%= link_to 'Edit', edit_employee_job_path(job) %></td>
-        <td><%= link_to 'Destroy', job, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
 <br>
 
-<%= link_to 'New Job', new_employee_job_path %>

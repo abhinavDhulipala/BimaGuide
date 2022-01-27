@@ -3,8 +3,8 @@
 <div class="container rounded mt-5 mb-5">
     <div class="row">
         <div class="col-md-3 border-right">
-            <div class="d-flex flex-column align-items-center text-center p-3 py-5">
-            <img class="rounded-circle mt-5" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg"><span class="font-weight-bold"><%= employee.last_name.capitalize %>
+            <div class="d-flex flex-column align-items-center text-center p-3 py-5"> 
+            <img class="rounded-circle mt-5" width="150px" src="<%= employee.avatar.attached? ? employee.avatar : default_image %>"><span class="font-weight-bold"><%= employee.last_name.capitalize %>
             </span><span class="text-black-50"><%= employee.email %></span><span></span>
             </div>
 
@@ -26,6 +26,15 @@
                     </div>
                 </div>
                 <div class="row mt-3">
+                    <div clas="col-md-12">
+                      <%= f.label :occupation, 'Main Occupation', class: 'labels' %>
+                      <% if edit_enabled %>
+                        <%= f.select :occupation, occupation_dropdown, class: 'form-control' %>
+                      <% else %>
+                        <%= f.text_field :occupation, class: 'form-control', value: employee.occupation, disabled: true %>
+                      <% end %>
+
+                    </div>
                     <div class="col-md-12">
                         <%= f.label :phone, 'Mobile Number (format: +255 750995366)', class: 'labels' %>
                         <%= f.telephone_field :phone, class: 'form-control', value: employee.phone, disabled: !edit_enabled %>

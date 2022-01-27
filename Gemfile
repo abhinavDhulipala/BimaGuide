@@ -66,3 +66,5 @@ gem "phonelib", "~> 0.6.54"
 gem "faker", "~> 2.19", :groups => [:development, :test]
 
 gem "stripe", "~> 5.40"
+
+gem "image_processing", "~> 1.12"

@@ -1,11 +1,13 @@
 class Employee < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  VIABLE_OCCUPATIONS = %w[porter guide]
+  VIABLE_OCCUPATIONS = %w[porter guide cook head_guide]
   ADDITIONAL_INFO = %w[address1 zip phone]
   ROLES = %w[contributor member admin]
 
   has_many :contributions
+  has_many :jobs
+  has_one_attached :avatar
   validates_inclusion_of :occupation, in: VIABLE_OCCUPATIONS , message: "%{value} not part of viable occupation"
   validates_inclusion_of :role, in: ROLES, default: 'contributor', message: "%{value} not a viable role"
   validates_uniqueness_of :email, case_sensitive: false

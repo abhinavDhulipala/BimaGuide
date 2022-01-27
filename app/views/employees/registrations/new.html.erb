@@ -22,8 +22,8 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :occupation %><br/>
-    <%= f.select :occupation, Employee::VIABLE_OCCUPATIONS, class: 'form-control ' %>
+    <%= f.label :occupation, 'Main occupation (done for most jobs)' %><br/>
+    <%= f.select :occupation, occupation_dropdown, class: 'form-control ' %>
   </div>
 
   <div class="form-group">

@@ -1,4 +1,6 @@
-<p id="notice"><%= notice %></p>
+<%= render 'layouts/navbar' %>
 
-<%= link_to 'Edit', edit_job_path(@job) %> |
-<%= link_to 'Back', jobs_path %>
+<div class="container">
+    <h1>Edit Job</h1>
+    <%= render 'form', job: @job %>
+</div>
