@@ -1,15 +1,13 @@
 class Employee < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  VIABLE_OCCUPATIONS = %w[porter guide cook head_guide]
   ADDITIONAL_INFO = %w[address1 zip phone]
-  ROLES = %w[contributor member admin]
 
   has_many :contributions
   has_many :jobs
   has_one_attached :avatar
-  validates_inclusion_of :occupation, in: VIABLE_OCCUPATIONS , message: "%{value} not part of viable occupation"
-  validates_inclusion_of :role, in: ROLES, default: 'contributor', message: "%{value} not a viable role"
+  enum occupation: %w[porter guide cook head_guide], _default: 'porter'
+  enum role: %w[contributor member admin], _default: 'contributor'
   validates_uniqueness_of :email, case_sensitive: false
   validates_presence_of :first_name, :last_name
   validates :phone, phone: {message: 'incorrect phone number format. Please include country code 
@@ -19,10 +17,13 @@ class Employee < ApplicationRecord
   before_save {first_name.downcase!}
   before_save {last_name.downcase!}
 
+  pay_customer
+
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last
   end
 
+  # filter for privilieged views of all employees
   def view_all_employees filters, orders
       
   end
@@ -30,6 +31,15 @@ class Employee < ApplicationRecord
   def unintialized_attrs 
     # address2 not included as it is not always required
     attributes.select {|k, v| v.nil? and Employee::ADDITIONAL_INFO.include? k}.keys
+  end
+
+  # for pay compatibility
+  def name
+    "#{first_name.humanize} #{last_name.humanize}"
+  end
+
+  def pay_customer_name
+    name
   end
 
   private

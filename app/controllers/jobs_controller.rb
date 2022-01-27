@@ -34,6 +34,7 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
+
       if @job.update(job_params)
         redirect_to employee_jobs_path(current_employee), notice: "Job was successfully updated." 
       else
@@ -58,6 +59,7 @@ class JobsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def job_params
-      params.require(:job).permit(%i[duration total_pay role date_completed])    
+      byebug
+      params.require(:job).permit(%i[duration total_pay role date_completed document])    
     end
 end

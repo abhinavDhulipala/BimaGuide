@@ -68,3 +68,5 @@ gem "faker", "~> 2.19", :groups => [:development, :test]
 gem "stripe", "~> 5.40"
 
 gem "image_processing", "~> 1.12"
+
+gem "pay", "~> 3.0"

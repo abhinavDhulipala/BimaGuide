@@ -20,7 +20,7 @@
       <tbody>
         <% @jobs.each do |job| %>
           <tr>
-            <td><%= job.role %></td>
+            <td><%= job.role.humanize %></td>
             <td><%= job.duration %></td>
             <td><%= job.total_pay %></td>
             <td><%= job.date_completed %></td>

@@ -4,8 +4,8 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
     create_table :employees do |t|
       t.string :first_name, null: false
       t.string :last_name, null: false
-      t.string :role, null: false, default: :contributor
-      t.string :occupation, null: false
+      t.integer :role, null: false
+      t.integer :occupation, null: false
       t.text   :address1
       t.text   :address2
       t.integer :zip

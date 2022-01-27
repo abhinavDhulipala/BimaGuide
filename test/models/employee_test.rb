@@ -7,7 +7,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test 'create validations' do 
-    assert_raises(ActiveRecord::RecordInvalid) do 
+    assert_raises(ArgumentError) do 
       Employee.create! email: 'abc@berkeley.edu', password: 'yeet123', 
       occupation: 'blah', first_name: 'abhi', last_name: 'd'
     end
@@ -72,6 +72,13 @@ class EmployeeTest < ActiveSupport::TestCase
     assert_equal @employee.unintialized_attrs, %w[address1 zip]
     @employee.update! address1: 'blah', address2: 'blah', zip: 88888
     assert_empty @employee.unintialized_attrs
+  end
+
+  test 'pay gem compatibility' do 
+    # must respond to name, first_name, last_name, pay_customer_name
+    assert_equal @employee.name, 'Rico Suave'
+    assert_equal @employee.pay_customer_name, 'Rico Suave'
+
   end
 end
  

@@ -1,13 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  duration: 1
-  total_pay: 1.5
-  role: MyString
-  employees: one
+  duration: 6
+  total_pay: 70
+  role: guide
+  employee: one
 
 two:
-  duration: 1
-  total_pay: 1.5
-  role: MyString
-  employees: two
+  duration: 4
+  total_pay: 30.5
+  role: porter
+  employee: one
