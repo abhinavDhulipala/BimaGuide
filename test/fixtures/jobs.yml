@@ -1,13 +1,14 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  date_completed: <%= 8.days.ago %>
   duration: 6
   total_pay: 70
   role: guide
   employee: one
 
 two:
-  duration: 4
+  duration: <%= 20.days.ago %>
   total_pay: 30.5
   role: porter
   employee: one
