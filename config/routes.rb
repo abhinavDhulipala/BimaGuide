@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   devise_for :employees, controllers: {registrations: 'employees/registrations'}
   resources :employees do 
     resources :contributions
+    resources :jobs
+
     post '/dismiss_notifications', to: 'employees#dismiss_notifications'
   end
 
