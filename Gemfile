@@ -69,4 +69,5 @@ gem "stripe", "~> 5.40"
 
 gem "image_processing", "~> 1.12"
 
+# ref: https://github.com/pay-rails/pay
 gem "pay", "~> 3.0"
