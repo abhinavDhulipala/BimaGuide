@@ -3,10 +3,9 @@
 one:
   amount: 1
   purpose: "regular contribution"
-  employee: default
+  employee: one
 
 two:
   amount: 1
   purpose: "regular contribution"
-  employee: default
-
+  employee: one

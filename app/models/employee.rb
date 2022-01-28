@@ -7,7 +7,7 @@ class Employee < ApplicationRecord
   has_many :jobs
   has_one_attached :avatar
   enum occupation: %w[porter guide cook head_guide], _default: 'porter'
-  enum role: %w[contributor member admin], _default: 'contributor'
+  enum role: %w[contributor member admin super_admin], _default: 'contributor'
   validates_uniqueness_of :email, case_sensitive: false
   validates_presence_of :first_name, :last_name
   validates :phone, phone: {message: 'incorrect phone number format. Please include country code 
@@ -21,6 +21,22 @@ class Employee < ApplicationRecord
 
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last
+  end
+
+  def latest_job_date
+    jobs.order(:date_completed).pluck(:date_completed).last
+  end
+
+  def role
+    config = Config.take
+    # anyone with privileges admin priviliges and above
+    return self[:role] if Employee.roles[self[:role]] > Employee.roles[:admin]
+    return 'member' if jobs.count >= config.min_jobs and
+      contributions.count >= config.min_contributions and
+      (latest_contribution_date or 200.years.ago) >= config.latest_contribution.months.ago and
+      (latest_job_date or 200.year.ago) >= config.latest_job.months.ago
+
+    'contributor'
   end
 
   # filter for privilieged views of all employees

@@ -5,10 +5,10 @@ one:
   duration: 6
   total_pay: 70
   role: guide
-  employee: one
+  employee: default
 
 two:
   duration: <%= 20.days.ago %>
   total_pay: 30.5
   role: porter
-  employee: one
+  employee: default

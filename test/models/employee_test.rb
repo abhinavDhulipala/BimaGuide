@@ -4,6 +4,8 @@ class EmployeeTest < ActiveSupport::TestCase
 
   setup do
     @employee = employees(:default)
+    j1 = jobs(:one)
+    @employee.jobs.create
   end
 
   test 'create validations' do 
@@ -78,7 +80,15 @@ class EmployeeTest < ActiveSupport::TestCase
     # must respond to name, first_name, last_name, pay_customer_name
     assert_equal @employee.name, 'Rico Suave'
     assert_equal @employee.pay_customer_name, 'Rico Suave'
+  end
 
+  test 'role enum: permissioning' do
+    assert_equal @employee.role, 'contributor'
+    Config.take.update!(min_jobs: 0, latest_job: 21,
+       latest_contribution: 21, min_contributions: 0)
+    byebug
+    assert_equal @employee.role, 'member'
+    
   end
 end
  
