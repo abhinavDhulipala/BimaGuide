@@ -8,7 +8,8 @@ one:
   employee: default
 
 two:
-  duration: <%= 20.days.ago %>
+  date_completed: <%= 20.days.ago %>
+  duration: 2
   total_pay: 30.5
   role: porter
   employee: default

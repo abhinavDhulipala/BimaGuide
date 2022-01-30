@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_032227) do
+ActiveRecord::Schema.define(version: 2022_01_30_035258) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2022_01_28_032227) do
     t.integer "min_contributions"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "max_contribution_amount"
+    t.integer "max_contribution_freq"
   end
 
   create_table "contributions", force: :cascade do |t|

@@ -8,7 +8,7 @@ class JobsController < ApplicationController
     @jobs = current_employee.jobs.order :date_completed
   end
 
-  # GET /jobs/1 or /jobs/1.json
+  # GET /jobs/1
   def show
   end
 
@@ -44,11 +44,10 @@ class JobsController < ApplicationController
 
   # DELETE /jobs/1 or /jobs/1.json
   def destroy
-    @job.destroy
-    respond_to do |format|
-      format.html { redirect_to jobs_url, notice: "Job was successfully destroyed." }
-      format.json { head :no_content }
+    unless @job.destroy
+      render :edit, status: :unprocessable_entity
     end
+    redirect_to employee_jobs_url(current_employee)
   end
 
   private
@@ -59,7 +58,6 @@ class JobsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def job_params
-      byebug
       params.require(:job).permit(%i[duration total_pay role date_completed document])    
     end
 end

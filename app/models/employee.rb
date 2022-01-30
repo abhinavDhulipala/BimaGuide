@@ -9,6 +9,7 @@ class Employee < ApplicationRecord
   enum occupation: %w[porter guide cook head_guide], _default: 'porter'
   enum role: %w[contributor member admin super_admin], _default: 'contributor'
   validates_uniqueness_of :email, case_sensitive: false
+  validates_uniqueness_of :id, allow_blank: true
   validates_presence_of :first_name, :last_name
   validates :phone, phone: {message: 'incorrect phone number format. Please include country code 
   and phone number exp: +255 750995366', allow_blank: true}
@@ -20,22 +21,21 @@ class Employee < ApplicationRecord
   pay_customer
 
   def latest_contribution_date
-    contributions.order(:created_at).pluck(:created_at).last
+    contributions.order(:created_at).pluck(:created_at).last or 200.years.ago
   end
 
   def latest_job_date
-    jobs.order(:date_completed).pluck(:date_completed).last
+    jobs.order(:date_completed).pluck(:date_completed).last or 200.years.ago
   end
 
   def role
     config = Config.take
     # anyone with privileges admin priviliges and above
-    return self[:role] if Employee.roles[self[:role]] > Employee.roles[:admin]
+    return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
     return 'member' if jobs.count >= config.min_jobs and
       contributions.count >= config.min_contributions and
-      (latest_contribution_date or 200.years.ago) >= config.latest_contribution.months.ago and
-      (latest_job_date or 200.year.ago) >= config.latest_job.months.ago
-
+      latest_contribution_date >= config.latest_contribution.months.ago and
+      latest_job_date >= config.latest_job.months.ago     
     'contributor'
   end
 

@@ -1,6 +1,9 @@
 <%= render 'layouts/navbar' %>
 
 <div class="container">
-    <h1>Edit Job</h1>
+    <div class="d-flex flex-row justify-content-between">
+      <h1>Edit Job</h1>
+      <%= button_to 'Delete job', employee_job_path(@job), class: 'btn btn-danger', method: :delete %>
+    </div>
     <%= render 'form', job: @job %>
 </div>

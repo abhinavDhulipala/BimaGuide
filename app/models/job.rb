@@ -1,8 +1,10 @@
 class Job < ApplicationRecord
   belongs_to :employee
-  validates_presence_of :total_pay, :role
+  validates_presence_of :total_pay, :role, :date_completed
+  validates_uniqueness_of :id
   validates_inclusion_of :role, in: Employee.occupations.keys
   validate :no_overlap_dates
+  before_destroy ->{errors.add(:date_created, 'cannot delete a 1 week old record') if created_at < 1.week.ago}
   has_one_attached :document
 
   private
@@ -14,7 +16,7 @@ class Job < ApplicationRecord
     # if any jobs previous end date is greater than our current start date
     # that doesn't make logical sense
     start_date = date_completed - duration.days
-    if Job.where(employee_id: employee_id).any? {|j| j.date_completed > start_date }
+    if Job.where(employee_id: employee_id).where.not(id: id).pluck(:date_completed).any? {|dc| dc > start_date}
       errors.add(:date_completed, "Invalid dates please check: you couldn't have started a job during another active job")
     end
   end

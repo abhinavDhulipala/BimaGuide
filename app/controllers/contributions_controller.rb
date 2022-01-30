@@ -25,44 +25,13 @@ class ContributionsController < ApplicationController
     @contribution = Contribution.new
   end
 
-  # GET /contributions/1/edit
-  def edit
-  end
-
   # POST /contributions or /contributions.json
   def create
-    @contribution = Contribution.new(contribution_params)
-
-    respond_to do |format|
-      if @contribution.save
-        format.html { redirect_to @contribution, notice: "Contribution was successfully created." }
-        format.json { render :show, status: :created, location: @contribution }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @contribution.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /contributions/1 or /contributions/1.json
-  def update
-    respond_to do |format|
-      if @contribution.update(contribution_params)
-        format.html { redirect_to @contribution, notice: "Contribution was successfully updated." }
-        format.json { render :show, status: :ok, location: @contribution }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @contribution.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /contributions/1 or /contributions/1.json
-  def destroy
-    @contribution.destroy
-    respond_to do |format|
-      format.html { redirect_to contributions_url, notice: "Contribution was successfully destroyed." }
-      format.json { head :no_content }
+    @contribution = current_employee.contributions.create(contribution_params)
+    if @contribution.persisted?
+      redirect_to employee_contributions_path(current_employee), notice: "Contribution was successfully created."
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 

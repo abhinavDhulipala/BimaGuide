@@ -4,30 +4,6 @@ class EmployeeTest < ActiveSupport::TestCase
 
   setup do
     @employee = employees(:default)
-    j1 = jobs(:one)
-    @employee.jobs.create
-  end
-
-  test 'create validations' do 
-    assert_raises(ArgumentError) do 
-      Employee.create! email: 'abc@berkeley.edu', password: 'yeet123', 
-      occupation: 'blah', first_name: 'abhi', last_name: 'd'
-    end
-    assert_raises(ActiveRecord::RecordInvalid) do 
-      Employee.create! email: 'abc@berkeley.edu', password: 'yeet123',
-      occupation: 'porter', last_name: 'd'
-    end
-    assert_raises(ActiveRecord::RecordInvalid) do 
-      Employee.create! email: 'abc@berkeley.edu', password: 'yeet123', 
-      occupation: 'porter', last_name: 'd'
-    end
-
-    assert_difference ->{Employee.count}, 2 do 
-      Employee.create! email: 'abc@berkeley.edu', password: 'yeet123',
-      occupation: 'porter', first_name: 'abhi', last_name: 'd'
-      Employee.create! email: 'abcd@berkeley.edu', password: 'yeet123',
-      occupation: 'guide', first_name: 'abhi', last_name: 'd'
-    end
   end
 
   test 'before_save::downcase' do 
@@ -38,11 +14,10 @@ class EmployeeTest < ActiveSupport::TestCase
     @employee.update! first_name: 'abhi', last_name: 'suave'
     assert_equal @employee.first_name, 'abhi'
     assert_equal @employee.last_name, 'suave'
-      
   end
 
   test 'no duplicate emails' do 
-    assert_difference ->{Employee.count}, 1 do 
+    assert_difference 'Employee.count', 1 do 
       email = Faker::Internet.unique.email
       3.times {Employee.create email: email, password: 'yeet123', 
                 occupation: 'porter', first_name: 'abhi', last_name: 'd'}
@@ -50,12 +25,7 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test 'phone format validation' do 
-    assert_raises(ActiveRecord::RecordInvalid) do 
-      @employee.update!(phone: '-9283592')
-    end 
-
-    #Employee.create! email: 'abc@berkeley.edu', password: 'yeet123',
-     # occupation: 'porter', first_name: 'abhi', last_name: 'd', phone: '4082525555'
+    refute @employee.update(phone: '-9283592')
     @employee.update! phone: '+1 (408)-252-5555'
     @employee.update! phone: '+255 75 099 5366'
     @employee.update! phone: '+255 750995366'
@@ -82,13 +52,53 @@ class EmployeeTest < ActiveSupport::TestCase
     assert_equal @employee.pay_customer_name, 'Rico Suave'
   end
 
-  test 'role enum: permissioning' do
+  test 'role permissioning' do
     assert_equal @employee.role, 'contributor'
     Config.take.update!(min_jobs: 0, latest_job: 21,
        latest_contribution: 21, min_contributions: 0)
-    byebug
     assert_equal @employee.role, 'member'
-    
+    Config.take.update!(min_jobs: 3, latest_job: 21,
+       latest_contribution: 21, min_contributions: 0)
+    assert_equal @employee.role, 'contributor'
+    Config.take.update!(min_jobs: 0, latest_job: 21,
+       latest_contribution: 21, min_contributions: 10)
+    assert_equal @employee.role, 'contributor'
+    Config.take.update!(min_jobs: 0, latest_job: 21,
+       latest_contribution: 21, min_contributions: 0)
+    assert_equal @employee.role, 'member'
+  end
+
+  test 'permissioning, latest job' do 
+    Config.take.update!(min_jobs: 0, latest_job: 1,
+       latest_contribution: 21, min_contributions: 0)
+    assert_equal @employee.role, 'member'
+    Config.take.update! latest_job: 0
+
+    assert_equal @employee.role, 'contributor'
+    Config.take.update! latest_job: 2
+    assert_equal @employee.role, 'member'
+
+    Job.destroy_all
+    assert_equal @employee.role, 'contributor'
+
+  end
+
+  test 'permissioning, latest contribution' do 
+    Config.take.update!(min_jobs: 0, latest_job: 1,
+       latest_contribution: 21, min_contributions: 0)
+    assert_equal @employee.role, 'member'
+    Config.take.update!(latest_contribution: 0)
+    assert_equal @employee.role, 'contributor'
+  end
+
+  test 'permissioning, min jobs' do 
+    Config.take.update!(min_jobs: 3, latest_job: 1,
+       latest_contribution: 21, min_contributions: 0)
+    assert_equal @employee.role, 'contributor'
+    Config.take.update!(min_jobs: 0)
+    assert_equal @employee.role, 'member'
+    Job.destroy_all
+    assert_equal @employee.role, 'contributor'
   end
 end
  
