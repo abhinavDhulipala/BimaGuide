@@ -29,13 +29,12 @@ class Employee < ApplicationRecord
   end
 
   def role
-    config = Config.take
     # anyone with privileges admin priviliges and above
-    return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
-    return 'member' if jobs.count >= config.min_jobs and
-      contributions.count >= config.min_contributions and
-      latest_contribution_date >= config.latest_contribution.months.ago and
-      latest_job_date >= config.latest_job.months.ago     
+    return self.role if Employee.roles[self[:role]] >= Employee.roles.admin
+    return 'member' if jobs.count >= Config.min_jobs.value and
+      contributions.count >= Config.min_contributions.value and
+      latest_contribution_date >= Config.latest_contribution.value.months.ago and
+      latest_job_date >= Config.latest_job.value.months.ago     
     'contributor'
   end
 

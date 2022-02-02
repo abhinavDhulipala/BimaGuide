@@ -7,39 +7,45 @@ class Config < ApplicationRecord
   MIN_CONTRIBUTIONS = 19
   LATEST_CONTIRBUTION = 4
   
-  # rate limit on contributions 
+  # Maximum USD value of a single contribution
   MAX_CONTRIBUTION_AMOUNT = 40
   # ~weekly
   MAX_CONTRIBUTION_FREQUENCY = 1
 
+  enum units: %i[amount seconds minutes days months years]
 
-  # Singleton for global configs
-  validate ->{errors.add(:base, 'record already exists') if Config.count > 0}, on: :create
-  validates_numericality_of :min_contributions, 
-    :min_jobs, 
-    :latest_job, 
-    :latest_contribution, 
-    :max_contribution_amount,
-    :max_contribution_freq,
-    only_integer: true, min: 0
-
-  # Override class single access
-  def self.take 
-  
-    return create(min_jobs: MIN_JOBS, 
-      latest_job: LATEST_CONTIRBUTION,
-      latest_contribution: LATEST_CONTIRBUTION, 
-      min_contributions: MIN_CONTRIBUTIONS,
-      max_contribution_amount: MAX_CONTRIBUTION_AMOUNT,
-      max_contribution_freq: MAX_CONTRIBUTION_FREQUENCY) unless exists?
-    super
+  def fetch
+    if units != :amount
+      value.send(units)
+    end
+    value
   end
 
-  def self.first 
-    take
+  def self.latest_job
+    find_by(conf: :latest_job) or create(conf: :latest_job, value: LATEST_JOB, units: :months)
   end
 
-  def self.last
-    take
+  def self.min_jobs
+    find_by(conf: :min_jobs) or create(conf: :min_jobs, value: MIN_JOBS, units: :amount)
   end
+
+  def self.min_contributions
+    find_by(conf: :min_contributions) or create(conf: :min_contributions, value: MIN_CONTRIBUTIONS, units: :amount)
+  end
+
+  def self.latest_contributions
+    find_by(conf: :latest_contributions) or create(conf: :latest_contributions, value: LATEST_CONTRIBUTIONS, units: :months)
+  end
+
+  def self.max_contribution_amount
+    config = find_by(conf: :max_contribution_amount) ||
+    create(conf: :max_contribution_amount, value: MAX_CONTRIBUTION_AMOUNT, units: :amount)
+    config.value
+  end 
+
+  def self.max_contribution_frequency
+    config = find_by(conf: :max_contribution_frequency) ||
+     create(conf: :max_contribution_frequency, value: MAX_CONTRIBUTION_FREQUENCY, units: :months)
+    config.value.send(config.units)
+  end 
 end

@@ -2,14 +2,14 @@
 
 one:
   date_completed: <%= 8.days.ago %>
-  duration: 6
+  date_started: <%= 10.days.ago %>
   total_pay: 70
   role: guide
   employee: default
 
 two:
   date_completed: <%= 20.days.ago %>
-  duration: 2
+  date_started: <%= 25.days.ago %>
   total_pay: 30.5
   role: porter
   employee: default

@@ -6,4 +6,5 @@
       <%= button_to 'Delete job', employee_job_path(@job), class: 'btn btn-danger', method: :delete %>
     </div>
     <%= render 'form', job: @job %>
+    <%= link_to 'Back', employee_jobs_path(current_employee) %>
 </div>

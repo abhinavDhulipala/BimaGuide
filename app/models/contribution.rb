@@ -1,7 +1,7 @@
 class Contribution < ApplicationRecord
     belongs_to :employee
-    validates_numericality_of :amount, less_than: Config.take.max_contribution_amount, 
-        message: "can only input a number less than #{Config.take.max_contribution_amount}. inputed %{value}"
+    validates_numericality_of :amount, less_than: Config.max_contribution_amount, 
+        message: "can only input a number less than #{Config.max_contribution_amount}. inputed %{value}"
     validate :no_recent_contribution
     validate :max_contrib_amount
     validates_uniqueness_of :id
@@ -9,8 +9,8 @@ class Contribution < ApplicationRecord
     private
 
     def no_recent_contribution
-      config = Config.take
-      limit = config.max_contribution_freq.weeks.ago
+      
+      limit = Config.max_contribution_freq.ago
       curr_date = Employee.find(employee_id).latest_contribution_date || 200.years.ago
       if curr_date > limit
         errors.add :created_at, "can contribute again in #{Time.at(curr_date - limit).strftime("%d days %H:%M:%S")}"
