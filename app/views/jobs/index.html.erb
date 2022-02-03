@@ -10,8 +10,8 @@
       <thead>
         <tr>
           <th>Role</th>
-          <th>Duration</th>
           <th>Total Pay</th>
+          <th>Date Started</th>
           <th>Date Completed</th>
           <th>Edit</th>
         </tr>
@@ -21,8 +21,8 @@
         <% @jobs.each do |job| %>
           <tr>
             <td><%= job.role.humanize %></td>
-            <td><%= pluralize(job.duration, 'day') %></td>
             <td>$<%= job.total_pay %></td>
+            <td><%= job.date_started.strftime('%c') %></td>
             <td><%= job.date_completed.strftime('%c') %></td>
             <td><%= button_to 'Edit Job', edit_employee_job_path(current_employee, job), class: 'btn btn-primary', method: :get %></td>
           </tr>

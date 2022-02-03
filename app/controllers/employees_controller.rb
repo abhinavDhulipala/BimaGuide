@@ -2,8 +2,6 @@ class EmployeesController < ApplicationController
   before_action :set_employee, except: %i[index ]
   before_action :authenticate_employee!, except: %i[ index ]
 
-  @display_notifications = true
-
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
@@ -16,11 +14,6 @@ class EmployeesController < ApplicationController
   # DELETE /employees/1 or /employees/1.json
   def destroy
     @employee.destroy
-  end
-
-  def dismiss_notifications 
-    @display_notifications = false
-    redirect_to employee_path(@employee)
   end
 
   def about; end

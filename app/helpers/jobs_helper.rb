@@ -8,4 +8,8 @@ module JobsHelper
      employee_job_path current_employee, job
    end
  end
+
+ def job_duration job
+    (job.date_completed.to_date - job.date_started.to_date).to_i
+ end
 end

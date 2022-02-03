@@ -5,6 +5,10 @@
       <h1>Edit Job</h1>
       <%= button_to 'Delete job', employee_job_path(@job), class: 'btn btn-danger', method: :delete %>
     </div>
+    <div> 
+      <%= label_tag :duration, 'Duration (days)' %>
+      <%= number_field_tag :duration, job_duration(@job), class: 'form-control', disabled: true %>
+    </div>
     <%= render 'form', job: @job %>
     <%= link_to 'Back', employee_jobs_path(current_employee) %>
 </div>

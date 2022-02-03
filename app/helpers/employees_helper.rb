@@ -11,4 +11,9 @@ module EmployeesHelper
     def occupation_dropdown 
      all_occupations.map {|e| [e.humanize, e]}
     end
+
+    def view_contribution contribution
+      return 'no contributions made' if contribution < 199.years.ago
+      Time.at(contribution).strftime('%b%e, %C at %k:%M %p')
+    end
 end

@@ -73,7 +73,7 @@
                 <br>
                 <div class="col-md-12">
                 <%= label_tag :latest_contribution, 'latest contribution', class: 'labels' %>
-                <%= text_field_tag :latest_contribution, employee.latest_contribution_date || 'No contributions yet!', class: 'form-control', disabled: true %>
+                <%= text_field_tag :latest_contribution, view_contribution(employee.latest_contribution_date), class: 'form-control', disabled: true %>
                 </div>
                 <div class="col-md-12">
                 <%= label_tag :role, 'Role', class: 'labels' %>

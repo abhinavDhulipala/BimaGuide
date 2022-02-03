@@ -9,8 +9,7 @@ class JobsController < ApplicationController
   end
 
   # GET /jobs/1
-  def show
-  end
+  def show; end
 
   # GET /jobs/new
   def new
@@ -18,14 +17,13 @@ class JobsController < ApplicationController
   end
 
   # GET /jobs/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /jobs or /jobs.json
   def create
     @job = current_employee.jobs.create(job_params)
 
-    if @job.valid?
+    if @job.persisted?
       redirect_to employee_jobs_url, notice: "Job was successfully created."
     else
       render :new, status: :unprocessable_entity
@@ -58,6 +56,6 @@ class JobsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def job_params
-      params.require(:job).permit(%i[duration total_pay role date_completed document])    
+      params.require(:job).permit %i[total_pay role date_completed date_started document]
     end
 end

@@ -15,10 +15,11 @@ class Config < ApplicationRecord
   enum units: %i[amount seconds minutes days months years]
 
   def fetch
-    if units != :amount
+    if units == 'amount'
+      value
+    else
       value.send(units)
     end
-    value
   end
 
   def self.latest_job
@@ -38,14 +39,12 @@ class Config < ApplicationRecord
   end
 
   def self.max_contribution_amount
-    config = find_by(conf: :max_contribution_amount) ||
-    create(conf: :max_contribution_amount, value: MAX_CONTRIBUTION_AMOUNT, units: :amount)
-    config.value
+    find_by(conf: :max_contribution_amount) or
+      create(conf: :max_contribution_amount, value: MAX_CONTRIBUTION_AMOUNT, units: :amount)
   end 
 
   def self.max_contribution_frequency
-    config = find_by(conf: :max_contribution_frequency) ||
+    find_by(conf: :max_contribution_frequency) or
      create(conf: :max_contribution_frequency, value: MAX_CONTRIBUTION_FREQUENCY, units: :months)
-    config.value.send(config.units)
   end 
 end

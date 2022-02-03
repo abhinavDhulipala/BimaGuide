@@ -30,7 +30,7 @@ class Employee < ApplicationRecord
 
   def role
     # anyone with privileges admin priviliges and above
-    return self.role if Employee.roles[self[:role]] >= Employee.roles.admin
+    return self.role if Employee.roles[self[:role]] >= Employee.roles[:admin]
     return 'member' if jobs.count >= Config.min_jobs.value and
       contributions.count >= Config.min_contributions.value and
       latest_contribution_date >= Config.latest_contribution.value.months.ago and
