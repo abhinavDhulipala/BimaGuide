@@ -1,4 +1,3 @@
-<%= render 'layouts/navbar' %>
 
 <div class="container">
     <div class="d-flex flex-row justify-content-between">
@@ -7,7 +6,7 @@
     </div>
     <div> 
       <%= label_tag :duration, 'Duration (days)' %>
-      <%= number_field_tag :duration, job_duration(@job), class: 'form-control', disabled: true %>
+      <%= text_field_tag :duration, distance_of_time_in_words(@job.date_started, @job.date_completed), class: 'form-control', disabled: true %>
     </div>
     <%= render 'form', job: @job %>
     <%= link_to 'Back', employee_jobs_path(current_employee) %>

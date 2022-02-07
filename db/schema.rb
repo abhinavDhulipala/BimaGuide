@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_28_032227) do
+ActiveRecord::Schema.define(version: 2022_02_03_003524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,16 @@ ActiveRecord::Schema.define(version: 2022_01_28_032227) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "employee_id"
     t.index ["employee_id"], name: "index_contributions_on_employee_id"
+  end
+
+  create_table "elections", force: :cascade do |t|
+    t.boolean "active"
+    t.integer "election_type"
+    t.datetime "ends_at"
+    t.integer "winner"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["winner"], name: "index_elections_on_winner"
   end
 
   create_table "employees", force: :cascade do |t|
@@ -166,10 +176,22 @@ ActiveRecord::Schema.define(version: 2022_01_28_032227) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "votes", force: :cascade do |t|
+    t.bigint "election_id", null: false
+    t.integer "voter", null: false
+    t.integer "candidate", null: false
+    t.datetime "created_at"
+    t.index ["election_id"], name: "index_votes_on_election_id"
+    t.index ["voter", "election_id"], name: "index_votes_on_voter_and_election_id", unique: true
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "pay_charges", "pay_customers", column: "customer_id"
   add_foreign_key "pay_charges", "pay_subscriptions", column: "subscription_id"
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
+  add_foreign_key "votes", "elections"
+  add_foreign_key "votes", "elections", column: "candidate"
+  add_foreign_key "votes", "elections", column: "voter"
 end

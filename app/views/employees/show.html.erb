@@ -1,8 +1,3 @@
-<%= render 'layouts/navbar' %>
-
-<% if @display %>
-    <%= render :additional_info_notifs, employee: @employee %>
-<% end %>
 
 <%= render 'profile', employee: @employee, edit_enabled: false,
  path: edit_employee_registration_path(@employee), method: :get %>
