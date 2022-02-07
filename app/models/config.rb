@@ -17,7 +17,7 @@ class Config < ApplicationRecord
   enum units: %i[amount seconds minutes days weeks months years]
 
   def fetch
-    if units == 'amount'
+    if amount?
       value
     else
       value.send(units)

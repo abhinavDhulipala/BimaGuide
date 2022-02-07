@@ -4,4 +4,12 @@ default:
   email: "rico.suave@gmail.com"
   encrypted_password: <%= encrypted_password %>
   occupation: <%= Employee.occupations['porter'] %>
-  role: <%= Employee.roles['contributor'] %>
+  role: <%= Employee.roles['member'] %>
+
+candidate:
+  first_name: green
+  last_name: beans
+  email: "green.beans@gmail.com"
+  encrypted_password: <%= encrypted_password %>
+  occupation: <%= Employee.occupations['guide'] %>
+  role: <%= Employee.roles['member'] %>

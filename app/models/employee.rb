@@ -38,11 +38,6 @@ class Employee < ApplicationRecord
     'contributor'
   end
 
-  # filter for privileged views of all employees
-  def view_all_employees filters, orders
-      
-  end
-
   def unintialized_attrs 
     # address2 not included as it is not always required
     attributes.select {|k, v| v.nil? and Employee::ADDITIONAL_INFO.include? k}.keys
@@ -57,10 +52,8 @@ class Employee < ApplicationRecord
     name
   end
 
-  private
-
   def privileged?
-    role != 'contributor'
+    self[role] >= Employee.roles['member']
   end
   
 end
