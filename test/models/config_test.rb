@@ -14,4 +14,11 @@ class ConfigTest < ActiveSupport::TestCase
     config.update value: 1
     assert_equal config.fetch, 1.month
   end
+
+  test 'latest contribution' do
+    config = Config.latest_contribution
+    assert_equal config.fetch, Config::LATEST_CONTRIBUTION.month
+    config.update value: 1
+    assert_equal config.fetch, 1.month
+  end
 end

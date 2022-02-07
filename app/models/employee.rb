@@ -29,16 +29,16 @@ class Employee < ApplicationRecord
   end
 
   def role
-    # anyone with privileges admin priviliges and above
-    return self.role if Employee.roles[self[:role]] >= Employee.roles[:admin]
-    return 'member' if jobs.count >= Config.min_jobs.value and
-      contributions.count >= Config.min_contributions.value and
-      latest_contribution_date >= Config.latest_contribution.value.months.ago and
-      latest_job_date >= Config.latest_job.value.months.ago     
+    # anyone with privileges admin privileges and above
+    return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
+    return 'member' if jobs.count >= Config.min_jobs.fetch and
+      contributions.count >= Config.min_contributions.fetch and
+      latest_contribution_date >= Config.latest_contribution.fetch.ago and
+      latest_job_date >= Config.latest_job.fetch.ago
     'contributor'
   end
 
-  # filter for privilieged views of all employees
+  # filter for privileged views of all employees
   def view_all_employees filters, orders
       
   end
@@ -59,7 +59,7 @@ class Employee < ApplicationRecord
 
   private
 
-  def is_privledged?
+  def privileged?
     role != 'contributor'
   end
   

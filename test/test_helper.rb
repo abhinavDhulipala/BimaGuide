@@ -3,6 +3,7 @@ require_relative "../config/environment"
 require "rails/test_help"
 require 'faker'
 require 'helpers/fixture_file_helpers.rb'
+require 'minitest/spec'
 ActiveRecord::FixtureSet.context_class.send :include, FixtureFileHelpers
 
 

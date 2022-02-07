@@ -5,14 +5,16 @@ class Config < ApplicationRecord
   LATEST_JOB = 12
   MIN_JOBS = 4
   MIN_CONTRIBUTIONS = 19
-  LATEST_CONTIRBUTION = 4
+  LATEST_CONTRIBUTION = 4
   
   # Maximum USD value of a single contribution
   MAX_CONTRIBUTION_AMOUNT = 40
   # ~weekly
   MAX_CONTRIBUTION_FREQUENCY = 1
 
-  enum units: %i[amount seconds minutes days months years]
+  validates_presence_of :conf, :value, :units
+
+  enum units: %i[amount seconds minutes days weeks months years]
 
   def fetch
     if units == 'amount'
@@ -23,28 +25,26 @@ class Config < ApplicationRecord
   end
 
   def self.latest_job
-    find_by(conf: :latest_job) or create(conf: :latest_job, value: LATEST_JOB, units: :months)
+    create_with(value: LATEST_JOB, units: :months).find_or_create_by(conf: :latest_job)
   end
 
   def self.min_jobs
-    find_by(conf: :min_jobs) or create(conf: :min_jobs, value: MIN_JOBS, units: :amount)
+    create_with(value: MIN_JOBS, units: :amount).find_or_create_by(conf: :min_jobs)
   end
 
   def self.min_contributions
-    find_by(conf: :min_contributions) or create(conf: :min_contributions, value: MIN_CONTRIBUTIONS, units: :amount)
+    create_with(value: MIN_CONTRIBUTIONS, units: :amount).find_or_create_by(conf: :min_contributions)
   end
 
-  def self.latest_contributions
-    find_by(conf: :latest_contributions) or create(conf: :latest_contributions, value: LATEST_CONTRIBUTIONS, units: :months)
+  def self.latest_contribution
+    create_with(value: LATEST_CONTRIBUTION, units: :months).find_or_create_by(conf: :latest_contribution)
   end
 
   def self.max_contribution_amount
-    find_by(conf: :max_contribution_amount) or
-      create(conf: :max_contribution_amount, value: MAX_CONTRIBUTION_AMOUNT, units: :amount)
+    create_with(value: MAX_CONTRIBUTION_AMOUNT, units: :amount).find_or_create_by(conf: :max_contribution_amount)
   end 
 
   def self.max_contribution_frequency
-    find_by(conf: :max_contribution_frequency) or
-     create(conf: :max_contribution_frequency, value: MAX_CONTRIBUTION_FREQUENCY, units: :months)
+    create_with(value: MAX_CONTRIBUTION_FREQUENCY, units: :months).find_or_create_by(conf: :max_contribution_frequency)
   end 
 end
