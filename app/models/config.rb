@@ -11,10 +11,12 @@ class Config < ApplicationRecord
   MAX_CONTRIBUTION_AMOUNT = 40
   # ~weekly
   MAX_CONTRIBUTION_FREQUENCY = 1
+  ADMIN_TERM = 3
+  ELECTION_LENGTH = 1
 
   validates_presence_of :conf, :value, :units
 
-  enum units: %i[amount seconds minutes days weeks months years]
+  enum units: %i[amount days weeks months years]
 
   def fetch
     if amount?
@@ -46,5 +48,13 @@ class Config < ApplicationRecord
 
   def self.max_contribution_frequency
     create_with(value: MAX_CONTRIBUTION_FREQUENCY, units: :months).find_or_create_by(conf: :max_contribution_frequency)
-  end 
+  end
+
+  def self.admin_term
+    create_with(value: ADMIN_TERM, units: :months).find_or_create_by(conf: :admin_term)
+  end
+
+  def self.election_length
+      create_with(value: ELECTION_LENGTH, units: :weeks).find_or_create_by(conf: :election_length)
+  end
 end

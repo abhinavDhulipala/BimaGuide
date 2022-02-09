@@ -4,6 +4,7 @@ require "rails/test_help"
 require 'faker'
 require 'helpers/fixture_file_helpers.rb'
 require 'minitest/spec'
+require 'minitest/mock'
 ActiveRecord::FixtureSet.context_class.send :include, FixtureFileHelpers
 
 

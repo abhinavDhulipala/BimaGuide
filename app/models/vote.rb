@@ -13,7 +13,6 @@ class Vote < ApplicationRecord
   end
 
   def vote_within_deadline
-    Election.poll_close_elections
     errors.add(:election_id, 'election has ended') unless election.active
   end
 

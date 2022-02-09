@@ -6,6 +6,11 @@ one:
   ends_at: 2022-02-02 16:25:27
 
 two:
-  active: false
+  active: true
   election_type: 1
   ends_at: 2022-02-02 16:25:27
+
+stale_admin:
+  active: false
+  election_type: 0
+  ends_at: <%= 1.year.ago %>
