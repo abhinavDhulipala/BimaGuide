@@ -12,7 +12,9 @@ class Election < ApplicationRecord
     def close_election
         return nil unless active?
         update!(active: false)
-        winner.update(role: 'admin')
+        # winner can be none if no one votes. Maybe we should make this an error.
+        # current behavior will result in a carry over of the previous admin
+        winner&.update(role: 'admin')
     end
 
     def winner
@@ -23,7 +25,9 @@ class Election < ApplicationRecord
 
     def self.current_admin
         # admins are only valid if they've been elected within 3 months
-        admin_elect.where(active: false).where(ends_at: Config.admin_term.fetch.ago..).order(:ends_at).last
+        latest_admin_elect = admin_elect.where(active: false).order(:ends_at).last
+        return nil unless latest_admin_elect.present?
+        latest_admin_elect.winner
     end
 
     def self.admin_elect_exists?
@@ -36,7 +40,7 @@ class Election < ApplicationRecord
         end
         elect = create!(election_type: :admin_elect, active: true, ends_at: Config.election_length.fetch.since)
         # add a buffer for queue timing
-        ElectionCloseJob.set(wait: Config.election_length.fetch + 1.minute).perform_later(elect)
+        ElectionCloseJob.set(wait_until: Config.election_length.fetch.since + 1.minute).perform_later(elect)
         elect
     end
 

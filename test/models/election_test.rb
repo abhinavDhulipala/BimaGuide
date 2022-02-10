@@ -16,30 +16,32 @@ class ElectionTest < ActiveSupport::TestCase
   test 'election happy path' do
     refute Election.admin_elect_exists?
     election = Election.start_admin_election
-    mock_vote election
+    ElectionTest.mock_vote election
     election.close_election
     assert_equal election.winner, Employee.order(:id)[6]
     assert_predicate election.winner, :admin?
     assert Election.admin_elect_exists?
   end
 
-  test 'election time triggered end' do
-    election = nil
-    assert_enqueued_with(job: ElectionCloseJob, at: Config.election_length.fetch + 1.minute) do
-      election = Election.start_admin_election
-    end
+  test 'correct calculation of winners' do
+    election = Election.start_admin_election
+    mocked_winner = ElectionTest.mock_vote election
+    election.close_election
+    assert_equal election.winner, mocked_winner
+  end
 
-    ElectionTest.mock_vote election
-    travel_to Config.admin_term.fetch.since + 1.day
-    puts DateTime.current
-    refute_predicate election, :active?
+  test 'winner is nil with no votes' do
+    election = Election.start_admin_election
+    election.close_election
+    assert_nil election.winner
   end
 
   def self.mock_vote(election)
     employees = Employee.order(:id)
-    candidate1, candidate2, candidate3 = employees[6].id, employees[4].id, employees[2].id
-    employees[0..5].each {|emp| election.votes.create!(voter: emp.id, candidate: candidate1)}
+    winner, candidate2, candidate3 = employees[6].id, employees[4].id, employees[2].id
+    employees[0..5].each {|emp| election.votes.create!(voter: emp.id, candidate: winner)}
     employees[6..8].each {|emp| election.votes.create!(voter: emp.id, candidate: candidate2)}
     employees[9..10].each {|emp| election.votes.create!(voter: emp.id, candidate: candidate3)}
+    employees.find(winner)
   end
   end
