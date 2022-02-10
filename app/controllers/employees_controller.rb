@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, except: %i[index ]
+  before_action :set_employee, except: %i[index show_admin]
   before_action :authenticate_employee!, except: %i[ index ]
 
   # GET /employees or /employees.json
@@ -16,7 +16,13 @@ class EmployeesController < ApplicationController
     @employee.destroy
   end
 
-  def about; end
+  def show_admin
+    if Election.admin_elect_exists?
+      @employee = Election.current_admin
+    else
+      flash[:info] = 'there currently is no admin, this means they have either been vetoed or an election is ongoing'
+    end
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

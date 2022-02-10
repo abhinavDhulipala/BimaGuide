@@ -4,7 +4,8 @@ Rails.application.routes.draw do
   resources :employees do 
     resources :contributions
     resources :jobs
-
+    
+    get 'show_admin', to: 'employees#show_admin'
     post '/dismiss_notifications', to: 'employees#dismiss_notifications'
   end
 

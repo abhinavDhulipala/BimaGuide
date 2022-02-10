@@ -1,9 +1,9 @@
 class Election < ApplicationRecord
     has_many :votes
-    enum election_type: %w[admin_elect claim_elect], _default: 'admin_elect'
     validates_presence_of :election_type, :active, :ends_at, on: :create
     validate :no_duplicate_admin_election, on: :create
     #after_create :close_election, if: votes.count == Employee.all.filter{|e| e.privileged?}.count
+    enum election_type: %w[admin_elect claim_elect], _default: 'admin_elect'
 
     def self.active_elections
         where(active: true)
