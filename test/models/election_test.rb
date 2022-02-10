@@ -36,6 +36,12 @@ class ElectionTest < ActiveSupport::TestCase
     assert_nil election.winner
   end
 
+  test 'no duplicate elections' do
+    assert_difference('Election.count', 1) do
+      2.times { Election.start_admin_election }
+    end
+  end
+
   def self.mock_vote(election)
     employees = Employee.order(:id)
     winner, candidate2, candidate3 = employees[6].id, employees[4].id, employees[2].id

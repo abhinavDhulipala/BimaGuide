@@ -21,7 +21,7 @@ class ElectionStartJobTest < ActiveJob::TestCase
 
   test 'election starts with proper triggers, previous admin does not exist' do
     freeze_time
-    assert_enqueued_with(job: ElectionCloseJob) do
+    assert_enqueued_with(job: ElectionCloseJob, at: Config.election_length.fetch.since) do
       election = Election.start_admin_election
       assert_predicate election, :active?
       assert_equal election.ends_at, Config.election_length.fetch.since

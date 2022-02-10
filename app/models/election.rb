@@ -2,7 +2,7 @@ class Election < ApplicationRecord
     has_many :votes
     enum election_type: %w[admin_elect claim_elect], _default: 'admin_elect'
     validates_presence_of :election_type, :active, :ends_at, on: :create
-    before_create :no_duplicate_admin_election
+    validate :no_duplicate_admin_election, on: :create
     #after_create :close_election, if: votes.count == Employee.all.filter{|e| e.privileged?}.count
 
     def self.active_elections
@@ -35,19 +35,19 @@ class Election < ApplicationRecord
     end
 
     def self.start_admin_election
+        elect = create(election_type: :admin_elect, active: true, ends_at: Config.election_length.fetch.since)
+        return nil unless elect.persisted?
         if admin_elect_exists?
             current_admin.update(role: 'member')
         end
-        elect = create!(election_type: :admin_elect, active: true, ends_at: Config.election_length.fetch.since)
-        # add a buffer for queue timing
-        ElectionCloseJob.set(wait_until: Config.election_length.fetch.since + 1.minute).perform_later(elect)
+        ElectionCloseJob.set(wait_until: elect.ends_at).perform_later(elect)
         elect
     end
 
     private
 
     def no_duplicate_admin_election
-        if admin_elect? && Election.admin_elect_exists?
+        if Election.admin_elect.active_elections.exists?
             errors.add(:election_type, 'cannot have two admin elections at the same time')
         end
     end
