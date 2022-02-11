@@ -30,6 +30,10 @@ class Election < ApplicationRecord
         latest_admin_elect.winner
     end
 
+    def self.previous_terms(employee)
+        admin_elect.where(active: false).filter {|e| e.winner === employee}.count
+    end
+
     def self.admin_elect_exists?
         current_admin.present?
     end

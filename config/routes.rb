@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :elections
   resources :donation_services
   devise_for :employees, controllers: {registrations: 'employees/registrations'}
   resources :employees do 

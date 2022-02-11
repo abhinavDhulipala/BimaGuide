@@ -19,6 +19,7 @@ class EmployeesController < ApplicationController
   def show_admin
     if Election.admin_elect_exists?
       @employee = Election.current_admin
+      @previous_terms = Election.previous_terms(@employee)
     else
       flash[:info] = 'there currently is no admin, this means they have either been vetoed or an election is ongoing'
     end
