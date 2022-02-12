@@ -1,22 +1,37 @@
 require "test_helper"
 
 class ElectionStartJobTest < ActiveJob::TestCase
-  test 'election start happy' do
-    Election.stub(:start_admin_election, nil) { ElectionStartJob.perform_now }
+
+  test 'happy; fire election after previous election' do
+    Election.create!(active: false, ends_at: Config.admin_term.fetch.ago - Config.election_length.fetch,
+                     election_type: :admin_elect)
+    assert_difference 'Election.count', 1 do
+      ElectionStartJob.perform_now
+    end
   end
+
   test 'fire with no admin; first time election' do
     Election.destroy_all
-    Election.stub(:start_admin_election, nil) do
+    assert_difference 'Election.count', 1 do
+      ElectionStartJob.perform_now
+    end
+    assert_enqueued_jobs 1
+  end
+
+  test "don't fire with recently created election" do
+    Election.start_admin_election
+    assert_no_difference 'Election.count' do
       ElectionStartJob.perform_now
     end
   end
 
   test 'assert error when trying to start an election too close to another' do
     Election.admin_elect.last.update!(ends_at: 1.day.ago)
-    # election
-    assert_enqueued_jobs 0
-    Election.stub(:start_admin_election, nil) { ElectionStartJob.perform_now }
-    assert_enqueued_jobs 0
+
+    # start admin election is never called
+    assert_no_difference 'Election.count' do
+      ElectionStartJob.perform_now
+    end
   end
 
   test 'election starts with proper triggers, previous admin does not exist' do

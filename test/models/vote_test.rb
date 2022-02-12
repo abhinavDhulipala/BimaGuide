@@ -1,8 +1,6 @@
 require "test_helper"
 
 class VoteTest < ActiveSupport::TestCase
-  include ActiveJob::TestHelper
-
   setup do
     @employee = employees(:default)
     @employee.update!(role: 'admin')

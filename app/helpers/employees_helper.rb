@@ -20,6 +20,7 @@ module EmployeesHelper
     end
 
     def view_contribution(contribution)
+      # contributions are default set
       return 'no contributions made' if contribution < 199.years.ago
       Time.at(contribution).strftime('%b%e, %C at %k:%M %p')
     end
