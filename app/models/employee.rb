@@ -48,12 +48,13 @@ class Employee < ApplicationRecord
     "#{first_name.humanize} #{last_name.humanize}"
   end
 
-  def pay_customer_name
+  def pa
+    y_customer_name
     name
   end
 
   def privileged?
-    self[role] >= Employee.roles['member']
+    Employee.roles[role] >= Employee.roles['member']
   end
   
 end
