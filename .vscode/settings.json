@@ -1,9 +1,0 @@
-{
-    "workbench.editor.autoLockGroups": {
-        "interactive": true,
-        "jsProfileVisualizer.cpuprofile.table": true
-    },
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "html.autoClosingTags": true
-}
