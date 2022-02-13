@@ -43,3 +43,4 @@ end
 # possibly use insert all to avoid validation errors:
 # https://api.rubyonrails.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-insert_all
 Employee.create!(employees)
+

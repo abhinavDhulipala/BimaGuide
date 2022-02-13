@@ -60,4 +60,4 @@ class ElectionTest < ActiveSupport::TestCase
     employees[9..10].each {|emp| election.votes.create!(voter: emp.id, candidate: candidate3)}
     employees.find(winner)
   end
-  end
+end
