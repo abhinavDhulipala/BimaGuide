@@ -1,8 +1,6 @@
 <div class="container rounded bg-light text-dark mt-5 mb-5">
   <div class="d-flex justify-content-between">
     <h3>Elections</h3>
-    <%= select_tag 'Filters', multiple: true, include_blank: 'None',
-    prompt: 'Select certain to filters to apply'%>
   </div>
   <% if @elections.present? %>
     <table class="table table-striped table-hover">
@@ -17,7 +15,7 @@
       <tbody>
         <% @elections.each do |election| %>
           <tr class="<%= highlight_row(election) %>">
-            <td><%= election.ends_at %></td>
+            <td><%= display_time(election.ends_at) %></td>
             <td><%= election.active? %></td>
             <td><%= election.election_type.humanize %></td>
             <td><%= button_to 'Show', employee_election_path(current_employee, election), method: :get,
