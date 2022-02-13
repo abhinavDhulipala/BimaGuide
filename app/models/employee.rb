@@ -38,7 +38,7 @@ class Employee < ApplicationRecord
       update(role: 'member')
       return 'member'
     end
-    update('contributor')
+    update(role: 'contributor')
     'contributor'
   end
 
@@ -52,8 +52,7 @@ class Employee < ApplicationRecord
     "#{first_name.humanize} #{last_name.humanize}"
   end
 
-  def pa
-    y_customer_name
+  def pay_customer_name
     name
   end
 
