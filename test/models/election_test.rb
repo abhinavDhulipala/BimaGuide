@@ -42,6 +42,16 @@ class ElectionTest < ActiveSupport::TestCase
     end
   end
 
+  test 'voted?' do
+    election = Election.start_admin_election
+    voter, candidate = Employee.all.sample(2)
+    # give permission to vote
+    voter.update!(role: :admin)
+    refute election.voted?(voter)
+    election.votes.create!(voter: voter.id, candidate: candidate.id)
+    assert election.voted?(voter)
+  end
+
   def self.mock_vote(election)
     employees = Employee.order(:id)
     winner, candidate2, candidate3 = employees[6].id, employees[4].id, employees[2].id

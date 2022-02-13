@@ -22,7 +22,6 @@ class JobsController < ApplicationController
   # POST /jobs or /jobs.json
   def create
     @job = current_employee.jobs.create(job_params)
-
     if @job.persisted?
       redirect_to employee_jobs_url, notice: "Job was successfully created."
     else
@@ -32,7 +31,6 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
-
       if @job.update(job_params)
         redirect_to employee_jobs_path(current_employee), notice: "Job was successfully updated." 
       else

@@ -1,17 +1,19 @@
 Rails.application.routes.draw do
-  resources :elections
   resources :donation_services
   devise_for :employees, controllers: {registrations: 'employees/registrations'}
   resources :employees do 
     resources :contributions
     resources :jobs
-    
+    resources :elections do
+      post 'vote', to: 'elections#vote'
+    end
+ 
     get 'show_admin', to: 'employees#show_admin'
-    post '/dismiss_notifications', to: 'employees#dismiss_notifications'
+    post 'dismiss_notifications', to: 'employees#dismiss_notifications'
   end
 
   # static pages
-  get '/about', to: 'static_pages#about'
+  get 'about', to: 'static_pages#about'
 
-  root to: redirect('/about')
+  root to: redirect('about')
 end

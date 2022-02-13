@@ -2,7 +2,6 @@ class Election < ApplicationRecord
     has_many :votes
     validates_presence_of :election_type, :ends_at, on: :create
     validate :no_duplicate_admin_election, on: :create
-    #after_create :close_election, if: votes.count == Employee.all.filter{|e| e.privileged?}.count
     enum election_type: %w[admin_elect claim_elect], _default: 'admin_elect'
 
     def self.active_elections
@@ -15,6 +14,18 @@ class Election < ApplicationRecord
         # winner can be none if no one votes. Maybe we should make this an error.
         # current behavior will result in a carry over of the previous admin
         winner&.update(role: 'admin')
+    end
+
+    def vote(current_employee, candidate)
+        votes.create(voter: current_employee.id, candidate: candidate)
+    end
+
+    def voted?(employee)
+        votes.exists?(voter: employee)
+    end
+
+    def expired?
+        DateTime.current > ends_at
     end
 
     def winner
@@ -31,11 +42,15 @@ class Election < ApplicationRecord
     end
 
     def self.previous_terms(employee)
-        admin_elect.where(active: false).filter {|e| e.winner === employee}.count
+        admin_elect.where(active: false).filter {|e| e.winner == employee}.count
     end
 
     def self.admin_elect_exists?
         current_admin.present?
+    end
+
+    def self.pending_elections(employee)
+        active_elections.order(:ends_at).filter { |election| not election.voted?(employee) }
     end
 
     def self.start_admin_election

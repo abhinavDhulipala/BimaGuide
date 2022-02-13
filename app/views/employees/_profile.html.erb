@@ -59,7 +59,10 @@
                     </div>
                       <%= yield f if block_given? %>
                     </div>
-                    <%= f.submit submit_text(edit_enabled), class: 'btn btn-primary' %>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                      <%= f.submit submit_text(edit_enabled), class: 'btn btn-primary' %>
+                    </div>
               <% end %>
             </div>
         </div>
@@ -79,11 +82,19 @@
                 <div class="col-md-12">
                 <%= label_tag :role, 'Role', class: 'labels' %>
                 <%= text_field_tag :role, employee.role.to_s.humanize, class: 'form-control', disabled: true %>
+                  <br>
                 </div>
-                <%= button_to 'View Admin', employee_show_admin_path(employee),
-                              class: 'btn btn-outline-primary btn-lg btn-block',
-                              method: :get
-                %>
+                  <div class="d-flex flex-lg-row justify-content-around">
+                    <%= button_to 'View Admin Info', employee_show_admin_path(employee),
+                                  class: 'btn btn-outline-primary btn-lg btn-block',
+                                  method: :get
+                    %>
+                    <%= button_to 'View Elections', employee_elections_path(employee),
+                                  class: 'btn btn-outline-primary btn-lg btn-block',
+                                  method: :get
+                    %>
+                  </div>
+
 
 
         </div>
