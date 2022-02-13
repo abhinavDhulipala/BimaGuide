@@ -181,8 +181,10 @@ ActiveRecord::Schema.define(version: 2022_02_03_003524) do
     t.integer "voter", null: false
     t.integer "candidate", null: false
     t.datetime "created_at"
+    t.index ["candidate"], name: "index_votes_on_candidate"
     t.index ["election_id"], name: "index_votes_on_election_id"
     t.index ["voter", "election_id"], name: "index_votes_on_voter_and_election_id", unique: true
+    t.index ["voter"], name: "index_votes_on_voter"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
@@ -192,6 +194,4 @@ ActiveRecord::Schema.define(version: 2022_02_03_003524) do
   add_foreign_key "pay_payment_methods", "pay_customers", column: "customer_id"
   add_foreign_key "pay_subscriptions", "pay_customers", column: "customer_id"
   add_foreign_key "votes", "elections"
-  add_foreign_key "votes", "elections", column: "candidate"
-  add_foreign_key "votes", "elections", column: "voter"
 end

@@ -1,0 +1,16 @@
+<div class="container-md">
+  <div class="card">
+    <h5 class="card-header">Election <%= render_date(@election) %></h5>
+    <div class="card-body">
+      <h5 class="card-title">Admin Election</h5>
+      <p class="card-text">This decides who is going to view and approve claims. Make sure it is somebody you trust
+        and somebody who has the time to view claims. You will be able to view all of this admins activity through the
+        admin profile page. This admin will serve for a total
+        of <%= term_limit %> and will have control over other configuration like deciding how many contributions it
+        takes to be a member or deciding how many jobs you must complete in order to be a member.
+      </p>
+      <%= render 'votes/form', election: @election, vote: @vote %>
+      <%= link_to 'Back', employee_elections_path(current_employee) %>
+    </div>
+  </div>
+</div>

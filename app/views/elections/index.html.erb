@@ -1,0 +1,28 @@
+<div class="container rounded bg-light text-dark mt-5 mb-5">
+  <div class="d-flex justify-content-between">
+    <h3>Elections</h3>
+  </div>
+  <% if @elections.present? %>
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>End Date</th>
+          <th>Active?</th>
+          <th>Election Type</th>
+          <th>Details</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @elections.each do |election| %>
+          <tr class="<%= highlight_row(election) %>">
+            <td><%= display_time(election.ends_at) %></td>
+            <td><%= election.active? %></td>
+            <td><%= election.election_type.humanize %></td>
+            <td><%= button_to 'Show', employee_election_path(current_employee, election), method: :get,
+                              class: 'btn btn-outline-dark' %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% end %>
+</div>

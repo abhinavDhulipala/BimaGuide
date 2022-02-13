@@ -1,0 +1,16 @@
+
+<% unless @pending_elections.empty? %>
+  <div class="alert alert-warning">
+    <h6>Election Reminder</h6>
+    <p>You still need to vote in the following elections:</p>
+    <hr>
+    <ul>
+      <% @pending_elections.each do |election| %>
+        <li>
+          <%= link_to election.election_type.humanize, employee_election_path(current_employee, election) %>
+          <%= "ends at #{election.ends_at}" %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

@@ -3,7 +3,7 @@
     <h3>Contributions</h3>
     <%= button_to 'make contribution', new_employee_contribution_path, class: 'btn btn-success', method: :get %>
   </div>
-  <% if @contributions %>
+  <% if @contributions.present? %>
     <table class="table table-striped table-hover">
       <thead>
         <tr>

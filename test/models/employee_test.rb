@@ -66,4 +66,3 @@ class EmployeeTest < ActiveSupport::TestCase
     assert_equal @employee.role, 'contributor'
   end
 end
- 

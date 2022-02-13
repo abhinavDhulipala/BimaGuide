@@ -4,8 +4,14 @@
     <div class="row">
         <div class="col-md-3 border-right">
             <div class="d-flex flex-column align-items-center text-center p-3 py-5"> 
-            <img class="rounded-circle mt-5" width="150px" src="<%= employee.avatar.attached? ? employee.avatar : default_image %>"><span class="font-weight-bold"><%= employee.last_name.capitalize %>
-            </span><span class="text-black-50"><%= employee.email %></span><span></span>
+            <img class="rounded-circle mt-5" width="150px" src="<%= profile_pic(employee) %>">
+              <span class="font-weight-bold">
+                <%= employee.last_name.capitalize %>
+              </span>
+              <span class="text-black-50">
+                <%= employee.email %>
+              </span>
+              <span></span>
             </div>
 
         </div>
@@ -26,7 +32,7 @@
                     </div>
                 </div>
                 <div class="row mt-3">
-                    <div clas="col-md-12">
+                    <div class="col-md-12">
                       <%= f.label :occupation, 'Main Occupation', class: 'labels' %>
                       <% if edit_enabled %>
                         <%= f.select :occupation, occupation_dropdown, class: 'form-control' %>
@@ -51,15 +57,13 @@
                         <%= f.label :zip, 'Postcode', class: 'labels' %>
                         <%= f.text_field :zip, class: 'form-control', value: employee.zip, disabled: !edit_enabled %>
                     </div>
-                    <div class="col-md-12">
-                        <%= f.label :email, 'Email ID', class: 'labels' %>
-                        <%= f.email_field :email, class: 'form-control', value: employee.email, disabled: true %>
+                      <%= yield f if block_given? %>
                     </div>
-                <%= yield f if block_given? %>
-                </div>
-                    <% msg = edit_enabled ? 'Edit' : 'Edit Profile' %>
-                    <%= f.submit msg, class: 'btn btn-primary' %>
-                <% end %>
+                    <br>
+                    <div class="d-flex justify-content-center">
+                      <%= f.submit submit_text(edit_enabled), class: 'btn btn-primary' %>
+                    </div>
+              <% end %>
             </div>
         </div>
         <div class="col-md-4">
@@ -78,11 +82,25 @@
                 <div class="col-md-12">
                 <%= label_tag :role, 'Role', class: 'labels' %>
                 <%= text_field_tag :role, employee.role.to_s.humanize, class: 'form-control', disabled: true %>
-
+                  <br>
                 </div>
+                  <div class="d-flex flex-lg-row justify-content-around">
+                    <%= button_to 'View Admin Info', employee_show_admin_path(employee),
+                                  class: 'btn btn-outline-primary btn-lg btn-block',
+                                  method: :get
+                    %>
+                    <%= button_to 'View Elections', employee_elections_path(employee),
+                                  class: 'btn btn-outline-primary btn-lg btn-block',
+                                  method: :get
+                    %>
+                  </div>
+
+
 
         </div>
     </div>
 </div>
 </div>
 </div>
+
+<!-- credit: https://bbbootstrap.com/snippets/bootstrap-5-myprofile-90806631 -->

@@ -31,16 +31,15 @@ class Employee < ApplicationRecord
   def role
     # anyone with privileges admin privileges and above
     return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
-    return 'member' if jobs.count >= Config.min_jobs.fetch and
+    if jobs.count >= Config.min_jobs.fetch and
       contributions.count >= Config.min_contributions.fetch and
       latest_contribution_date >= Config.latest_contribution.fetch.ago and
       latest_job_date >= Config.latest_job.fetch.ago
+      update(role: 'member')
+      return 'member'
+    end
+    update('contributor')
     'contributor'
-  end
-
-  # filter for privileged views of all employees
-  def view_all_employees filters, orders
-      
   end
 
   def unintialized_attrs 
@@ -53,14 +52,13 @@ class Employee < ApplicationRecord
     "#{first_name.humanize} #{last_name.humanize}"
   end
 
-  def pay_customer_name
+  def pa
+    y_customer_name
     name
   end
 
-  private
-
   def privileged?
-    role != 'contributor'
+    Employee.roles[role] >= Employee.roles['member']
   end
   
 end
