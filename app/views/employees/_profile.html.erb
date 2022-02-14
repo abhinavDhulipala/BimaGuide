@@ -21,6 +21,17 @@
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
                 <%= form_with(model: employee, url: path, method: method) do |f| %>
+                <% if employee.errors.any? %>
+                  <div id="error_explanation" class="alert alert-danger">
+                    <h4><%= pluralize(employee.errors.count, "error") %> prohibited this employee from being edited</h4>
+                    <hr/>
+                    <ul>
+                      <% employee.errors.each do |error| %>
+                        <li><%= error.full_message %></li>
+                      <% end %>
+                    </ul>
+                  </div>
+                <% end %>
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <%= f.label :first_name, 'Name' , class: 'labels' %>

@@ -5,7 +5,7 @@ class JobsController < ApplicationController
 
   # GET /jobs or /jobs.json
   def index
-    @jobs = current_employee.jobs.order date_completed: :desc
+    @jobs = current_employee.jobs.order(date_completed: :desc)
   end
 
   # GET /jobs/1

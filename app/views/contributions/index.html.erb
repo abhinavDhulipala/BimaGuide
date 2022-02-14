@@ -18,7 +18,7 @@
           <tr>
             <td><%= contribution.amount %></td>
             <td><%= contribution.purpose %></td>
-            <td><%= contribution.created_at %></td>
+            <td><%= display_time(contribution.created_at) %></td>
           </tr>
         <% end %>
       </tbody>
