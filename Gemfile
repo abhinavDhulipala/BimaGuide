@@ -71,3 +71,5 @@ gem "image_processing", "~> 1.12"
 
 # ref: https://github.com/pay-rails/pay
 gem "pay", "~> 3.0"
+
+gem "sidekiq", "~> 6.4"
