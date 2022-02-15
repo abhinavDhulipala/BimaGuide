@@ -7,8 +7,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <%= link_to 'Home', about_path, class: 'nav-link active' %>
-	</li>
+          <%= link_to 'Home', about_path, class: 'nav-link' %>
+	      </li>
 	<% if employee_signed_in? %>
     <li class="nav-item">
       <%= link_to 'Contribute', employee_contributions_path(current_employee), class: 'nav-link' %>
@@ -17,7 +17,7 @@
       <%= link_to 'Job History', employee_jobs_path(current_employee), class: 'nav-link' %>
     </li>
     <li class="nav-item">
-      <%= link_to '' %>
+      <%= link_to 'Claims', employee_claims_path(current_employee), class: 'nav-link' %>
     </li>
     <% if show_election? %>
           <li class="nav-item alert-warning">

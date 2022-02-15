@@ -1,11 +1,13 @@
 <%= form_with(model: vote, url: employee_election_vote_path(current_employee, election)) do |form| %>
   <% if vote.errors.any? %>
-  <h2><%= pluralize(vote.errors.count, "error") %> prohibited this vote from being submitted:</h2>
-  <ul>
-    <% vote.errors.each do |error| %>
-      <li><%= error.full_message %></li>
-    <% end %>
-  </ul>
+    <div id="error_explanation" class="alert alert-danger">
+      <h5><%= pluralize(vote.errors.count, "error") %> prohibited this vote from being submitted:</h5>
+      <ul>
+        <% vote.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
   <div class="form-group">
     <%= form.label :candidate %>

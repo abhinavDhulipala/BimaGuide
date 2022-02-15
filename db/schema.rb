@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_03_003524) do
+ActiveRecord::Schema.define(version: 2022_02_14_203442) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,23 @@ ActiveRecord::Schema.define(version: 2022_02_03_003524) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "claims", force: :cascade do |t|
+    t.bigint "employee_id"
+    t.bigint "{:null=>false, :foreign_key=>true}_id"
+    t.boolean "approved", null: false
+    t.integer "amount", null: false
+    t.integer "approver_id", null: false
+    t.integer "type", null: false
+    t.text "info", null: false
+    t.datetime "occurred", null: false
+    t.boolean "edit_required"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["approver_id"], name: "index_claims_on_approver_id"
+    t.index ["employee_id"], name: "index_claims_on_employee_id"
+    t.index ["{:null=>false, :foreign_key=>true}_id"], name: "index_claims_on_{:null=>false, :foreign_key=>true}_id"
   end
 
   create_table "configs", primary_key: "conf", id: :string, force: :cascade do |t|

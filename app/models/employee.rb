@@ -5,6 +5,7 @@ class Employee < ApplicationRecord
 
   has_many :contributions
   has_many :jobs
+  has_many :claims
   has_one_attached :avatar
   enum occupation: %w[porter guide cook head_guide], _default: 'porter'
   enum role: %w[contributor member admin super_admin], _default: 'contributor'

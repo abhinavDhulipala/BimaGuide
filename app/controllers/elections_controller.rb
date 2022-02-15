@@ -4,12 +4,13 @@ class ElectionsController < ApplicationController
 
   # GET /elections or /elections.json
   def index
-    @elections = Election.order(:ends_at)
+    @elections = Election.order(ends_at: :desc)
   end
 
   # GET /elections/1 or /elections/1.json
   def show
-    @vote = @election.votes.new
+    @vote = @election.votes.find_or_initialize_by(voter: current_employee)
+    @candidate = Employee.find(@vote.candidate).name if @vote.persisted?
   end
 
   def vote

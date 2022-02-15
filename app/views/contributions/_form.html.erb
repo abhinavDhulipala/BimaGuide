@@ -1,8 +1,7 @@
 <%= form_with(model: contribution, url: employee_contributions_path(current_employee)) do |form| %>
   <% if contribution.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(contribution.errors.count, "error") %> prohibited this contribution from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
+      <h4><%= pluralize(contribution.errors.count, "error") %> prohibited this contribution from being saved:</h4>
       <ul>
         <% contribution.errors.each do |error| %>
           <li><%= error.full_message %></li>
