@@ -16,9 +16,14 @@ bundle && yarn && rails db:create db:migrate
 ```
 
 ### Setting up Redis
-Please use this quick start to install redis for locally. Redis is used to
+Please use this [quick start](https://redis.io/topics/quickstart) to install redis for locally. Redis is used to
 run the background jobs on heroku. To test locally, run
 ```bash
+# setup
+brew install redis
+brew services start redis
+
+# on every run
 redis-server
 
 # in separate terminal
