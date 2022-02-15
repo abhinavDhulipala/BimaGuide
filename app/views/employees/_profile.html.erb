@@ -80,7 +80,7 @@
         <div class="col-md-4">
             <div class="p-3 py-5">
                 <div class="d-flex justify-content-between align-items-center experience"><span>Contribution Summary</span>
-                <%= button_to 'Make new contribution', new_employee_contribution_path(employee), class: 'btn-sm btn-success', method: :get %>
+                <%= button_to 'Make New Contribution', new_employee_contribution_path(employee), class: 'btn-sm btn-success', method: :get %>
                 </div><br>
                 <div class="col-md-12">
                 <%= label_tag :total_contributions, 'total contributions', class: 'labels' %>
@@ -93,8 +93,18 @@
                 <div class="col-md-12">
                 <%= label_tag :role, 'Role', class: 'labels' %>
                 <%= text_field_tag :role, employee.role.to_s.humanize, class: 'form-control', disabled: true %>
-                  <br>
                 </div>
+                  <hr>
+                  <div class="d-flex justify-content-between align-items-center experience">
+                    <span>Claims information</span>
+                    <%= button_to 'File New Claim', new_employee_contribution_path(employee), class: 'btn-sm btn-success', method: :get %>
+                  </div>
+                  <br>
+                  <div class="col-md-12">
+                    <%= label_tag :total_claims, 'total claims filed' %>
+                    <%= text_field_tag :total_claims, employee.claims.count, class: 'form-control', disabled: true %>
+                  </div>
+                  <hr>
                   <div class="d-flex flex-lg-row justify-content-around">
                     <%= button_to 'View Admin Info', employee_show_admin_path(employee),
                                   class: 'btn btn-outline-primary btn-lg btn-block',
@@ -105,8 +115,6 @@
                                   method: :get
                     %>
                   </div>
-
-
 
         </div>
     </div>

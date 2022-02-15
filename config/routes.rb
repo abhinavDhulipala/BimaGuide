@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     resources :elections do
       post 'vote', to: 'elections#vote'
     end
+    resources :claims
  
     get 'show_admin', to: 'employees#show_admin'
     post 'dismiss_notifications', to: 'employees#dismiss_notifications'

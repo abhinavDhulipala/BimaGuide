@@ -9,7 +9,14 @@
         of <%= term_limit %> and will have control over other configuration like deciding how many contributions it
         takes to be a member or deciding how many jobs you must complete in order to be a member.
       </p>
-      <%= render 'votes/form', election: @election, vote: @vote %>
+      <% if @vote.persisted? %>
+        <div class="alert alert-success">
+          <h4 class="alert-heading">Well Done! You Voted</h4>
+          <p>You voted for <strong><%= @candidate %></strong></p>
+        </div>
+      <% else %>
+        <%= render 'votes/form', election: @election, vote: @vote %>
+      <% end %>
       <%= link_to 'Back', employee_elections_path(current_employee) %>
     </div>
   </div>
