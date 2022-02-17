@@ -6,5 +6,4 @@ Sidekiq.configure_server do |config|
   config.redis = { url: ENV.fetch('REDIS_URL'), size: 12, network_timeout: 5 }
 end
 
-Sidekiq::Extensions.enable_delay!
-
+Sidekiq::DelayExtensions.enable_delay!

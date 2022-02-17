@@ -25,7 +25,7 @@ class Election < ApplicationRecord
     end
 
     def expired?
-        DateTime.current > ends_at
+        DateTime.current > ends_at && !active?
     end
 
     def winner

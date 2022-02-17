@@ -1,7 +1,7 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  authenticate :employee, ->{|emp| emp.super_admin?} do
+  authenticate :employee, ->(emp){emp.super_admin?} do
     mount Sidekiq::Web => 'sidekiq' 
   end
   resources :donation_services

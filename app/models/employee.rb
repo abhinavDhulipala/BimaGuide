@@ -35,6 +35,7 @@ class Employee < ApplicationRecord
       contributions.count >= Config.min_contributions.fetch and
       latest_contribution_date >= Config.latest_contribution.fetch.ago and
       latest_job_date >= Config.latest_job.fetch.ago
+
       update(role: 'member')
       return 'member'
     end

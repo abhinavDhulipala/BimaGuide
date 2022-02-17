@@ -1,7 +1,8 @@
 <nav class="no-shadow navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
     <%= link_to 'BimaGuide', about_path, class: 'navbar-brand' %>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"
+      onclick="toggleCollapse()">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -16,9 +17,6 @@
     <li class="nav-item">
       <%= link_to 'Job History', employee_jobs_path(current_employee), class: 'nav-link' %>
     </li>
-    <li class="nav-item">
-      <%= link_to '' %>
-    </li>
     <% if show_election? %>
           <li class="nav-item alert-warning">
             <%= link_to 'Pending Elections', employee_elections_path(current_employee), class: 'nav-link alert-link' %>
@@ -31,7 +29,7 @@
   <% end %>
       </ul>
 
-      <div class="btn-group" role="group"> 
+      <div class="btn-group" role="group">
         <% btn_attn, btn_secondary = 'nav-link ', 'nav-link active' %>
         <% if employee_signed_in? %>
           <%= link_to 'Profile', employee_path(current_employee), class: btn_attn, method: :get %>
@@ -41,7 +39,19 @@
           <%= link_to 'Login', new_employee_session_path, class: btn_secondary %>
         <% end %>
       </div>
-      
+
     </div>
   </div>
 </nav>
+
+<script>
+  function toggleCollapse() {
+      // bootstrap data toggle not working ~ monkey patch
+      let navElem = document.getElementById("navbarSupportedContent");
+      if (navElem.className.includes("collapsed")) {
+          navElem.className = "collapse navbar-collapse";
+      } else {
+          navElem.className = "collapsed navbar-collapse";
+      }
+  }
+</script>

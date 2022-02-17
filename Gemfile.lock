@@ -198,6 +198,8 @@ GEM
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
+    sidekiq-delay_extensions (6.4.1)
+      sidekiq (>= 6.4.1)
     spring (3.0.0)
     sprockets (4.0.2)
       concurrent-ruby (~> 1.0)
@@ -260,6 +262,7 @@ DEPENDENCIES
   sass-rails (>= 6)
   selenium-webdriver
   sidekiq (~> 6.4)
+  sidekiq-delay_extensions (~> 6.4)
   spring
   stripe (~> 5.40)
   turbolinks (~> 5)

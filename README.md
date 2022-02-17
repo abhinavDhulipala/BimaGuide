@@ -25,7 +25,4 @@ brew services start redis
 
 # on every run
 redis-server
-
-# in separate terminal
-bundle exec sideqik
 ```
