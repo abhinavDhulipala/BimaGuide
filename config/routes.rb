@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     resources :jobs
     resources :elections do
       post 'vote', to: 'elections#vote'
+      patch 'vote', to: 'elections#vote'
     end
  
     get 'show_admin', to: 'employees#show_admin'

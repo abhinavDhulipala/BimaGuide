@@ -2,7 +2,7 @@
 
 <%= form_with(model: job, url: job_form_url(job)) do |form| %>
   <% if job.errors.any? %>
-    <div id="error_explanation">
+    <div id="error_explanation" class="alert alert-danger">
       <h2><%= pluralize(job.errors.count, "error") %> prohibited this job from being saved:</h2>
 
       <ul>

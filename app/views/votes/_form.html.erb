@@ -1,15 +1,28 @@
 <%= form_with(model: vote, url: employee_election_vote_path(current_employee, election)) do |form| %>
-  <% if vote.errors.any? %>
-  <h2><%= pluralize(vote.errors.count, "error") %> prohibited this vote from being submitted:</h2>
-  <ul>
-    <% vote.errors.each do |error| %>
-      <li><%= error.full_message %></li>
-    <% end %>
-  </ul>
+  <% if election.active? && vote.errors.any? %>
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(vote.errors.count, "error") %> prohibited this vote from being submitted:</h2>
+      <ul>
+        <% vote.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
   <% end %>
-  <div class="form-group">
-    <%= form.label :candidate %>
-    <%= form.collection_select(:candidate, Employee.where.not(role: :contributor), :id, :name) %>
-  </div>
-  <%= form.submit 'Vote', class: 'btn btn-primary' %>
+
+    <% if election.voted?(current_employee) %>
+      You've voted for <%= election.voted_for(current_employee).name %>
+    <% end %>
+
+  <% if election.active? %>
+    <div class="form-group">
+      <%= form.label :candidate %>
+      <%= form.collection_select :candidate, candidates, :id, :name %>
+    </div>
+    <%= form.submit 'Vote', class: 'btn btn-primary' %>
+  <% else %>
+    <p>
+      <%= post_admin_election_text(election) %>
+    </p>
+  <% end %>
 <% end %>

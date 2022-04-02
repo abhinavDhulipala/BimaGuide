@@ -48,10 +48,11 @@
   function toggleCollapse() {
       // bootstrap data toggle not working ~ monkey patch
       let navElem = document.getElementById("navbarSupportedContent");
-      if (navElem.className.includes("collapsed")) {
-          navElem.className = "collapse navbar-collapse";
+      let navClass = navElem.className;
+      if (navClass.includes("collapsed")) {
+          navElem.className = navClass.replace("collapsed", "collapse");
       } else {
-          navElem.className = "collapsed navbar-collapse";
+          navElem.className = navClass.replace("collapse", "collapsed");
       }
   }
 </script>

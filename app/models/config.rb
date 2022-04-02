@@ -4,7 +4,8 @@ class Config < ApplicationRecord
   # How many months since the last job, to be considered active. 
   LATEST_JOB = 12
   MIN_JOBS = 4
-  MIN_CONTRIBUTIONS = 19
+  JOB_LOG_LIMIT = 12
+  MIN_CONTRIBUTIONS = 10
   LATEST_CONTRIBUTION = 4
   
   # Maximum USD value of a single contribution
@@ -13,6 +14,8 @@ class Config < ApplicationRecord
   MAX_CONTRIBUTION_FREQUENCY = 1
   ADMIN_TERM = 3
   ELECTION_LENGTH = 1
+
+  DEVELOPER_EMAIL = 'abhinav.dhulipala@berkeley.edu'
 
   validates_presence_of :conf, :value, :units
 
@@ -47,7 +50,7 @@ class Config < ApplicationRecord
   end 
 
   def self.max_contribution_frequency
-    create_with(value: MAX_CONTRIBUTION_FREQUENCY, units: :months).find_or_create_by(conf: :max_contribution_frequency)
+    create_with(value: MAX_CONTRIBUTION_FREQUENCY, units: :weeks).find_or_create_by(conf: :max_contribution_frequency)
   end
 
   def self.admin_term
@@ -56,5 +59,9 @@ class Config < ApplicationRecord
 
   def self.election_length
       create_with(value: ELECTION_LENGTH, units: :weeks).find_or_create_by(conf: :election_length)
+  end
+
+  def self.job_log_limit
+    create_with(value: JOB_LOG_LIMIT, units: :months).find_or_create_by(conf: :job_log_limit)
   end
 end

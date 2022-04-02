@@ -48,7 +48,7 @@
                       <% if edit_enabled %>
                         <%= f.select :occupation, occupation_dropdown, class: 'form-control' %>
                       <% else %>
-                        <%= f.text_field :occupation, class: 'form-control', value: employee.occupation, disabled: true %>
+                        <%= f.text_field :occupation, class: 'form-control', value: employee.occupation.humanize, disabled: true %>
                       <% end %>
 
                     </div>

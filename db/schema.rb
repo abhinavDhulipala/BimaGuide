@@ -59,9 +59,10 @@ ActiveRecord::Schema.define(version: 2022_02_03_003524) do
 
   create_table "elections", force: :cascade do |t|
     t.boolean "active"
-    t.integer "election_type"
+    t.boolean "vetoed"
     t.datetime "ends_at"
     t.integer "winner"
+    t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["winner"], name: "index_elections_on_winner"

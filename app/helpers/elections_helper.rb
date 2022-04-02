@@ -1,16 +1,25 @@
 module ElectionsHelper
   def highlight_row(election)
-    return '' if election.expired?
-    election.voted?(current_employee) ? 'table-success' : 'table-warning'
+    if election.expired?
+      'table-secondary'
+    elsif election.voted?(current_employee)
+      'table-success'
+    else
+      'table-warning'
+    end
   end
 
   def term_limit
     Config.admin_term.fetch.inspect
   end
 
-  def viable_employees
-    # force evaluation for all employees.
-    Employee.where.not(current_employee).filter {|emp| emp.role != 'contributor'}
+  def post_admin_election_text(election)
+    if election.voted?(current_employee)
+      "You voted for: #{election.voted_for(current_employee).name}. Thanks for voting"
+    else
+      "We have no record of you voting for a candidate. Sorry. Make sure to take a look at the elections home page
+       for the next election"
+    end
   end
 
   def render_date(election)

@@ -83,6 +83,4 @@ test:
 #
 production:
   <<: *default
-  database: bimaguide_production
-  username: bimaguide
-  password: <%= ENV['BIMAGUIDE_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

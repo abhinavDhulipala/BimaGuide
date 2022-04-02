@@ -9,7 +9,7 @@
         of <%= term_limit %> and will have control over other configuration like deciding how many contributions it
         takes to be a member or deciding how many jobs you must complete in order to be a member.
       </p>
-      <%= render 'votes/form', election: @election, vote: @vote %>
+      <%= render 'votes/form', election: @election, vote: @vote || Vote.new, candidates: @candidates %>
       <%= link_to 'Back', employee_elections_path(current_employee) %>
     </div>
   </div>

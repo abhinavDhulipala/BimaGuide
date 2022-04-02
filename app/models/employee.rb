@@ -15,10 +15,11 @@ class Employee < ApplicationRecord
   and phone number exp: +255 750995366', allow_blank: true}
   validates_uniqueness_of :phone, message: 'phone number already in use by another user', allow_blank: true
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
-  before_save {first_name.downcase!}
-  before_save {last_name.downcase!}
+  before_create {first_name.downcase!}
+  before_create {last_name.downcase!}
 
   pay_customer
+  attr_readonly :email
 
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last or 200.years.ago
@@ -26,6 +27,11 @@ class Employee < ApplicationRecord
 
   def latest_job_date
     jobs.order(:date_completed).pluck(:date_completed).last or 200.years.ago
+  end
+
+  def votable_employees
+    # force evaluation for all employees.
+    Employee.where('role > ?', Employee.roles[:contributor]).where.not(id: self) || []
   end
 
   def role
@@ -60,5 +66,4 @@ class Employee < ApplicationRecord
   def privileged?
     Employee.roles[role] >= Employee.roles['member']
   end
-  
 end

@@ -17,7 +17,7 @@
           <tr class="<%= highlight_row(election) %>">
             <td><%= display_time(election.ends_at) %></td>
             <td><%= election.active? %></td>
-            <td><%= election.election_type.humanize %></td>
+            <td><%= election.type.gsub(/election/i, '').humanize %></td>
             <td><%= button_to 'Show', employee_election_path(current_employee, election), method: :get,
                               class: 'btn btn-outline-dark' %></td>
           </tr>

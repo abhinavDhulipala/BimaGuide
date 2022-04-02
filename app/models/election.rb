@@ -1,8 +1,8 @@
 class Election < ApplicationRecord
-    has_many :votes
-    validates_presence_of :election_type, :ends_at, on: :create
-    validate :no_duplicate_admin_election, on: :create
-    enum election_type: %w[admin_elect claim_elect], _default: 'admin_elect'
+    has_many :votes, dependent: :destroy
+    validate :no_duplicate_election, on: :create
+
+    before_create {self.vetoed = false}
 
     def self.active_elections
         where(active: true)
@@ -10,10 +10,7 @@ class Election < ApplicationRecord
 
     def close_election
         return nil unless active?
-        update!(active: false)
-        # winner can be none if no one votes. Maybe we should make this an error.
-        # current behavior will result in a carry over of the previous admin
-        winner&.update(role: 'admin')
+        update(active: false)
     end
 
     def vote(current_employee, candidate)
@@ -21,52 +18,46 @@ class Election < ApplicationRecord
     end
 
     def voted?(employee)
-        votes.exists?(voter: employee)
+        votes.find_by(voter: employee)
+    end
+
+    def voted_for(employee)
+      if voted?(employee)
+        cast_vote = votes.find_by(voter: employee)
+        Employee.find(cast_vote.candidate)
+      end
     end
 
     def expired?
-        DateTime.current > ends_at && !active?
+        if DateTime.current > ends_at
+            update(active: false)
+        end
+
+        not active?
     end
 
     def winner
-        winner_id = votes.group(:candidate).count.max_by {|_, v| v}
-        return nil unless winner_id.present?
-        Employee.find(winner_id[0])
-    end
-
-    def self.current_admin
-        # admins are only valid if they've been elected within 3 months
-        latest_admin_elect = admin_elect.where(active: false).order(:ends_at).last
-        return nil unless latest_admin_elect.present?
-        latest_admin_elect.winner
-    end
-
-    def self.previous_terms(employee)
-        admin_elect.where(active: false).filter {|e| e.winner == employee}.count
-    end
-
-    def self.admin_elect_exists?
-        current_admin.present?
+        winner_ids = votes.group(:candidate).count.max_by {|_, v| v}
+        return nil unless winner_ids.present?
+        Employee.find(winner_ids.first)
     end
 
     def self.pending_elections(employee)
         active_elections.order(:ends_at).filter { |election| not election.voted?(employee) }
     end
 
-    def self.start_admin_election
-        elect = create(election_type: :admin_elect, active: true, ends_at: Config.election_length.fetch.since)
-        return nil unless elect.persisted?
-        if admin_elect_exists?
-            current_admin.update(role: 'member')
+    def self.start_election
+        elect = create(active: true, ends_at: Config.election_length.fetch.since)
+        unless elect.persisted?
+            logger.info "election creation failed due to #{elect.errors.messages}"
+            return nil
         end
-        ElectionCloseJob.set(wait_until: elect.ends_at).perform_later(elect)
-        elect
     end
 
     private
 
-    def no_duplicate_admin_election
-        if Election.admin_elect.active_elections.exists?
+    def no_duplicate_election
+        if Election.active_elections.exists?
             errors.add(:election_type, 'cannot have two admin elections at the same time')
         end
     end
