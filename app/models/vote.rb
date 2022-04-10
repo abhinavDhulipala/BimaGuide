@@ -1,7 +1,7 @@
 class Vote < ApplicationRecord
   belongs_to :election
   validates_presence_of :voter, :candidate, on: :create
-  validates_uniqueness_of :voter, scope: :election_id
+  validates_uniqueness_of :voter, scope: :election_id, on: :create
   validate :vote_within_deadline, on: :create
   validate :cannot_vote_for_yourself, on: :create
   validate :voter_must_be_privileged, on: :create

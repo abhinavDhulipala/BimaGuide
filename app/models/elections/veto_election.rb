@@ -1,5 +1,5 @@
 class Elections::VetoElection < Election
-  validates
+  validate :check_vote_val
 
   private
   def check_vote_val

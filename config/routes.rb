@@ -8,10 +8,12 @@ Rails.application.routes.draw do
   devise_for :employees, controllers: {registrations: 'employees/registrations'}
   resources :employees do 
     resources :contributions
+    resources :claims
     resources :jobs
     resources :elections do
       post 'vote', to: 'elections#vote'
       patch 'vote', to: 'elections#vote'
+      post 'veto', to: 'elections#veto'
     end
  
     get 'show_admin', to: 'employees#show_admin'

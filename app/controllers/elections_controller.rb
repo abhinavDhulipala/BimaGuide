@@ -21,7 +21,7 @@ class ElectionsController < ApplicationController
   def vote
     @vote = @election.vote(current_employee, vote_params[:candidate])
     if @vote.persisted?
-      redirect_to employee_elections_url(current_employee), notice: 'Vote successfully cast.'
+      redirect_to employee_elections_url(current_employee), notice: 'Vote successfully cast'
     else
       @candidates = current_employee.votable_employees
       render :show, status: :unprocessable_entity
@@ -49,6 +49,7 @@ class ElectionsController < ApplicationController
   end
 
   def vote_params
+    params[:vote] = params[:employee] if params.key?(:employee)
     params.require(:vote).permit(:candidate)
   end
 end

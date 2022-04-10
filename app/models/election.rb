@@ -14,7 +14,14 @@ class Election < ApplicationRecord
     end
 
     def vote(current_employee, candidate)
-        votes.create(voter: current_employee.id, candidate: candidate)
+        cast = votes.find_by(voter: current_employee.id)
+        if cast.present?
+            cast.update(candidate: candidate)
+        else
+            cast = votes.create(voter: current_employee.id, candidate: candidate)
+        end
+
+        cast
     end
 
     def voted?(employee)
