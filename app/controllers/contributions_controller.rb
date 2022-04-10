@@ -7,13 +7,11 @@ class ContributionsController < ApplicationController
   # GET /contributions or /contributions.json
   def index
 
-    @contributions = current_employee.contributions
+    @contributions = current_employee.contributions.order(created_at: :desc)
     @privileged = privledged_access
     if @privileged
-      @contributions = Contribution.all unless params[:current_employee_filter].empty?
+      @contributions = Contribution.all if params[:current_employee_filter] == 'all'
     end
-    
-    @contributions&.limit VIEW_LIMIT
   end
 
   # GET /contributions/1 or /contributions/1.json

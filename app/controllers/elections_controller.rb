@@ -1,5 +1,6 @@
 class ElectionsController < ApplicationController
   before_action :set_election, except: %i[index]
+  before_action :refresh_active_elections, except: %i[vote]
   before_action :authenticate_employee!
 
   # GET /elections or /elections.json
@@ -27,7 +28,16 @@ class ElectionsController < ApplicationController
     end
   end
 
+  def veto
+
+  end
+
   private
+
+  def refresh_active_elections
+    AdminElection.check_active_elects
+  end
+
   # Use callbacks to share common setup or constraints between actions.
   def set_election
     @election = Election.find(params[:id] || params[:election_id])

@@ -8,10 +8,11 @@ class AdminElection < Election
   end
 
   def self.start_election
-    new_election = super
     if exists?
       current_admin.update(role: 'member')
     end
+
+    new_election = super
     return nil unless new_election.present?
     ElectionCloseJob.set(wait_until: new_election.ends_at).perform_later(new_election)
     VetoElection.start_election
@@ -27,5 +28,15 @@ class AdminElection < Election
 
   def self.elections_won(employee)
     where(winner: employee.id, active: false).count
+  end
+
+  def self.check_active_elects
+    where(active: true).where('ends_at < ?', DateTime.current).each do |election|
+      election.close_election
+    end
+  end
+
+  def self.latest_election
+    order(:ends_at).last
   end
 end

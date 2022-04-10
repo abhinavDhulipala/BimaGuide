@@ -8,6 +8,10 @@ module EmployeesHelper
       Employee.occupations.keys
     end
 
+    def present_election(election)
+      election.type.gsub(/election/i, '').humanize
+    end
+
     def profile_pic(employee)
       employee.avatar.attached? ? employee.avatar : default_image
     end

@@ -7,8 +7,8 @@
     <ul>
       <% @pending_elections.each do |election| %>
         <li>
-          <%= link_to election.election_type.humanize, employee_election_path(current_employee, election) %>
-          <%= "ends at #{election.ends_at}" %>
+          <%= link_to present_election(election), employee_election_path(current_employee, election) %>
+          <%= "ends at #{display_time(election.ends_at)}" %>
         </li>
       <% end %>
     </ul>

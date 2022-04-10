@@ -8,10 +8,9 @@
           <div class="text-center"> <img src="<%= profile_pic(@employee) %>" width="100" class="rounded-circle" alt=""> </div>
           <div class="text-center mt-3">
             <span class="bg-secondary p-1 px-4 rounded text-white">
-              Pro
+              <%= @employee.occupation.humanize %>
             </span>
-            <h5 class="mt-2 mb-0"><%= @employee.name %>></h5>
-            <span><%= @employee.occupation %></span>
+            <h5 class="mt-2 mb-0"><%= @employee.name %></h5>
             <div class="px-4 mt-1">
               <p class="fonts">
                 Summary of Statistics
@@ -27,8 +26,15 @@
               <li>
                 Prior Terms Served: <%= @previous_terms %>
               </li>
+              <li>
+                Term Ends At: <%=  display_time(@terms_ends) %>
+              </li>
             </ul>
-            <div class="buttons"> <button class="btn btn-outline-primary px-4">Message</button> <button class="btn btn-primary px-4 ms-3">Contact</button> </div>
+            <div class="buttons"> <button class="btn btn-outline-primary px-4">Message</button>
+
+              <% button_to  %>
+
+              <button class="btn btn-primary px-4 ms-3">Contact</button> </div>
           </div>
         </div>
       </div>

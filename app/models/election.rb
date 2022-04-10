@@ -30,7 +30,7 @@ class Election < ApplicationRecord
 
     def expired?
         if DateTime.current > ends_at
-            update(active: false)
+            close_election
         end
 
         not active?
