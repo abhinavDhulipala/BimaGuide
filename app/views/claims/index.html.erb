@@ -1,25 +1,35 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Claims</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @claims.each do |claim| %>
+<div class="container rounded bg-light text-dark mt-5 mb-5">
+  <div class="d-flex justify-content-between">
+    <h3>Claims</h3>
+    <%= button_to 'make claim', new_employee_claim_path, class: 'btn btn-success', method: :get %>
+  </div>
+  <% if @contributions.present? %>
+    <table class="table table-striped table-hover">
+      <thead>
       <tr>
-        <td><%= link_to 'Show', claim %></td>
-        <td><%= link_to 'Edit', edit_claim_path(claim) %></td>
-        <td><%= link_to 'Destroy', claim, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Amount</th>
+        <th>Reason</th>
+        <th>Date Contributed</th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
 
+      <tbody>
+      <% @claims.each do |claim| %>
+        <tr>
+          <td><%= claim.amount %></td>
+          <td><%= claim.purpose %></td>
+          <td><%= display_time(claim.created_at) %></td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <div class="alert alert-dark" role="alert">
+      you don't have any claims yet. Click
+      <%= link_to 'here', new_employee_claim_path, class: 'alert-link' %>
+      to make your first one.
+    </div>
+  <% end %>
+</div>
 <br>
 
-<%= link_to 'New Claim', new_claim_path %>

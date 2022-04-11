@@ -1,9 +1,10 @@
 class ClaimsController < ApplicationController
   before_action :set_claim, only: %i[ show edit update destroy ]
+  before_action :authenticate_employee!
 
   # GET /claims or /claims.json
   def index
-    @claims = Claim.all
+    @claims = current_employee.claims
   end
 
   # GET /claims/1 or /claims/1.json
@@ -21,16 +22,12 @@ class ClaimsController < ApplicationController
 
   # POST /claims or /claims.json
   def create
-    @claim = Claim.new(claim_params)
+    @claim = current_employee.claims.new(claim_params)
 
-    respond_to do |format|
-      if @claim.save
-        format.html { redirect_to @claim, notice: "Claim was successfully created." }
-        format.json { render :show, status: :created, location: @claim }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @claim.errors, status: :unprocessable_entity }
-      end
+    if @claim.save
+      redirect_to employee_claims_path(current_employee), notice: 'Claim was successfully created'
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
@@ -64,6 +61,6 @@ class ClaimsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def claim_params
-      params.fetch(:claim, {})
+      params.require(:claim).permit(:amount, :reason)
     end
 end

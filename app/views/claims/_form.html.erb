@@ -1,8 +1,7 @@
-<%= form_with(model: claim) do |form| %>
+<%= form_with(model: claim, url: employee_claims_path(current_employee, claim)) do |form| %>
   <% if claim.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(claim.errors.count, "error") %> prohibited this claim from being saved:</h2>
-
+    <div id="error_explanation" class="alert alert-danger">
+      <h2><%= pluralize(claim.errors.count, "error") %> prohibited this vote from being submitted:</h2>
       <ul>
         <% claim.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,7 +10,19 @@
     </div>
   <% end %>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="form-group">
+    <%= form.label :amount, class: 'form-label' %>
+    <%= form.number_field :amount, value: 55.0, class: 'form-control', min: 0, max: max_claim_amount, step: 0.01 %>
   </div>
+
+  <div class="form-group">
+    <%= form.label :reason, class: 'form-label' %>
+    <%= form.text_field :reason, value: 'broken leg', class: 'form-control' %>
+  </div>
+
+  <br>
+  <div class="actions">
+    <%= form.submit class: 'btn btn-primary' %>
+  </div>
+
 <% end %>

@@ -15,6 +15,12 @@ class Config < ApplicationRecord
   ADMIN_TERM = 3
   ELECTION_LENGTH = 1
 
+  MAX_CLAIMS_AMOUNT = 200
+  MAX_CLAIMS_FREQUENCY = 1
+
+  # max claims per year
+  MAX_TOTAL_CLAIMS = 5
+
   DEVELOPER_EMAIL = 'abhinav.dhulipala@berkeley.edu'
 
   validates_presence_of :conf, :value, :units
@@ -63,5 +69,9 @@ class Config < ApplicationRecord
 
   def self.job_log_limit
     create_with(value: JOB_LOG_LIMIT, units: :months).find_or_create_by(conf: :job_log_limit)
+  end
+
+  def self.max_claim_amount
+    create_with(value: MAX_CLAIMS_AMOUNT, units: :amount).find_or_create_by(conf: :max_claim_amount)
   end
 end

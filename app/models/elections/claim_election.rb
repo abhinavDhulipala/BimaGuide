@@ -1,0 +1,2 @@
+class ClaimElection < Election
+end
