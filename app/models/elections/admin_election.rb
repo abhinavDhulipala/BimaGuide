@@ -15,6 +15,7 @@ class AdminElection < Election
     new_election = super
     return nil unless new_election.present?
     ElectionCloseJob.set(wait_until: new_election.ends_at).perform_later(new_election)
+    VetoElection.last.close_election
     VetoElection.start_election
     new_election
   end

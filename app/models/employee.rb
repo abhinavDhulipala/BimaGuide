@@ -7,7 +7,7 @@ class Employee < ApplicationRecord
   has_many :jobs
   has_many :claims
   has_one_attached :avatar
-  enum occupation: %w[porter guide cook head_guide], _default: 'porter'
+  enum occupation: %w[porter guide cook head_guide chairman secretary spokesman treasurer], _default: 'porter'
   enum role: %w[contributor member admin super_admin], _default: 'contributor'
   validates_uniqueness_of :email, case_sensitive: false
   validates_uniqueness_of :id, allow_blank: true
