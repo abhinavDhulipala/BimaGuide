@@ -47,12 +47,10 @@ class JobsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_job
       @job = Job.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def job_params
       params.require(:job).permit %i[total_pay role date_completed date_started document]
     end
