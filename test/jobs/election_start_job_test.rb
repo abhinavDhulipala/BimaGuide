@@ -1,7 +1,8 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class ElectionStartJobTest < ActiveJob::TestCase
-
   test 'happy; fire election after previous election' do
     Election.create!(active: false, ends_at: Config.admin_term.fetch.ago - Config.election_length.fetch,
                      election_type: :admin_elect)
@@ -36,5 +37,4 @@ class ElectionStartJobTest < ActiveJob::TestCase
       assert_equal election.ends_at, Config.election_length.fetch.since
     end
   end
-
 end

@@ -1,4 +1,6 @@
-require "test_helper"
+# frozen_string_literal: true
+
+require 'test_helper'
 
 class VoteTest < ActiveSupport::TestCase
   setup do
@@ -11,22 +13,22 @@ class VoteTest < ActiveSupport::TestCase
   test 'no duplicate votes' do
     assert_predicate @election.votes.create(voter: @employee.id, candidate: @candidate.id), :persisted?
     dup = @election.votes.create(voter: @employee.id, candidate: @candidate.id)
-    refute_predicate dup, :persisted?
+    assert_not_predicate dup, :persisted?
     assert_equal dup.errors.size, 1
-    assert_equal dup.errors.messages[:voter], ["has already been taken"]
+    assert_equal dup.errors.messages[:voter], ['has already been taken']
   end
 
   test 'voter expiration' do
     @election.update(active: false)
     time_expired = @election.votes.create(voter: @employee.id, candidate: @candidate.id)
-    refute_predicate time_expired, :persisted?
+    assert_not_predicate time_expired, :persisted?
     assert_equal time_expired.errors.size, 1
     assert_equal time_expired.errors.messages[:election_id], ['election has ended']
   end
 
   test 'cannot vote for yourself' do
     vote_self = @election.votes.create(voter: @employee.id, candidate: @employee.id)
-    refute_predicate vote_self, :persisted?
+    assert_not_predicate vote_self, :persisted?
     assert_equal vote_self.errors.size, 1
     assert_equal vote_self.errors.messages[:candidate], ['cannot vote for yourself']
   end
@@ -41,7 +43,7 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   test 'no active elections pending' do
-    Election.active_elections.each { |e| e.close_election }
+    Election.active_elections.each(&:close_election)
     assert_empty Election.pending_elections(@employee)
   end
 

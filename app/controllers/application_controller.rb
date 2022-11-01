@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-  after_action ->{ flash.clear }
+  after_action -> { flash.clear }
 
   protected
 
@@ -8,7 +10,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name occupation])
   end
 
-  def flash_exception e
+  def flash_exception(e)
     flash[:error] = e.message
   end
 end

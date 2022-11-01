@@ -1,5 +1,6 @@
-class CreateEmployees < ActiveRecord::Migration[6.1]
+# frozen_string_literal: true
 
+class CreateEmployees < ActiveRecord::Migration[6.1]
   def change
     create_table :employees do |t|
       t.string :first_name, null: false
@@ -10,7 +11,6 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       t.text   :address2
       t.integer :zip
       t.string :phone
-      
 
       ## Database authenticatable
       t.string :email,              null: false
@@ -41,14 +41,11 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       # t.string   :unlock_token # Only if unlock strategy is :email or :both
       # t.datetime :locked_at
 
-
       # Uncomment below if timestamps were not included in your original model.
       # t.timestamps null: false
-    
 
-
-    # add_index :employees, :confirmation_token,   unique: true
-    # add_index :employees, :unlock_token,         unique: true
+      # add_index :employees, :confirmation_token,   unique: true
+      # add_index :employees, :unlock_token,         unique: true
       t.timestamps
     end
     add_index :employees, :email,                unique: true

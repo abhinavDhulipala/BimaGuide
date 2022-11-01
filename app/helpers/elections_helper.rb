@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ElectionsHelper
   def highlight_row(election)
     if election.expired?

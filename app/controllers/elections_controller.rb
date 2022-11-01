@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ElectionsController < ApplicationController
   before_action :set_election, except: %i[index]
   before_action :refresh_active_elections, except: %i[vote]
@@ -12,9 +14,6 @@ class ElectionsController < ApplicationController
   def show
     @vote = @election.voted_for(current_employee)
     @vote ||= @election.votes.new
-    if @vote.nil?
-
-    end
     @candidates = current_employee.votable_employees
   end
 
@@ -28,9 +27,7 @@ class ElectionsController < ApplicationController
     end
   end
 
-  def veto
-
-  end
+  def veto; end
 
   private
 

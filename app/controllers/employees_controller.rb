@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 class EmployeesController < ApplicationController
   before_action :set_employee, except: %i[index]
-  before_action :authenticate_employee!, except: %i[ index ]
+  before_action :authenticate_employee!, except: %i[index]
   before_action :set_election_notifications
 
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
   end
-
 
   def show; end
 
@@ -22,6 +23,7 @@ class EmployeesController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_employee
     @employee = current_employee || Employee.find(params[:id])
@@ -29,7 +31,10 @@ class EmployeesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def employee_params
-    params.require(:employee).permit(:first_name, :last_name, :role, :contributions, :email, :occupation) if params[:employee]
+    if params[:employee]
+      params.require(:employee).permit(:first_name, :last_name, :role, :contributions, :email,
+                                       :occupation)
+    end
   end
 
   def set_election_notifications

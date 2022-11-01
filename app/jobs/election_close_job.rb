@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ElectionCloseJob < ApplicationJob
   queue_as :default
 

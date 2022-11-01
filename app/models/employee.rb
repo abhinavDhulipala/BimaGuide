@@ -1,23 +1,26 @@
+# frozen_string_literal: true
+
 class Employee < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  ADDITIONAL_INFO = %w[address1 zip phone]
+  ADDITIONAL_INFO = %w[address1 zip phone].freeze
 
   has_many :contributions
   has_many :jobs
   has_many :claims
   has_one_attached :avatar
-  enum occupation: %w[porter guide cook head_guide chairman secretary spokesman treasurer], _default: 'porter'
-  enum role: %w[contributor member admin super_admin], _default: 'contributor'
-  validates_uniqueness_of :email, case_sensitive: false
-  validates_uniqueness_of :id, allow_blank: true
-  validates_presence_of :first_name, :last_name
-  validates :phone, phone: {message: 'incorrect phone number format. Please include country code 
-  and phone number exp: +255 750995366', allow_blank: true}
-  validates_uniqueness_of :phone, message: 'phone number already in use by another user', allow_blank: true
+  enum occupation: { 'porter' => 0, 'guide' => 1, 'cook' => 2, 'head_guide' => 3, 'chairman' => 4, 'secretary' => 5, 'spokesman' => 6, 'treasurer' => 7 },
+       _default: 'porter'
+  enum role: { 'contributor' => 0, 'member' => 1, 'admin' => 2, 'super_admin' => 3 }, _default: 'contributor'
+  validates :email, uniqueness: { case_sensitive: false }
+  validates :id, uniqueness: { allow_blank: true }
+  validates :first_name, :last_name, presence: true
+  validates :phone, phone: { message: 'incorrect phone number format. Please include country code
+  and phone number exp: +255 750995366', allow_blank: true }
+  validates :phone, uniqueness: { message: 'phone number already in use by another user', allow_blank: true }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
-  before_create {first_name.downcase!}
-  before_create {last_name.downcase!}
+  before_create { first_name.downcase! }
+  before_create { last_name.downcase! }
 
   pay_customer
   attr_readonly :email
@@ -38,10 +41,11 @@ class Employee < ApplicationRecord
   def role
     # anyone with privileges admin privileges and above
     return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
-    if jobs.count >= Config.min_jobs.fetch and
-      contributions.count >= Config.min_contributions.fetch and
-      latest_contribution_date >= Config.latest_contribution.fetch.ago and
-      latest_job_date >= Config.latest_job.fetch.ago
+
+    if (jobs.count >= Config.min_jobs.fetch) &&
+       (contributions.count >= Config.min_contributions.fetch) &&
+       (latest_contribution_date >= Config.latest_contribution.fetch.ago) &&
+       (latest_job_date >= Config.latest_job.fetch.ago)
 
       update(role: 'member')
       return 'member'
@@ -50,9 +54,9 @@ class Employee < ApplicationRecord
     'contributor'
   end
 
-  def unintialized_attrs 
+  def unintialized_attrs
     # address2 not included as it is not always required
-    attributes.select {|k, v| v.nil? and Employee::ADDITIONAL_INFO.include? k}.keys
+    attributes.select { |k, v| v.nil? and Employee::ADDITIONAL_INFO.include? k }.keys
   end
 
   # for pay compatibility

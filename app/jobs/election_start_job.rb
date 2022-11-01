@@ -1,6 +1,7 @@
+# frozen_string_literal: true
+
 class ElectionStartJob < ApplicationJob
   queue_as :default
-
 
   def perform
     if Election.admin_elect.where(ends_at: Config.admin_term.fetch.ago..).exists?

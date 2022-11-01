@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
@@ -27,7 +29,7 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'byebug', platforms: %i[mri mingw x64_mingw]
 end
 
 group :development do
@@ -35,8 +37,8 @@ group :development do
   gem 'web-console', '>= 4.1.0'
   # Display performance information such as SQL time and flame graphs for each request in your browser.
   # Can be configured to work on production as well see: https://github.com/MiniProfiler/rack-mini-profiler/blob/master/README.md
-  gem 'rack-mini-profiler', '~> 2.0'
   gem 'listen', '~> 3.3'
+  gem 'rack-mini-profiler', '~> 2.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
@@ -50,27 +52,26 @@ group :test do
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
-gem "dotenv-rails", "~> 2.7"
+gem 'dotenv-rails', '~> 2.7'
 
-gem "devise", "~> 4.8"
+gem 'devise', '~> 4.8'
 
+gem 'phonelib', '~> 0.6.54'
 
-gem "phonelib", "~> 0.6.54"
+gem 'faker', '~> 2.19', groups: %i[development test]
 
+gem 'stripe', '~> 5.40'
 
-gem "faker", "~> 2.19", :groups => [:development, :test]
-
-gem "stripe", "~> 5.40"
-
-gem "image_processing", "~> 1.12"
+gem 'image_processing', '~> 1.12'
 
 # ref: https://github.com/pay-rails/pay
-gem "pay", "~> 3.0"
+gem 'pay', '~> 3.0'
 
-gem "sidekiq", "~> 6.4"
+gem 'sidekiq', '~> 6.4'
 
 # get ahead of sideqik delay extension deprecation. See: https://github.com/mperham/sidekiq/issues/5076
-gem "sidekiq-delay_extensions", "~> 6.4"
+gem 'sidekiq-delay_extensions', '~> 6.4'
 
+gem 'rubocop-rails', '~> 2.17'

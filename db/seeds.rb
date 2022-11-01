@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
@@ -7,12 +9,11 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 logger = Rails.logger
 
-
-def encrypted_password(password='password123')
+def encrypted_password(password = 'password123')
   Employee.new.send(:password_digest, password)
 end
 
-logger.info "seeding admin"
+logger.info 'seeding admin'
 employees = [
   {
     first_name: 'green',
@@ -25,7 +26,7 @@ employees = [
 ]
 
 # seed members along with their requirements
-logger.info "seeding mock members"
+logger.info 'seeding mock members'
 5.times do
   emp = Employee.create(
     first_name: Faker::Name.first_name,
@@ -41,8 +42,8 @@ logger.info "seeding mock members"
       total_pay: Faker::Number.between(from: 25.0, to: 70.0),
       role: Employee.occupations.keys.sample,
       date_completed: i.months.ago,
-      date_started: i.months.ago - Faker::Number.between(from: 2, to: 10),
-      )
+      date_started: i.months.ago - Faker::Number.between(from: 2, to: 10)
+    )
   end
 
   11.times.reverse_each do |i|
@@ -66,10 +67,8 @@ employees += 10.times.collect do
   }
 end
 
-
 # possibly use insert all to avoid validation errors:
 # https://api.rubyonrails.org/classes/ActiveRecord/Persistence/ClassMethods.html#method-i-insert_all
 Employee.create!(employees)
 
-logger.info "contributors mocked"
-
+logger.info 'contributors mocked'

@@ -1,13 +1,14 @@
+# frozen_string_literal: true
+
 class Config < ApplicationRecord
-  
   # Time units x -> x.month(s).ago, unless otherwise specified
-  # How many months since the last job, to be considered active. 
+  # How many months since the last job, to be considered active.
   LATEST_JOB = 12
   MIN_JOBS = 4
   JOB_LOG_LIMIT = 12
   MIN_CONTRIBUTIONS = 10
   LATEST_CONTRIBUTION = 4
-  
+
   # Maximum USD value of a single contribution
   MAX_CONTRIBUTION_AMOUNT = 40
   # ~weekly
@@ -23,9 +24,9 @@ class Config < ApplicationRecord
 
   DEVELOPER_EMAIL = 'abhinav.dhulipala@berkeley.edu'
 
-  validates_presence_of :conf, :value, :units
+  validates :conf, :value, :units, presence: true
 
-  enum units: %i[amount days weeks months years]
+  enum units: { amount: 0, days: 1, weeks: 2, months: 3, years: 4 }
 
   def fetch
     if amount?
@@ -53,7 +54,7 @@ class Config < ApplicationRecord
 
   def self.max_contribution_amount
     create_with(value: MAX_CONTRIBUTION_AMOUNT, units: :amount).find_or_create_by(conf: :max_contribution_amount)
-  end 
+  end
 
   def self.max_contribution_frequency
     create_with(value: MAX_CONTRIBUTION_FREQUENCY, units: :weeks).find_or_create_by(conf: :max_contribution_frequency)
@@ -64,7 +65,7 @@ class Config < ApplicationRecord
   end
 
   def self.election_length
-      create_with(value: ELECTION_LENGTH, units: :weeks).find_or_create_by(conf: :election_length)
+    create_with(value: ELECTION_LENGTH, units: :weeks).find_or_create_by(conf: :election_length)
   end
 
   def self.job_log_limit

@@ -1,7 +1,8 @@
-class JobsController < ApplicationController
-  before_action :set_job, only: %i[ show edit update destroy ]
-  before_action :authenticate_employee!
+# frozen_string_literal: true
 
+class JobsController < ApplicationController
+  before_action :set_job, only: %i[show edit update destroy]
+  before_action :authenticate_employee!
 
   # GET /jobs or /jobs.json
   def index
@@ -23,7 +24,7 @@ class JobsController < ApplicationController
   def create
     @job = current_employee.jobs.create(job_params)
     if @job.persisted?
-      redirect_to employee_jobs_url, notice: "Job was successfully created."
+      redirect_to employee_jobs_url, notice: 'Job was successfully created.'
     else
       render :new, status: :unprocessable_entity
     end
@@ -31,27 +32,26 @@ class JobsController < ApplicationController
 
   # PATCH/PUT /jobs/1 or /jobs/1.json
   def update
-      if @job.update(job_params)
-        redirect_to employee_jobs_path(current_employee), notice: "Job was successfully updated." 
-      else
-        render :edit, status: :unprocessable_entity 
-      end
+    if @job.update(job_params)
+      redirect_to employee_jobs_path(current_employee), notice: 'Job was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   # DELETE /jobs/1 or /jobs/1.json
   def destroy
-    unless @job.destroy
-      render :edit, status: :unprocessable_entity
-    end
+    render :edit, status: :unprocessable_entity unless @job.destroy
     redirect_to employee_jobs_url(current_employee)
   end
 
   private
-    def set_job
-      @job = Job.find(params[:id])
-    end
 
-    def job_params
-      params.require(:job).permit %i[total_pay role date_completed date_started document]
-    end
+  def set_job
+    @job = Job.find(params[:id])
+  end
+
+  def job_params
+    params.require(:job).permit %i[total_pay role date_completed date_started document]
+  end
 end

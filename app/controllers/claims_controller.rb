@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class ClaimsController < ApplicationController
-  before_action :set_claim, only: %i[ show edit update destroy ]
+  before_action :set_claim, only: %i[show edit update destroy]
   before_action :authenticate_employee!
 
   # GET /claims or /claims.json
@@ -8,8 +10,7 @@ class ClaimsController < ApplicationController
   end
 
   # GET /claims/1 or /claims/1.json
-  def show
-  end
+  def show; end
 
   # GET /claims/new
   def new
@@ -17,8 +18,7 @@ class ClaimsController < ApplicationController
   end
 
   # GET /claims/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /claims or /claims.json
   def create
@@ -35,7 +35,7 @@ class ClaimsController < ApplicationController
   def update
     respond_to do |format|
       if @claim.update(claim_params)
-        format.html { redirect_to @claim, notice: "Claim was successfully updated." }
+        format.html { redirect_to @claim, notice: 'Claim was successfully updated.' }
         format.json { render :show, status: :ok, location: @claim }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -48,19 +48,20 @@ class ClaimsController < ApplicationController
   def destroy
     @claim.destroy
     respond_to do |format|
-      format.html { redirect_to claims_url, notice: "Claim was successfully destroyed." }
+      format.html { redirect_to claims_url, notice: 'Claim was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_claim
-      @claim = Claim.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def claim_params
-      params.require(:claim).permit(:amount, :reason)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_claim
+    @claim = Claim.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def claim_params
+    params.require(:claim).permit(:amount, :reason)
+  end
 end

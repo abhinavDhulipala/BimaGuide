@@ -1,53 +1,55 @@
-require "application_system_test_case"
+# frozen_string_literal: true
+
+require 'application_system_test_case'
 
 class EmployeesTest < ApplicationSystemTestCase
   setup do
     @employee = employees(:one)
   end
 
-  test "visiting the index" do
+  test 'visiting the index' do
     visit employees_url
-    assert_selector "h1", text: "Employees"
+    assert_selector 'h1', text: 'Employees'
   end
 
-  test "creating a Employee" do
+  test 'creating a Employee' do
     visit employees_url
-    click_on "New Employee"
+    click_on 'New Employee'
 
-    fill_in "Contributions", with: @employee.contributions
-    fill_in "Email", with: @employee.email
-    fill_in "First name", with: @employee.first_name
-    fill_in "Last name", with: @employee.last_name
-    fill_in "Occupation", with: @employee.occupation
-    fill_in "Role", with: @employee.role
-    click_on "Create Employee"
+    fill_in 'Contributions', with: @employee.contributions
+    fill_in 'Email', with: @employee.email
+    fill_in 'First name', with: @employee.first_name
+    fill_in 'Last name', with: @employee.last_name
+    fill_in 'Occupation', with: @employee.occupation
+    fill_in 'Role', with: @employee.role
+    click_on 'Create Employee'
 
-    assert_text "Employee was successfully created"
-    click_on "Back"
+    assert_text 'Employee was successfully created'
+    click_on 'Back'
   end
 
-  test "updating a Employee" do
+  test 'updating a Employee' do
     visit employees_url
-    click_on "Edit", match: :first
+    click_on 'Edit', match: :first
 
-    fill_in "Contributions", with: @employee.contributions
-    fill_in "Email", with: @employee.email
-    fill_in "First name", with: @employee.first_name
-    fill_in "Last name", with: @employee.last_name
-    fill_in "Occupation", with: @employee.occupation
-    fill_in "Role", with: @employee.role
-    click_on "Update Employee"
+    fill_in 'Contributions', with: @employee.contributions
+    fill_in 'Email', with: @employee.email
+    fill_in 'First name', with: @employee.first_name
+    fill_in 'Last name', with: @employee.last_name
+    fill_in 'Occupation', with: @employee.occupation
+    fill_in 'Role', with: @employee.role
+    click_on 'Update Employee'
 
-    assert_text "Employee was successfully updated"
-    click_on "Back"
+    assert_text 'Employee was successfully updated'
+    click_on 'Back'
   end
 
-  test "destroying a Employee" do
+  test 'destroying a Employee' do
     visit employees_url
     page.accept_confirm do
-      click_on "Destroy", match: :first
+      click_on 'Destroy', match: :first
     end
 
-    assert_text "Employee was successfully destroyed"
+    assert_text 'Employee was successfully destroyed'
   end
 end
