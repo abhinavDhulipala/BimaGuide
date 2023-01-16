@@ -7,7 +7,7 @@ class VoteTest < ActiveSupport::TestCase
     @employee = employees(:default)
     @employee.update!(role: 'admin')
     @candidate = employees(:candidate)
-    @election = Election.create!(election_type: :admin_elect, active: true, ends_at: 1.week.since)
+    @election = AdminElection.create!(active: true, ends_at: 1.week.since)
   end
 
   test 'no duplicate votes' do
@@ -48,11 +48,11 @@ class VoteTest < ActiveSupport::TestCase
   end
 
   test 'happy; 2 pending elections' do
-    assert_equal Election.pending_elections(@employee).count, 2
+    assert_equal Election.pending_elections(@employee).count, 1
   end
 
   test 'reflects employee casting vote' do
-    @election.votes.create(voter: @employee.id, candidate: @candidate.id)
-    assert_equal Election.pending_elections(@employee).count, 1
+    errors = @election.votes.create!(voter: @employee.id, candidate: @candidate.id)
+    assert_empty Election.pending_elections(@employee)
   end
 end

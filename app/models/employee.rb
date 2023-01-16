@@ -42,10 +42,10 @@ class Employee < ApplicationRecord
     # anyone with privileges admin privileges and above
     return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
 
-    if (jobs.count >= Config.min_jobs.fetch) &&
-       (contributions.count >= Config.min_contributions.fetch) &&
-       (latest_contribution_date >= Config.latest_contribution.fetch.ago) &&
-       (latest_job_date >= Config.latest_job.fetch.ago)
+    if jobs.count >= Config.min_jobs.fetch &&
+       contributions.count >= Config.min_contributions.fetch &&
+       latest_contribution_date >= Config.latest_contribution.fetch.ago &&
+       latest_job_date >= Config.latest_job.fetch.ago
 
       update(role: 'member')
       return 'member'

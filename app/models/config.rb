@@ -1,4 +1,19 @@
 # frozen_string_literal: true
+# class Knob
+#   def initializer(value, units, config_name)
+#     valid_units = %i[amount days weeks months years]
+#     raise %(units must be in) unless valid_units.include? units
+#     @value = value
+#     @units = unit
+#     @name = name
+#   end
+# end
+# 
+# KNOBS = [
+#   Knob(12, :months, :latest_job),
+#   Knob(4, :amount, :min_jobs),
+#   Knob(10, :amount, :min_contributions),
+# ]
 
 class Config < ApplicationRecord
   # Time units x -> x.month(s).ago, unless otherwise specified

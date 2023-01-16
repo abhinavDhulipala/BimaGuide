@@ -11,13 +11,14 @@ class ElectionTest < ActiveSupport::TestCase
                        email: Faker::Internet.unique.email,
                        occupation: Employee.occupations['porter'],
                        role: Employee.roles['member'],
-                       password: 'encrypted_password')
+                       password: 'encrypted_password', 
+                       validate: false)
     end
   end
 
   test 'election happy path' do
     assert_not Election.admin_elect_exists?
-    election = Election.start_admin_election
+    election = AdminElection.start_election
     ElectionTest.mock_vote election
     election.close_election
     assert_equal election.winner, Employee.order(:id)[6]
@@ -26,21 +27,22 @@ class ElectionTest < ActiveSupport::TestCase
   end
 
   test 'correct calculation of winners' do
-    election = Election.start_admin_election
+    election = AdminElection.start_election
+    refute_nil election
     mocked_winner = ElectionTest.mock_vote election
     election.close_election
     assert_equal election.winner, mocked_winner
   end
 
   test 'winner is nil with no votes' do
-    election = Election.start_admin_election
+    election = Election.start_election
     election.close_election
     assert_nil election.winner
   end
 
   test 'no duplicate elections' do
     assert_difference('Election.count', 1) do
-      2.times { Election.start_admin_election }
+      2.times { Election.start_election }
     end
   end
 
@@ -56,6 +58,7 @@ class ElectionTest < ActiveSupport::TestCase
 
   def self.mock_vote(election)
     employees = Employee.order(:id)
+    byebug
     winner = employees[6].id
     candidate2 = employees[4].id
     candidate3 = employees[2].id

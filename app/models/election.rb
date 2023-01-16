@@ -59,7 +59,8 @@ class Election < ApplicationRecord
     elect = create(active: true, ends_at: Config.election_length.fetch.since)
     unless elect.persisted?
       logger.info "election creation failed due to #{elect.errors.messages}"
-      nil
+    else
+      elect
     end
   end
 

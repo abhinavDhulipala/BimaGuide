@@ -9,7 +9,7 @@ class AdminElection < Election
   end
 
   def self.start_election
-    current_admin.update(role: 'member') if exists?
+    current_admin&.update(role: 'member')
 
     new_election = super
     return nil if new_election.blank?

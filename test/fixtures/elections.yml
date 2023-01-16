@@ -1,17 +1,14 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+# # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  active: false
-  election_type: 1
-  ends_at: 2022-02-02 16:25:27
+# one:
+#   active: false
+#   ends_at: 2022-02-02 16:25:27
 
-two:
-  active: true
-  election_type: 1
-  ends_at: 2022-02-02 16:25:27
+# two:
+#   active: true
+#   ends_at: 2022-02-02 16:25:27
 
-stale_admin:
-  active: false
-  election_type: 0
-  ends_at: <%= 1.year.ago %>
+# stale_admin:
+#   active: false
+#   ends_at: <%= 1.year.ago %>
 
