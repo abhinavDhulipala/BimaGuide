@@ -6,27 +6,30 @@ class ElectionTest < ActiveSupport::TestCase
   setup do
     Employee.destroy_all
     10.times do
-      Employee.create!(first_name: Faker::Name.first_name,
+      emp = Employee.new(first_name: Faker::Name.first_name,
                        last_name: Faker::Name.last_name,
                        email: Faker::Internet.unique.email,
                        occupation: Employee.occupations['porter'],
                        role: Employee.roles['member'],
-                       password: 'encrypted_password', 
-                       validate: false)
+                       password: 'encrypted_password')
+      emp.skip_role_validation = true
+      emp.save!(validate: false)
     end
+    byebug
   end
 
   test 'election happy path' do
-    assert_not Election.admin_elect_exists?
+    assert_empty AdminElection.all
     election = AdminElection.start_election
     ElectionTest.mock_vote election
     election.close_election
     assert_equal election.winner, Employee.order(:id)[6]
     assert_predicate election.winner, :admin?
-    assert Election.admin_elect_exists?
+    refute_empty AdminElection.all
   end
 
   test 'correct calculation of winners' do
+    puts Employee.all
     election = AdminElection.start_election
     refute_nil election
     mocked_winner = ElectionTest.mock_vote election
@@ -58,7 +61,6 @@ class ElectionTest < ActiveSupport::TestCase
 
   def self.mock_vote(election)
     employees = Employee.order(:id)
-    byebug
     winner = employees[6].id
     candidate2 = employees[4].id
     candidate3 = employees[2].id

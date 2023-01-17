@@ -13,7 +13,7 @@ class EmployeesController < ApplicationController
   def show; end
 
   def show_admin
-    if AdminElection.exists?
+    if AdminElection.current_admin.present?
       @employee = AdminElection.current_admin
       @previous_terms = AdminElection.elections_won(@employee)
       @terms_ends = AdminElection.latest_election.ends_at

@@ -64,6 +64,13 @@ class Election < ApplicationRecord
     end
   end
 
+  def self.elections_won(employee)
+    where(winner: employee.id, active: false).count
+  end
+
+  def self.latest_election
+    order(:ends_at).last
+  end
   private
 
   def no_duplicate_election

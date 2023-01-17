@@ -67,4 +67,8 @@ class EmployeeTest < ActiveSupport::TestCase
     Config.latest_contribution.update! value: 1, units: :days
     assert_equal @employee.role, 'contributor'
   end
+
+  test 'set test member' do
+    employee = Employee.create()
+  end
 end

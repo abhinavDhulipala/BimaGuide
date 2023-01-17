@@ -19,11 +19,14 @@ class Employee < ApplicationRecord
   and phone number exp: +255 750995366', allow_blank: true }
   validates :phone, uniqueness: { message: 'phone number already in use by another user', allow_blank: true }
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
-  before_create { first_name.downcase! }
-  before_create { last_name.downcase! }
+  before_create { first_name.downcase! and last_name.downcase! }
+  before_update { first_name.downcase! and last_name.downcase! }
 
   pay_customer
   attr_readonly :email
+
+  attr_accessor :skip_role_validation
+  @skip_role_validation = false
 
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last or 200.years.ago
@@ -39,6 +42,7 @@ class Employee < ApplicationRecord
   end
 
   def role
+    return self[:role] if @skip_role_validation
     # anyone with privileges admin privileges and above
     return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
 

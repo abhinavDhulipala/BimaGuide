@@ -25,15 +25,7 @@ class AdminElection < Election
     latest_admin_elect.winner if latest_admin_elect.present?
   end
 
-  def self.elections_won(employee)
-    where(winner: employee.id, active: false).count
-  end
-
   def self.check_active_elects
     where(active: true).where('ends_at < ?', DateTime.current).find_each(&:close_election)
-  end
-
-  def self.latest_election
-    order(:ends_at).last
   end
 end
