@@ -69,6 +69,6 @@ class EmployeeTest < ActiveSupport::TestCase
   end
 
   test 'set test member' do
-    employee = Employee.create()
+    employee = Employee.create
   end
 end

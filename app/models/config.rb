@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 # class Knob
 #   def initializer(value, units, config_name)
 #     valid_units = %i[amount days weeks months years]
@@ -8,7 +9,7 @@
 #     @name = name
 #   end
 # end
-# 
+#
 # KNOBS = [
 #   Knob(12, :months, :latest_job),
 #   Knob(4, :amount, :min_jobs),

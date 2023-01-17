@@ -57,10 +57,10 @@ class Election < ApplicationRecord
 
   def self.start_election
     elect = create(active: true, ends_at: Config.election_length.fetch.since)
-    unless elect.persisted?
-      logger.info "election creation failed due to #{elect.errors.messages}"
-    else
+    if elect.persisted?
       elect
+    else
+      logger.info "election creation failed due to #{elect.errors.messages}"
     end
   end
 
@@ -71,6 +71,7 @@ class Election < ApplicationRecord
   def self.latest_election
     order(:ends_at).last
   end
+
   private
 
   def no_duplicate_election

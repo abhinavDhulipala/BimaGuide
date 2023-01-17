@@ -26,6 +26,7 @@ class Employee < ApplicationRecord
   attr_readonly :email
 
   attr_accessor :skip_role_validation
+
   @skip_role_validation = false
 
   def latest_contribution_date
