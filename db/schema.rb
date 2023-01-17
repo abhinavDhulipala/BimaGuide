@@ -73,6 +73,7 @@ ActiveRecord::Schema.define(version: 2022_04_10_201444) do
     t.boolean "vetoed"
     t.datetime "ends_at"
     t.integer "winner"
+    t.string "type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["winner"], name: "index_elections_on_winner"
