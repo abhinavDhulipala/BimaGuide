@@ -22,7 +22,7 @@ class AdminElection < Election
 
   def self.current_admin
     latest_admin_elect = where(active: false).order(:ends_at).last
-    latest_admin_elect.winner if latest_admin_elect.present?
+    latest_admin_elect&.winner
   end
 
   def self.check_active_elects

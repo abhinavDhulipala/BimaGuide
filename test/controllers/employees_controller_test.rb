@@ -3,7 +3,7 @@
 require 'test_helper'
 
 class EmployeesControllerTest < ActionDispatch::IntegrationTest
-  setup do
-    @employee = employees(:one)
-  end
+  # setup do
+  #   @employee = employees(:one)
+  # end
 end

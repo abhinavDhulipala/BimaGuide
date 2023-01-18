@@ -5,12 +5,10 @@ class ElectionsController < ApplicationController
   before_action :refresh_active_elections, except: %i[vote]
   before_action :authenticate_employee!
 
-  # GET /elections or /elections.json
   def index
     @elections = Election.order(ends_at: :desc)
   end
 
-  # GET /elections/1 or /elections/1.json
   def show
     @vote = @election.voted_for(current_employee)
     @vote ||= @election.votes.new

@@ -8,7 +8,7 @@
 #   active: true
 #   ends_at: 2022-02-02 16:25:27
 
-# stale_admin:
-#   active: false
-#   ends_at: <%= 1.year.ago %>
-
+stale_admin:
+  active: false
+  ends_at: <%= 1.year.ago %>
+  type: AdminElection
