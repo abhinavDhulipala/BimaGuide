@@ -27,8 +27,6 @@ class Employee < ApplicationRecord
 
   attr_accessor :skip_role_validation
 
-  @skip_role_validation = false
-
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last or 200.years.ago
   end
@@ -43,7 +41,6 @@ class Employee < ApplicationRecord
   end
 
   def role
-    return self[:role] if @skip_role_validation
     # anyone with privileges admin privileges and above
     return self[:role] if Employee.roles[self[:role]] >= Employee.roles[:admin]
 

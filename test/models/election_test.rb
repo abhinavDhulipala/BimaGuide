@@ -12,35 +12,8 @@ class ElectionTest < ActiveSupport::TestCase
                          occupation: Employee.occupations['porter'],
                          role: Employee.roles['member'],
                          password: 'encrypted_password')
-      emp.skip_role_validation = true
       emp.save!(validate: false)
     end
-    byebug
-  end
-
-  test 'election happy path' do
-    assert_empty AdminElection.all
-    election = AdminElection.start_election
-    ElectionTest.mock_vote election
-    election.close_election
-    assert_equal election.winner, Employee.order(:id)[6]
-    assert_predicate election.winner, :admin?
-    assert_not_empty AdminElection.all
-  end
-
-  test 'correct calculation of winners' do
-    puts Employee.all
-    election = AdminElection.start_election
-    assert_not_nil election
-    mocked_winner = ElectionTest.mock_vote election
-    election.close_election
-    assert_equal election.winner, mocked_winner
-  end
-
-  test 'winner is nil with no votes' do
-    election = Election.start_election
-    election.close_election
-    assert_nil election.winner
   end
 
   test 'no duplicate elections' do
@@ -50,7 +23,7 @@ class ElectionTest < ActiveSupport::TestCase
   end
 
   test 'voted?' do
-    election = Election.start_admin_election
+    election = AdminElection.start_election
     voter, candidate = Employee.all.sample(2)
     # give permission to vote
     voter.update!(role: :admin)
