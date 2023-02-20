@@ -67,7 +67,6 @@ gem 'stripe', '~> 5.40'
 gem 'image_processing', '~> 1.12'
 
 # ref: https://github.com/pay-rails/pay
-gem 'pay', '~> 3.0'
 
 gem 'sidekiq', '~> 6.4'
 
@@ -75,3 +74,5 @@ gem 'sidekiq', '~> 6.4'
 gem 'sidekiq-delay_extensions', '~> 6.4'
 
 gem 'rubocop-rails', '~> 2.17'
+
+gem 'pay', '~> 3.0'
