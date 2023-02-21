@@ -4,7 +4,6 @@ require 'test_helper'
 
 class ElectionStartJobTest < ActiveJob::TestCase
   test 'fire with valid previous election' do
-    elections(:stale_admin).save!
     assert_difference('AdminElection.count', 1) { ElectionStartJob.perform_now }
   end
   test 'fire with no admin; first time election' do

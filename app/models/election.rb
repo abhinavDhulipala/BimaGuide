@@ -52,7 +52,7 @@ class Election < ApplicationRecord
   end
 
   def self.pending_elections(employee)
-    return [] if employee.role < Employee.roles[:member]
+    return [] if Employee.roles[employee.role] < Employee.roles[:member]
     active_elections.order(:ends_at).reject { |election| election.voted?(employee) }
   end
 

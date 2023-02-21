@@ -24,19 +24,19 @@ class ElectionTest < ActiveSupport::TestCase
 
   test 'contributor pending elections' do
     employee = Object.new
-    def employee.role; Employee.roles[:contributor]; end
+    def employee.role; 'contributor'; end
     assert_empty Election.pending_elections(employee)
   end
 
   test 'member no pending elections' do
     employee = Object.new
-    def employee.role; Employee.roles[:member]; end
+    def employee.role; 'member'; end
     assert_empty Election.pending_elections(employee)
   end
 
   test 'member pending elections' do
     employee = Object.new
-    def employee.role; Employee.roles[:member]; end
+    def employee.role; 'member'; end
     AdminElection.start_election
     refute_empty Election.pending_elections(employee)
   end
