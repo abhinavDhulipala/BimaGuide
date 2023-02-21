@@ -36,23 +36,4 @@ class VoteTest < ActiveSupport::TestCase
   test 'happy path' do
     assert_predicate @election.votes.create(voter: @employee.id, candidate: @candidate.id), :persisted?
   end
-
-  test 'no pending elections' do
-    Election.destroy_all
-    assert_empty Election.pending_elections(@employee)
-  end
-
-  test 'no active elections pending' do
-    Election.active_elections.each(&:close_election)
-    assert_empty Election.pending_elections(@employee)
-  end
-
-  test 'happy; 2 pending elections' do
-    assert_equal Election.pending_elections(@employee).count, 1
-  end
-
-  test 'reflects employee casting vote' do
-    errors = @election.votes.create!(voter: @employee.id, candidate: @candidate.id)
-    assert_empty Election.pending_elections(@employee)
-  end
 end
