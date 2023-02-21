@@ -41,7 +41,7 @@ class Election < ApplicationRecord
   def expired?
     close_election if DateTime.current > ends_at
 
-    !active?
+    not active?
   end
 
   def winner
@@ -52,7 +52,8 @@ class Election < ApplicationRecord
   end
 
   def self.pending_elections(employee)
-    active_elections.order(:ends_at).filter { |election| !election.voted?(employee) }
+    return [] if employee.role < Employee.roles[:member]
+    active_elections.order(:ends_at).reject { |election| election.voted?(employee) }
   end
 
   def self.start_election

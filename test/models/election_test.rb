@@ -22,6 +22,25 @@ class ElectionTest < ActiveSupport::TestCase
     end
   end
 
+  test 'contributor pending elections' do
+    employee = Object.new
+    def employee.role; Employee.roles[:contributor]; end
+    assert_empty Election.pending_elections(employee)
+  end
+
+  test 'member no pending elections' do
+    employee = Object.new
+    def employee.role; Employee.roles[:member]; end
+    assert_empty Election.pending_elections(employee)
+  end
+
+  test 'member pending elections' do
+    employee = Object.new
+    def employee.role; Employee.roles[:member]; end
+    AdminElection.start_election
+    refute_empty Election.pending_elections(employee)
+  end
+  
   test 'voted?' do
     election = AdminElection.start_election
     voter, candidate = Employee.all.sample(2)

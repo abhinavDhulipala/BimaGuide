@@ -10,5 +10,5 @@
 
 stale_admin:
   active: false
-  ends_at: <%= 1.year.ago %>
+  ends_at: <%= 10.years.ago %>
   type: AdminElection
