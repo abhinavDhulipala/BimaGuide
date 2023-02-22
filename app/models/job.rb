@@ -18,14 +18,17 @@ class Job < ApplicationRecord
   end
     
   def no_overlap_dates
-    return errors.add(:date_completed, 'must be included') if date_completed.blank?
-    return errors.add(:date_started, 'must be included ') if date_started.blank?
-    return errors.add(:date_completed, 'date completed must be ahead of date started') if date_started >= date_completed
+    errors.add(:date_completed, 'must be included') if date_completed.blank?
+    errors.add(:date_started, 'must be included ') if date_started.blank?
+    return errors unless errors.empty?
+    errors.add(:date_completed, 'date completed must be ahead of date started') if date_started >= date_completed
+
 
     if date_completed < Config.job_log_limit.fetch.ago
-      return errors.add(:date_completed,
+      errors.add(:date_completed,
                         'cannot log a job from more than a month ago')
     end
+    return errors unless errors.empty?
 
     # check that date ranges don't overlap
     if Employee.find(employee_id).jobs.where.not(id: id).any? do |dc|
