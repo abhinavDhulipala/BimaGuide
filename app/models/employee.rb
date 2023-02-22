@@ -5,11 +5,12 @@ class Employee < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   ADDITIONAL_INFO = %w[address1 zip phone].freeze
 
-  has_many :contributions
-  has_many :jobs
-  has_many :claims
+  has_many :contributions, dependent: :destroy
+  has_many :jobs, dependent: :destroy
+  has_many :claims, dependent: :destroy
   has_one_attached :avatar
-  enum occupation: { 'porter' => 0, 'guide' => 1, 'cook' => 2, 'head_guide' => 3, 'chairman' => 4, 'secretary' => 5, 'spokesman' => 6, 'treasurer' => 7 },
+  enum occupation: { 'porter' => 0, 'guide' => 1, 'cook' => 2,
+                     'head_guide' => 3, 'chairman' => 4, 'secretary' => 5, 'spokesman' => 6, 'treasurer' => 7 },
        _default: 'porter'
   enum role: { 'contributor' => 0, 'member' => 1, 'admin' => 2, 'super_admin' => 3 }, _default: 'contributor'
   validates :email, uniqueness: { case_sensitive: false }
@@ -24,8 +25,6 @@ class Employee < ApplicationRecord
 
   pay_customer
   attr_readonly :email
-
-  attr_accessor :skip_role_validation
 
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last or 200.years.ago

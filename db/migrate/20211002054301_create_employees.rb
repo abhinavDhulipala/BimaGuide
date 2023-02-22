@@ -10,7 +10,7 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       t.text   :address1
       t.text   :address2
       t.integer :zip
-      t.string :phone
+      t.string :phone, unique: true
 
       ## Database authenticatable
       t.string :email,              null: false

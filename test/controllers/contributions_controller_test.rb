@@ -19,7 +19,8 @@ class ContributionsControllerTest < ActionDispatch::IntegrationTest
 
   # test 'should create contribution' do
   #   assert_difference('Contribution.count') do
-  #     post contributions_url, params: { contribution: { amount: @contribution.amount, purpose: @contribution.purpose } }
+  #     post contributions_url, params: { contribution:
+  # { amount: @contribution.amount, purpose: @contribution.purpose } }
   #   end
 
   #   assert_redirected_to contribution_url(Contribution.last)

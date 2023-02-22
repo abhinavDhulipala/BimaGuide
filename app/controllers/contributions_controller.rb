@@ -2,7 +2,7 @@
 
 class ContributionsController < ApplicationController
   before_action :authenticate_employee!
-  before_action :set_contribution, only: %i[show edit update destroy]
+  before_action :set_contribution, only: %i[show]
 
   VIEW_LIMIT = 100
 

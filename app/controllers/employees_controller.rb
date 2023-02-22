@@ -31,10 +31,10 @@ class EmployeesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def employee_params
-    if params[:employee]
-      params.require(:employee).permit(:first_name, :last_name, :role, :contributions, :email,
-                                       :occupation)
-    end
+    return unless params[:employee]
+
+    params.require(:employee).permit(:first_name, :last_name, :role, :contributions, :email,
+                                     :occupation)
   end
 
   def set_election_notifications
