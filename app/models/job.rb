@@ -6,11 +6,17 @@ class Job < ApplicationRecord
   validates :id, uniqueness: true
   validates :role, inclusion: { in: Employee.occupations.keys }
   validate :no_overlap_dates
+  validate :less_than_now
   before_destroy -> { errors.add(:date_created, 'cannot delete a 1 week old record') if created_at < 1.week.ago }
   has_one_attached :document
 
   private
 
+  def less_than_now
+    errors.add(:date_completed, "can't log jobs in the future") if date_completed > DateTime.now
+    errors.add(:date_started, "can't log jobs in the future") if date_started > DateTime.now
+  end
+    
   def no_overlap_dates
     return errors.add(:date_completed, 'must be included') if date_completed.blank?
     return errors.add(:date_started, 'must be included ') if date_started.blank?
