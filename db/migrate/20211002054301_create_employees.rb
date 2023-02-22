@@ -13,7 +13,7 @@ class CreateEmployees < ActiveRecord::Migration[6.1]
       t.string :phone, unique: true
 
       ## Database authenticatable
-      t.string :email,              null: false
+      t.string :email, unique: true, null: false
       t.string :encrypted_password, null: false
 
       ## Recoverable

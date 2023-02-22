@@ -18,7 +18,7 @@ class Employee < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :phone, phone: { message: 'incorrect phone number format. Please include country code
   and phone number exp: +255 750995366', allow_blank: true }
-  validates :phone, uniqueness: { message: 'phone number already in use by another user', allow_blank: true }
+  validates :phone, uniqueness: { message: 'phone number already in use by another user', allow_blank: true } # rubocop:disable Rails/UniqueValidationWithoutIndex
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
   before_create { first_name.downcase! and last_name.downcase! }
   before_update { first_name.downcase! and last_name.downcase! }
