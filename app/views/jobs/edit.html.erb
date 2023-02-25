@@ -4,7 +4,7 @@
       <h1>Edit Job</h1>
       <%= button_to 'Delete job', employee_job_path(@job), class: 'btn btn-danger', method: :delete %>
     </div>
-    <div> 
+    <div>
       <%= label_tag :duration, 'Duration (days)' %>
       <%= text_field_tag :duration, distance_of_time_in_words(@job.date_started, @job.date_completed), class: 'form-control', disabled: true %>
     </div>

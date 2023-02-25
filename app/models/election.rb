@@ -25,16 +25,16 @@ class Election < ApplicationRecord
   end
 
   def voted_for(employee)
-    if voted?(employee)
-      cast_vote = votes.find_by(voter: employee)
-      Employee.find(cast_vote.candidate)
-    end
+    return unless voted?(employee)
+
+    cast_vote = votes.find_by(voter: employee)
+    Employee.find(cast_vote.candidate)
   end
 
   def expired?
     close_election if DateTime.current > ends_at
 
-    not active?
+    !active?
   end
 
   def winner
@@ -46,6 +46,7 @@ class Election < ApplicationRecord
 
   def self.pending_elections(employee)
     return [] if Employee.roles[employee.role] < Employee.roles[:member]
+
     active_elections.order(:ends_at).reject { |election| election.voted?(employee) }
   end
 

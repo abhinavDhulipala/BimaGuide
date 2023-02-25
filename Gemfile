@@ -56,7 +56,7 @@ gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'dotenv-rails', '~> 2.7'
 
-gem 'devise', '~> 4.8'
+gem 'devise', '~> 4.8.1'
 
 gem 'phonelib', '~> 0.6.54'
 

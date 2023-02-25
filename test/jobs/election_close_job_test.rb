@@ -9,6 +9,6 @@ class ElectionCloseJobTest < ActiveJob::TestCase
     assert_enqueued_with(job: ElectionStartJob, at: Config.admin_term.fetch.since) do
       ElectionCloseJob.perform_now(election)
     end
-    refute_predicate election, :active?
+    assert_not_predicate election, :active?
   end
 end

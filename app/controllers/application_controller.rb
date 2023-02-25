@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_up, keys: %i[first_name last_name occupation])
   end
 
-  def flash_exception(e)
-    flash[:error] = e.message
+  def flash_exception(exc)
+    flash[:error] = exc.message
   end
 end
