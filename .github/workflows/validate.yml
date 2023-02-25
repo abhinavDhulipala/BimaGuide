@@ -1,0 +1,12 @@
+name: application validations
+
+on: push
+
+jobs:
+  pre-commit:
+    runs-on: "ubuntu-latest"
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-python@v3
+    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+    - uses: pre-commit/action@v3.0.0
