@@ -24,7 +24,6 @@ class Employee < ApplicationRecord
   before_update { first_name.downcase! and last_name.downcase! }
 
   pay_customer
-  attr_readonly :email
 
   def latest_contribution_date
     contributions.order(:created_at).pluck(:created_at).last or 200.years.ago
