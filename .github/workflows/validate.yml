@@ -8,16 +8,33 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v3
-    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+    - uses: ruby/setup-ruby@v1
     - uses: pre-commit/action@v3.0.0
 
   test:
     name: Run rails tests
     needs: pre-commit
     runs-on: "ubuntu-latest"
+    env:
+      ENV: test
+    services:
+      postgres:
+        image: postgres:12.1-alpine
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        # needed because the postgres container does not provide a healthcheck
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
     steps:
     - uses: actions/checkout@v3
-    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
+    - uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-    - run: bin/rails test
+    - run: yarn install
+    - run: bin/rails db:setup && bin/rails test
+      env:
+        RAILS_ENV: test
+        PGHOST: localhost
+        PGUSER: postgres
+        POSTGRES_PASSWORD: postgres
