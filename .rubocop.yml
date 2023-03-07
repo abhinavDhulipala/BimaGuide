@@ -15,11 +15,10 @@ AllCops:
     - 'db/**/*'
     - 'config/**/*'
     - 'bin/**/*'
-    - 'venv/'
+    - 'venv/**/*'
 
 Rails:
   Enabled: true
-
 
 Lint/EmptyFile:
   Enabled: false

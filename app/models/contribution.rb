@@ -7,6 +7,7 @@ class Contribution < ApplicationRecord
       message: "can only input a number less than #{Config.max_contribution_amount.fetch}. inputed %<value>s" }
   validate :no_recent_contribution
   validate :max_contrib_amount
+  validates :purpose, presence: true
   validates :id, uniqueness: true
 
   private
