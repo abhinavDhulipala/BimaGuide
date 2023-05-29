@@ -11,11 +11,11 @@
         <main class="col py-5">
             <div class="row">
                 <div class="col">
-                    <ul class="nav nav-tabs small" role="tablist">
+                    <%# <ul class="nav nav-tabs small" role="tablist">
                         <li class="nav-item"><a class="nav-link text-uppercase active" data-toggle="tab" href="#tab1" role="tab">Home</a></li>
                         <li class="nav-item ml-auto"><a class="nav-link text-uppercase" data-toggle="tab" href="#tab2" role="tab">List</a></li>
                         <li class="nav-item"><a class="nav-link text-uppercase" data-toggle="tab" href="#tab3" role="tab">More</a></li>
-                    </ul>
+                    </ul> %>
                     <div class="tab-content py-3">
                         <div class="tab-pane active" id="tab1" role="tabpanel">
                             <h2 class="mb-3">How does BimaGuide work?</h2>
@@ -117,23 +117,15 @@
                 <div class="col-lg-3 col-12">
                     <div class="card bg-faded border-0 mb-3">
                         <div class="card-body">
-                            <h3 class="card-title">Card</h3>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-outline-secondary">Outline</a>
+                            <h3 class="card-title">Donations</h3>
+                            <p class="card-text">Not a Member? You can still help out by donating!</p>
+                            <%= button_to 'Donate Now', donation_services_path, class: 'btn btn-outline-success', method: :get %>
                         </div>
                     </div>
                     <div class="card bg-faded border-0 mb-3">
                         <div class="card-body">
-                            <h3 class="card-title">Ad</h3>
-                            <p class="card-text">Display supporters and advertisements here.</p>
-                            <a href="#" class="btn btn-outline-secondary">C-T-A</a>
-                        </div>
-                    </div>
-                    <div class="card bg-faded border-0 mb-3">
-                        <div class="card-body">
-                            <h3 class="card-title">Card</h3>
-                            <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-                            <a href="#" class="btn btn-outline-secondary">Outline</a>
+                            <h3 class="card-title">Already an Employee?</h3>
+                            <%= button_to 'Login or Sign up', new_employee_path, class: 'btn btn-outline-success', method: :get %>
                         </div>
                     </div>
                 </div>
