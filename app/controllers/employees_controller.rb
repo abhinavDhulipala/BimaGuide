@@ -4,10 +4,12 @@ class EmployeesController < ApplicationController
   before_action :set_employee, except: %i[index]
   before_action :authenticate_employee!, except: %i[index]
   before_action :set_election_notifications
+  before_action :admin_only, only: %i[admin_profile]
 
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
+    @employees = @employees.order first_name: :desc, last_name: :desc if params[:sort_name]
   end
 
   def show; end
@@ -20,6 +22,10 @@ class EmployeesController < ApplicationController
     else
       flash[:info] = 'there currently is no admin, this means they have either been vetoed or an election is ongoing'
     end
+  end
+
+  def admin_profile
+    redirect_to action: :index, method: :get if flash[:error]
   end
 
   private
@@ -39,5 +45,12 @@ class EmployeesController < ApplicationController
 
   def set_election_notifications
     @pending_elections = Election.pending_elections(current_employee)
+  end
+
+  def admin_only
+    return if @employee.admin?
+
+    flash[:danger] = 'Must be an admin'
+    redirect_to action: :index
   end
 end

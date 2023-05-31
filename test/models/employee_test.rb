@@ -67,4 +67,10 @@ class EmployeeTest < ActiveSupport::TestCase
     Config.latest_contribution.update! value: 1, units: :days
     assert_equal @employee.role, 'contributor'
   end
+
+  test 'admin detection' do
+    assert_not @employee.admin?
+    @employee.role = 'super_admin'
+    assert @employee.admin?
+  end
 end
