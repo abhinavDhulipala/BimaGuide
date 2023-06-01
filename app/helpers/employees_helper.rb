@@ -31,4 +31,16 @@ module EmployeesHelper
 
     display_time(contribution_date)
   end
+
+  def display_arrow(param)
+    param ||= 0
+    case param.to_i
+    when 1
+      '↑'
+    when 2
+      '↓'
+    else
+      ''
+    end
+  end
 end

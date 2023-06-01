@@ -1,15 +1,22 @@
 # frozen_string_literal: true
 
 class EmployeesController < ApplicationController
-  before_action :set_employee, except: %i[index]
-  before_action :authenticate_employee!, except: %i[index]
+  before_action :set_employee
+  before_action :authenticate_employee!
   before_action :set_election_notifications
-  before_action :admin_only, only: %i[admin_profile]
+  before_action :admin_only, only: %i[admin_profile index]
 
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
-    @employees = @employees.order first_name: :desc, last_name: :desc if params[:sort_name]
+    if params[:sort_role].to_i.positive?
+      @employees = @employees.order role: :desc if params[:sort_role].to_i == 1
+      @employees = @employees.order :role if params[:sort_role].to_i == 2
+    end
+    return unless params[:sort_name].to_i.positive?
+
+    @employees = @employees.order first_name: :desc, last_name: :desc if params[:sort_name].to_i == 1
+    @employees = @employees.order :first_name, :last_name if params[:sort_name].to_i == 2
   end
 
   def show; end
@@ -51,6 +58,6 @@ class EmployeesController < ApplicationController
     return if @employee.admin?
 
     flash[:danger] = 'Must be an admin'
-    redirect_to action: :index
+    redirect_to :root
   end
 end
