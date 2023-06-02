@@ -9,14 +9,6 @@ class EmployeesController < ApplicationController
   # GET /employees or /employees.json
   def index
     @employees = Employee.all
-    if params[:sort_role].to_i.positive?
-      @employees = @employees.order role: :desc if params[:sort_role].to_i == 1
-      @employees = @employees.order :role if params[:sort_role].to_i == 2
-    end
-    return unless params[:sort_name].to_i.positive?
-
-    @employees = @employees.order first_name: :desc, last_name: :desc if params[:sort_name].to_i == 1
-    @employees = @employees.order :first_name, :last_name if params[:sort_name].to_i == 2
   end
 
   def show; end
