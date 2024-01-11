@@ -4,7 +4,7 @@ module Employees
   class RegistrationsController < Devise::RegistrationsController
     # before_action :configure_sign_up_params, only: [:create]
     # before_action :configure_account_update_params, only: [:update]
-
+    before_action :editable
     # GET /resource/sign_up
     # def new
     #   super
@@ -67,5 +67,13 @@ module Employees
     # def after_inactive_sign_up_path_for(resource)
     #   super(resource)
     # end
+    private
+
+    def editable
+      return if [params.fetch(:id, ''), params.fetch(:format, '')].include? current_employee.id.to_s
+
+      flash[:danger] = "can't edit another employees information"
+      redirect_to :root
+    end
   end
 end
