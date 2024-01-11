@@ -19,6 +19,7 @@ Rails.application.routes.draw do
     end
 
     get 'show_admin', to: 'employees#show_admin'
+    get 'admin_profile', to: 'employees#admin_profile'
     post 'dismiss_notifications', to: 'employees#dismiss_notifications'
   end
 

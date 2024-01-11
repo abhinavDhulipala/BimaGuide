@@ -13,6 +13,9 @@ class Job < ApplicationRecord
   private
 
   def less_than_now
+    return if date_completed.blank?
+    return if date_started.blank?
+
     errors.add(:date_completed, "can't log jobs in the future") if date_completed > DateTime.now
     errors.add(:date_started, "can't log jobs in the future") if date_started > DateTime.now
   end

@@ -1,0 +1,37 @@
+<div>
+    <table id="table" class="table">
+        <thead>
+            <th scope="col"> Name </th>
+            <th scope="col"> Role </th>
+            <th scope="col"> Total Contributions </th>
+            <th scope="col"> Total Jobs </th>
+        </thead>
+        <tbody>
+            <% @employees.each do |employee| %>
+            <tr>
+                <td> <%= link_to employee.name, employee_path(employee) %> </td>
+                <td> <%= employee.role.humanize %> </td>
+                <td> <%= employee.contributions.count %> </td>
+                <td> <%= employee.jobs.count %> </td>
+            </tr>
+            <% end %>
+        </tbody>
+    </table>
+</div>
+
+<script>
+getCellValue = (tr, idx) => tr.children[idx].innerText || tr.children[idx].textContent
+
+comparer = (idx, asc) => (a, b) => ((v1, v2) =>
+    v1 !== '' && v2 !== '' && !isNaN(v1) && !isNaN(v2) ? v1 - v2 : v1.toString().localeCompare(v2)
+    )(getCellValue(asc ? a : b, idx), getCellValue(asc ? b : a, idx))
+
+document.querySelectorAll('th').forEach(th => th.addEventListener('click', (() => {
+  table = th.closest('table')
+  tbody = table.querySelector('tbody')
+  Array.from(tbody.querySelectorAll('tr'))
+    .sort(comparer(Array.from(th.parentNode.children).indexOf(th), this.asc = !this.asc))
+    .forEach(tr => tbody.appendChild(tr) )
+})))
+
+</script>

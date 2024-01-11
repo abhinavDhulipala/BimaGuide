@@ -71,4 +71,8 @@ class Employee < ApplicationRecord
   def privileged?
     Employee.roles[role] >= Employee.roles['member']
   end
+
+  def admin?
+    Employee.roles[role] >= Employee.roles['admin']
+  end
 end
